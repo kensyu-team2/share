@@ -1,0 +1,3 @@
+CREATE DATABASE item DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+CREATE USER item_user@'localhost' IDENTIFIED BY '1tem';
+GRANT SELECT,UPDATE,INSERT,DELETE ON item.* TO item_user@'localhost';

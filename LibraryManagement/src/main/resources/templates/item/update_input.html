@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>更新＞入力</title>
+</head>
+<body>
+	<form th:action="@{/item/update/confirm}" method="post" th:object="${item}">
+
+		<div>ID：<span th:text="*{id}"></span></div>
+		<div>商品名：<input type="text" th:field="*{name}" /></div>
+		<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+		<div>価格：<input type="text" th:field="*{price}" /></div>
+		<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+
+		<input type="hidden" th:field="*{id}" />
+		<input type="hidden" th:field="*{version}" />
+
+		<input type="submit" value="送信（アクション）" />
+	</form>
+</body>
+</html>

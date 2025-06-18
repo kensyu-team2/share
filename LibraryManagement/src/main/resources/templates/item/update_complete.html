@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>更新＞完了</title>
+</head>
+<body>
+	<a th:href="@{/item/list}">一覧</a>
+	<hr />
+	ID:[[${item.id}]]<br />
+	商品名：[[${item.name}]]<br />
+	を更新しました。
+</body>
+</html>
