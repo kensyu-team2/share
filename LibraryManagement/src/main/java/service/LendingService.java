@@ -1,4 +1,4 @@
-package jp.co.systempack.itemManagement.service;
+package service;
 
 import java.util.List;
 
@@ -7,16 +7,16 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jp.co.systempack.itemManagement.entity.Item;
+import entity.Item;
 import jp.co.systempack.itemManagement.exception.ApplicationException;
-import jp.co.systempack.itemManagement.repository.ItemRepository;
+import repository.MemberRepository;
 
 @Transactional
 @Service
-public class ItemService {
+public class LendingService {
 
 	@Autowired
-	private ItemRepository itemRepository;
+	private MemberRepository itemRepository;
 
 	public Item insert(Item item) {
 		item.setVersion(1);
