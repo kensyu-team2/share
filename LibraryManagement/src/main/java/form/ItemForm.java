@@ -1,4 +1,4 @@
-package jp.co.systempack.itemManagement.form;
+package form;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

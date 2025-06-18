@@ -1,4 +1,4 @@
-package jp.co.systempack.itemManagement.entity;
+package entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,13 +1,13 @@
-package jp.co.systempack.itemManagement;
+package MemberManagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ItemManagementApplication {
+public class MemberManagementApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ItemManagementApplication.class, args);
+        SpringApplication.run(MemberManagementApplication.class, args);
     }
 
 }

@@ -1,4 +1,4 @@
-package jp.co.systempack.itemManagement.controller;
+package controller;
 
 import java.util.Locale;
 
@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jp.co.systempack.itemManagement.entity.Item;
+import entity.Item;
+import form.ItemForm;
 import jp.co.systempack.itemManagement.exception.ApplicationException;
-import jp.co.systempack.itemManagement.form.ItemForm;
-import jp.co.systempack.itemManagement.service.ItemService;
+import service.LendingService;
 
 @Controller
 @RequestMapping("item")
-public class ItemUpdateController {
+public class MemberController {
 
 	/** itemサービス. */
 	@Autowired
-	private ItemService itemService;
+	private LendingService itemService;
 
 	@Autowired
 	private MessageSource messageSource;
