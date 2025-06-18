@@ -1,0 +1,388 @@
+/* --- ページ全体のスタイル --- */
+body {
+    font-family: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --- 全体を囲むコンテナ --- */
+.container {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* 角丸を内側にも適用 */
+}
+
+/* --- ヘッダー部分 --- */
+header {
+    background-color: #b2eeb2;
+    padding: 25px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #333;
+}
+
+/* --- フォーム全体のスタイル --- */
+.lending-form {
+    padding: 30px 40px;
+}
+
+/* --- エラーメッセージ表示欄 --- */
+.error-message {
+    color: red;
+    text-align: center;
+    min-height: 1.5em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* --- 入力欄の共通スタイル --- */
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px; /* 入力欄どうしの縦の隙間 */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* ▼▼▼ 変更点 ▼▼▼ */
+/* --- 2列レイアウトのためのコンテナ --- */
+.form-columns {
+    display: flex; /* 中の要素を横並びにする */
+    justify-content: space-between; /* 左右の列の間にスペースを空ける */
+    gap: 20px; /* 列と列の間の隙間 */
+    margin-bottom: 20px;
+}
+
+/* --- 左右の各列 --- */
+.column {
+    flex: 1; /* 利用可能なスペースを均等に分け合う */
+}
+
+/* 古い item-inputs-grid のスタイルは不要なので削除しました */
+
+/* --- 登録ボタン --- */
+.submit-button {
+    width: 50%;
+    display: block;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;  /* リンクの下線を消す */
+    text-align: center;     /* 文字を中央揃えにする */
+}
+
+.submit-button:hover {
+    background-color: #d0d0d0;
+}
+
+/* --- 戻るリンク --- */
+.back-link {
+    display: block;
+    text-align: right;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: underline;
+    font-size: 14px;
+}
+/* ===================================
+   貸出確認画面のスタイル
+   =================================== */
+
+   .confirmation-content {
+    padding: 30px 40px;
+}
+
+.confirmation-grid {
+    display: flex;
+    gap: 30px; /* 列と列の間の隙間 */
+    margin-bottom: 30px;
+}
+
+.details-column {
+    flex: 1; /* 比率1 */
+}
+
+.items-column {
+    flex: 1.5; /* 比率1.5で、右側を少し広くする */
+}
+
+.info-box {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.info-label {
+    display: block;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.info-value {
+    font-weight: bold;
+    color: #333;
+}
+
+.item-list-box {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    padding: 15px;
+    height: 100%;
+    box-sizing: border-box;
+    max-height: 275px; /* 例えば、ボックスの最大の高さを指定 */
+    overflow-y: auto;  /* 縦方向に内容がはみ出たら、自動でスクロールバーを表示 */
+}
+
+.item-list-box ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item-list-box li {
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.item-list-box li:last-child {
+    border-bottom: none;
+}
+
+.prompt-message {
+    text-align: center;
+    margin: 40px 0 25px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* ボタンとボタンの間の隙間 */
+}
+
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-confirm {
+    background-color: #28a745; /* 緑色 */
+}
+
+.btn-back {
+    background-color: #dc3545; /* 赤色 */
+}
+/* ===================================
+   返却画面のスタイル
+   =================================== */
+
+/* 返却画面用のヘッダー色 */
+.header-return {
+    background-color: #dce384; /* 画像の黄緑色を再現 */
+}
+
+/* 返却フォームの余白設定 */
+.return-form {
+    padding: 30px 40px;
+}
+
+/* 番号付き入力欄のリスト全体 */
+.return-inputs-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2つの列を均等に分割 */
+    gap: 12px 25px; /* 縦と横の隙間 */
+    list-style: none; /* デフォルトの数字（1. 2. ...）を非表示 */
+    padding: 0;
+    margin: 20px 0 30px 0;
+    counter-reset: item-counter; /* 数字を数えるためのカウンターを初期化 */
+}
+
+/* 各入力欄の行 */
+.return-inputs-list li {
+    display: flex;
+    align-items: center;
+}
+
+/* CSSで番号を自動生成して表示 */
+.return-inputs-list li::before {
+    counter-increment: item-counter; /* カウンターを1つ増やす */
+    content: counter(item-counter) ":"; /* 「1:」「2:」のように表示 */
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+    min-width: 2em; /* 番号部分の幅を確保して、入力欄の左端を揃える */
+}
+
+/* 返却画面の入力欄のスタイル */
+.return-inputs-list input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+/* CSSで番号を自動生成して表示 */
+.info-list-grid li::before {
+    counter-increment: item-counter; /* カウンターを1つ増やす */
+    content: counter(item-counter) ":"; /* 「1:」「2:」のように表示 */
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+}
+/* ===================================
+   ボタン 共通スタイル
+   =================================== */
+
+/* ボタンの土台となるスタイル */
+.btn {
+    display: inline-block;
+    text-decoration: none; /* リンクの下線を消す */
+    text-align: center;    /* 文字を中央揃えにする */
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    color: white;          /* 文字色を白に統一 */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* --- ボタンの色を指定するクラス --- */
+
+/* [推奨] 緑色：肯定的なアクション（登録・確認・実行） */
+.btn-primary {
+    background-color: #28a745; 
+}
+
+/* [推奨] 赤色：否定的なアクション（戻る・キャンセル） */
+.btn-danger {
+    background-color: #dc3545;
+}
+
+/* [推奨] グレー：その他のアクション（メニューへ戻る等） */
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+
+/* 以前のクラス（後方互換性のため残す、または新しいクラスに置き換えて削除）*/
+.btn-confirm { background-color: #28a745; } /* → .btn-primary と同じ */
+.btn-back { background-color: #dc3545; }    /* → .btn-danger と同じ */
+/* ===================================
+   メインメニューのスタイル
+   =================================== */
+
+   .menu-container {
+    max-width: 800px; /* メインメニューは少し幅を広くとる */
+    padding: 40px;
+}
+
+.menu-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+/* メニューボタンを配置するグリッド */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2つの列を均等に分割 */
+    gap: 30px; /* ボタン間の隙間 */
+}
+
+/* 各メニューボタンのスタイル */
+.menu-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background-color: #f8f9fa; /* ニュートラルな薄いグレー */
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    color: #495057;
+    aspect-ratio: 1 / 1; /* 常に正方形を保つ */
+    transition: all 0.2s ease-in-out;
+}
+
+.menu-item:hover {
+    transform: translateY(-5px); /* 少し浮き上がる効果 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: #007bff;
+    color: #007bff;
+}
+
+.menu-item-text {
+    font-size: 24px;
+    font-weight: bold;
+}
+/* ===================================
+   メインメニューの各ボタンの色
+   =================================== */
+
+   .menu-item-material {
+    background-color: #c8c8e6; /* 資料管理の青紫色 */
+}
+
+.menu-item-member {
+    background-color: #e6a8a8; /* 会員管理の赤色 */
+}
+
+.menu-item-lending {
+    background-color: #b2eeb2; /* 貸出の緑色 */
+}
+
+.menu-item-return {
+    background-color: #dce384; /* 返却の黄緑色 */
+}
+
+/* どの色のボタンでもhoverが綺麗に見えるように修正 */
+.menu-item:hover {
+    transform: translateY(-5px); /* 少し浮き上がる効果 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: #444;
+    color: #000;
+}

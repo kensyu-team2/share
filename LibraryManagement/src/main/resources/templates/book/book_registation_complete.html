@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料登録完了</title>
+</head>
+<body>
+    <h1>資料登録完了</h1>
+    <p>書籍名:<span th:text="$bookname"></span></p>
+    <p>書籍名フリガナ:<span th:text="$bookrubi"></span></p>
+    <p>入荷年月日:<span th:text="$arrivaldate"></span></p>
+    <p>出版社:<span th:text="$publish"></span></p>
+    <p>著者名:<span th:text="$author"></span></p>
+    <p>著者名フリガナ:<span th:text="$authorrubi"></span></p>
+    <p>出版年月日:<span th:text="$publishdate"></span></p>
+    <p>資料ジャンル:<span th:text="$genere"></span></p>
+    <p>ISBN:<span th:text="$ISBN"></span></p>
+    <p>資料区分:<span th:text="$type"></span></p>
+
+    <p>上記の内容で登録しました</p>
+    <a href="book_registation.html">確認</a>
+    
+</body>
+</html>
