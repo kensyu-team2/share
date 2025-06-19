@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会員登録</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header-sub-menu header-member">
+            <a href="member_mgmt_menu.html" class="header-back-link">会員管理メニュー</a>
+            <h1 class="header-title">会員登録</h1>
+        </header>
+
+        <main>
+            <form action="/members/register/confirm" method="post" class="registration-form">
+                
+                <div class="form-columns">
+                    <div class="column">
+                        <div class="form-group">
+                            <label for="name">氏名</label>
+                            <input type="text" id="name" name="name" class="input-field" placeholder="山田 太郎">
+                        </div>
+                        <div class="form-group">
+                            <label for="name-kana">フリガナ</label>
+                            <input type="text" id="name-kana" name="nameKana" class="input-field" placeholder="ヤマダ タロウ">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">電話番号</label>
+                            <input type="tel" id="phone" name="phone" class="input-field" placeholder="090-1234-5678">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="form-group">
+                            <label for="birthdate">生年月日</label>
+                            <input type="date" id="birthdate" name="birthdate" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">住所</label>
+                            <input type="text" id="address" name="address" class="input-field" placeholder="北海道札幌市...">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">メール</label>
+                            <input type="email" id="email" name="email" class="input-field" placeholder="taro.yamada@example.com">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-button">登録</button>
+                    <a href="member_mgmt_menu.html" class="back-link">戻る</a>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+</body>
+</html>

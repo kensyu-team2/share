@@ -420,3 +420,170 @@ header h1 {
 .header-member {
     background-color: #e6a8a8;
 }
+/* ===================================
+   会員登録・変更フォームのスタイル
+   =================================== */
+
+   .registration-form {
+    padding: 30px 40px;
+}
+
+/* ラベルと入力欄のセット */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* ラベルのスタイル */
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* フォームの入力欄のプレースホルダーの色を少し薄く */
+.input-field::placeholder {
+    color: #bbb;
+}
+
+/* フォームのボタンとリンクの配置 */
+.form-actions {
+    margin-top: 30px;
+    position: relative; /* 「戻る」リンクの配置基準 */
+    min-height: 50px; /* ボタンの高さを考慮 */
+}
+
+/* 登録ボタンは中央に配置 */
+.form-actions .submit-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 戻るリンクは右下に配置 */
+.form-actions .back-link {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+/* ===================================
+   確認画面の本人確認チェックボックス
+   =================================== */
+
+   .verification-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0 10px 0;
+    padding: 10px;
+}
+
+.verification-checkbox input[type="checkbox"] {
+    /* チェックボックスを少し大きくして押しやすくする */
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.verification-checkbox label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+/* ===================================
+   一覧画面の共通スタイル
+   =================================== */
+
+   .page-content {
+    padding: 30px 40px;
+}
+
+/* --- 検索フォーム --- */
+.search-form {
+    display: flex;
+    justify-content: flex-end; /* 右寄せにする */
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.search-input {
+    width: 280px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.search-button {
+    padding: 8px 18px;
+    margin-left: 10px;
+    background-color: #6c757d; /* グレー */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-button:hover {
+    background-color: #5a6268;
+}
+
+/* --- データテーブル --- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse; /* ボーダーを重ねて綺麗に見せる */
+    font-size: 14px;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: middle; /* 文字を上下中央に */
+}
+
+.data-table th {
+    background-color: #f8f9fa; /* ヘッダー行の背景色 */
+    font-weight: bold;
+}
+
+/* テーブルの行を交互に色付けして見やすくする */
+.data-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* テーブル内の変更ボタン */
+.btn-table-edit {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #007bff; /* 青色 */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.btn-table-edit:hover {
+    background-color: #0056b3;
+}
+/* ===================================
+   幅広コンテンツ用のスタイル
+   =================================== */
+
+/* 幅広のコンテンツ用のコンテナスタイル */
+.container-wide {
+    max-width: 1100px; /* 横幅を広げる (この値は調整可能です) */
+}
+
+/* データテーブルのセル内で文字が折り返されないようにする */
+/* 既存の .data-table th, .data-table td に追記してもOKです */
+.data-table th,
+.data-table td {
+    white-space: nowrap; /* テキストの折り返しを禁止 */
+}
