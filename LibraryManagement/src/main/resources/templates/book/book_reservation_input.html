@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料予約</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header-sub-menu header-material">
+            <a href="book_detail.html" class="header-back-link">資料詳細へ</a>
+            <h1 class="header-title">資料予約</h1>
+        </header>
+
+        <main>
+            <form action="/reservations/confirm" method="post" class="registration-form">
+                
+                <div class="book-display-box">
+                    <div class="book-main-info">
+                        <span class="book-id">書籍ID: B0001</span>
+                        <span class="book-title">Spring Boot入門</span>
+                    </div>
+                    <div class="book-sub-info">
+                        <span>著者名: AI 博士</span>
+                        <span>出版社: 技術評論社</span>
+                        <span>発行年月日: 2025/04/01</span>
+                    </div>
+                </div>
+
+                <div class="form-group" style="max-width: 400px; margin: 40px auto;">
+                    <label for="memberId">会員ID</label>
+                    <input type="text" id="memberId" name="memberId" class="input-field" placeholder="会員IDを入力...">
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="book_detail.html" class="btn btn-secondary">戻る</a>
+                    <button type="submit" class="btn btn-secondary">確認</button>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+</body>
+</html>
