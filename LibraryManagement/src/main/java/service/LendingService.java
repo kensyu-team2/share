@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import entity.Item;
-import jp.co.systempack.itemManagement.exception.ApplicationException;
 import repository.MemberRepository;
 
 @Transactional
@@ -29,13 +28,13 @@ public class LendingService {
 		return item;
 	}
 
-	public void update(Item item) {
+	public void update(Item item) throws Exception {
 
 		try {
 			itemRepository.save(item);
 			itemRepository.flush();
 		} catch (OptimisticLockingFailureException e) {
-			throw new ApplicationException("optimistic.locking.error");
+			throw new Exception("optimistic.locking.error");
 		}
 
 	}

@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import entity.Item;
 import form.ItemForm;
-import jp.co.systempack.itemManagement.exception.ApplicationException;
 import service.LendingService;
 
 @Controller
@@ -68,10 +65,11 @@ public class MemberController {
 	 * @param itemForm 商品
 	 * @param result バインド結果
 	 * @return Redirect
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "update/update", method = { RequestMethod.POST })
 	public String update(@ModelAttribute("item") @Validated ItemForm itemForm, BindingResult result,
-			RedirectAttributes redirectAttrs) {
+			RedirectAttributes redirectAttrs) throws Exception {
 
 		if (result.hasErrors()) {
 			return "item/update_input";
@@ -84,15 +82,8 @@ public class MemberController {
 		item.setPrice(itemForm.getPrice());
 		item.setVersion(itemForm.getVersion());
 
-		try {
-			// 更新処理
-			itemService.update(item);
-		} catch (ApplicationException e) {
-			String messageKey = e.getMessage();
-			String message = messageSource.getMessage(messageKey, null, Locale.getDefault());
-			redirectAttrs.addFlashAttribute("message", message);
-			return "redirect:../list";
-		}
+		// 更新処理
+		itemService.update(item);
 
 		redirectAttrs.addFlashAttribute("item", itemForm);
 		return "redirect:complete";
