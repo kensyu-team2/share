@@ -945,3 +945,127 @@ select.input-field {
     justify-content: center;
     gap: 15px;
 }
+/* ===================================
+   メインメニューのスタイル（追記分）
+   =================================== */
+
+/* メインメニュー画面用のコンテナ設定 */
+.menu-container {
+    max-width: 800px;
+    padding: 40px;
+}
+
+/* 「メインメニュー」のタイトル */
+.menu-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+/* メニューの行をまとめるラッパー */
+.menu-rows-wrapper {
+    display: flex;
+    flex-direction: column; /* 行を縦に並べる */
+    align-items: center; /* 全体を中央揃えに */
+    gap: 30px; /* 行と行の間の隙間 */
+}
+
+/* メニューの各行 */
+.menu-row {
+    display: flex;
+    justify-content: center; /* 各行のボタンを中央揃えに */
+    gap: 30px; /* ボタンとボタンの間の隙間 */
+}
+
+/* 各メニューボタンの共通スタイル */
+.menu-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    color: #495057;
+    width: 180px;  /* 幅を固定 */
+    height: 180px; /* 高さを固定 */
+    transition: all 0.2s ease-in-out;
+}
+
+/* マウスを乗せた時のエフェクト */
+.menu-item:hover {
+    transform: translateY(-5px); /* 少し浮き上がる効果 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: #444;
+    color: #000;
+}
+
+/* ボタン内のテキスト */
+.menu-item-text {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* --- 各メニューボタンの色 --- */
+
+.menu-item-comms {
+    background-color: #b4e0f0; /* 業務連絡の水色 */
+}
+
+.menu-item-material {
+    background-color: #c8c8e6; /* 資料管理の青紫色 */
+}
+
+.menu-item-member {
+    background-color: #e6a8a8; /* 会員管理の赤色 */
+}
+
+.menu-item-lending {
+    background-color: #b2eeb2; /* 貸出の緑色 */
+}
+
+.menu-item-return {
+    background-color: #dce384; /* 返却の黄緑色 */
+}
+/* ===================================
+   資料予約画面のスタイル
+   =================================== */
+
+/* 書籍情報を表示するボックス */
+.book-display-box {
+    background-color: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 20px 25px;
+    margin-bottom: 30px;
+}
+
+.book-display-box .book-main-info {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.book-display-box .book-main-info .book-id {
+    margin-right: 15px;
+}
+
+.book-display-box .book-sub-info {
+    font-size: 14px;
+    color: #0056b3; /* 少し濃い青色 */
+}
+
+.book-display-box .book-sub-info span {
+    margin-right: 15px;
+}
+
+/* グレーのボタンの文字色を修正 */
+/* 既存の.btn-secondaryに追記してもOKです */
+.btn-secondary {
+    color: #333; /* 背景が明るいグレーなので、文字色を濃くする */
+    background-color: #e0e0e0;
+}
+.btn-secondary:hover {
+    background-color: #d0d0d0;
+}

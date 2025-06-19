@@ -1,68 +1,31 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="jp">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>会員登録確認</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
 </head>
 <body>
-
-    <div class="container">
-        <header class="header-sub-menu header-member">
-            <a href="member_registration_input.html" class="header-back-link">入力に戻る</a>
-            <h1 class="header-title">会員登録確認</h1>
-        </header>
-
-        <main>
-            <form action="/members/register/execute" method="post" class="confirmation-content">
-                
-                <div class="confirmation-grid">
-                    <div class="details-column">
-                        <div class="info-box">
-                            <span class="info-label">氏名</span>
-                            <span class="info-value">山田 太郎</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">フリガナ</span>
-                            <span class="info-value">ヤマダ タロウ</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">電話番号</span>
-                            <span class="info-value">090-1234-5678</span>
-                        </div>
-                    </div>
-                    <div class="items-column">
-                        <div class="info-box">
-                            <span class="info-label">生年月日</span>
-                            <span class="info-value">1990/01/01</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">住所</span>
-                            <span class="info-value">北海道札幌市...</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">メール</span>
-                            <span class="info-value">taro.yamada@example.com</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="verification-checkbox">
-                    <input type="checkbox" id="identity-verified" name="identityVerified" required>
-                    <label for="identity-verified">身分証明書と照合し、本人確認を完了しました。</label>
-                </div>
-
-                <p class="prompt-message">上記の内容で登録しますか？</p>
-
-                <div class="action-buttons">
-                    <button type="submit" class="btn btn-primary">登録</button>
-                    <a href="member_registration_input.html" class="btn btn-danger">修正</a>
-                </div>
-
-            </form>
-        </main>
+    <div class="nav">
+        <a class="home" href="../main_manu.html">ホーム</a> 
     </div>
 
+    <form action="member_registation_complete.html">
+    <h1>会員登録確認</h1>
+    <p>氏名:<span th:text="$membername"></span></p>
+    <p>氏名フリガナ:<span th:text="$membernamerubi"></span></p><br>
+    <p>生年月日:<span th:text="$birthday"></span></p>
+    <p>住所:<span th:text="$adress"></span></p><br>
+    <p>電話番号:<span th:text="$telnumber"></span></p>
+    <p>メールアドレス:<span th:text="$mail"></span></p><br>
+    
+    <p><input type="checkbox" name="confirm" value="yes">身分証明書と照合し、本人確認を完了しました。</p>
+    </form>
+    <p>上記の内容で登録しますか？</p>
+    <a href="member_registation_complete.html">登録</a>
+    <a href="member_registation.html">戻る</a>
+    
 </body>
 </html>
