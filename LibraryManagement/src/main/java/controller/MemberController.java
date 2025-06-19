@@ -1,103 +1,91 @@
-package controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import entity.Item;
-import form.ItemForm;
-import service.LendingService;
-
-@Controller
-@RequestMapping("item")
-public class MemberController {
-
-	/** itemサービス. */
-	@Autowired
-	private LendingService itemService;
-
-	@Autowired
-	private MessageSource messageSource;
-
-	/**
-	 * 入力画面表示メソッド.
-	 *
-	 * @param itemForm itemフォーム
-	 * @return View
-	 */
-	@RequestMapping(value = "update/input", method = { RequestMethod.GET, RequestMethod.POST })
-	public String input(@ModelAttribute("item") ItemForm itemForm) {
-
-		Item item = itemService.getItem(itemForm.getId());
-		itemForm.setName(item.getName());
-		itemForm.setPrice(item.getPrice());
-		itemForm.setVersion(item.getVersion());
-
-		return "item/update_input";
-	}
-
-	/**
-	 * 確認画面表示メソッド.
-	 *
-	 * @param itemForm   商品
-	 * @param result バインド結果
-	 * @return View
-	 */
-	@RequestMapping(value = "update/confirm", method = { RequestMethod.POST })
-	public String confirm(@ModelAttribute("item") @Validated ItemForm itemForm, BindingResult result) {
-
-		if (result.hasErrors()) {
-			return "item/update_input";
-		}
-
-		return "item/update_confirm";
-	}
-
-	/**
-	 * 更新処理.
-	 *
-	 * @param itemForm 商品
-	 * @param result バインド結果
-	 * @return Redirect
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "update/update", method = { RequestMethod.POST })
-	public String update(@ModelAttribute("item") @Validated ItemForm itemForm, BindingResult result,
-			RedirectAttributes redirectAttrs) throws Exception {
-
-		if (result.hasErrors()) {
-			return "item/update_input";
-		}
-
-		// FormクラスからEntityへの変換
-		Item item = new Item();
-		item.setId(itemForm.getId());
-		item.setName(itemForm.getName());
-		item.setPrice(itemForm.getPrice());
-		item.setVersion(itemForm.getVersion());
-
-		// 更新処理
-		itemService.update(item);
-
-		redirectAttrs.addFlashAttribute("item", itemForm);
-		return "redirect:complete";
-	}
-
-	/**
-	 * 完了画面.
-	 *
-	 * @return View
-	 */
-	@RequestMapping(value = "update/complete", method = { RequestMethod.GET })
-	public String complete() {
-		// 画面を表示するだけなので処理はなし。
-		return "item/update_complete";
-	}
-
-}
+//package controller;
+//
+//import java.util.List;
+//
+//import javax.validation.Valid;
+//
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.validation.BindingResult;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.ModelAttribute;
+//import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//
+//import com.sun.java.util.jar.pack.Package.Class.Member;
+//
+//import form.MemberForm;
+//import form.MemberSearchForm;
+//import service.MemberService;
+//
+//@Controller
+//@RequestMapping("/members")
+//public class MemberController {
+//
+//    private final MemberService service;
+//
+//    public MemberController(MemberService service) {
+//        this.service = service;
+//    }
+//
+//    /** 会員一覧 */
+//    @GetMapping
+//    public String list(Model m) {
+//        List<Member> list = service.findAll();
+//        m.addAttribute("members", list);
+//        return "member/list";
+//    }
+//
+//    /** 新規登録フォーム */
+//    @GetMapping("/new")
+//    public String createForm(Model m) {
+//        m.addAttribute("memberForm", new MemberForm());
+//        return "member/form";
+//    }
+//
+//    /** 登録処理 */
+//    @PostMapping
+//    public String create(@Valid @ModelAttribute MemberForm form, BindingResult br) {
+//        if (br.hasErrors()) {
+//            return "member/form";
+//        }
+//        service.register(form);
+//        return "redirect:/members";
+//    }
+//
+//    /** 編集フォーム */
+//    @GetMapping("/{id}/edit")
+//    public String editForm(@PathVariable Long id, Model m) {
+//        MemberForm form = service.loadForm(id);
+//        m.addAttribute("memberForm", form);
+//        return "member/form";
+//    }
+//
+//    /** 更新処理 */
+//    @PostMapping("/{id}")
+//    public String update(@PathVariable Long id,
+//                         @Valid @ModelAttribute MemberForm form, BindingResult br) {
+//        if (br.hasErrors()) {
+//            return "member/form";
+//        }
+//        service.update(id, form);
+//        return "redirect:/members";
+//    }
+//
+//    /** 削除処理 */
+//    @PostMapping("/{id}/delete")
+//    public String delete(@PathVariable Long id) {
+//        service.delete(id);
+//        return "redirect:/members";
+//    }
+//
+//    /** 会員検索（MemberSearchForm） */
+//    @GetMapping("/search")
+//    public String search(@ModelAttribute MemberSearchForm form, Model m) {
+//        List<Member> results = service.search(form);
+//        m.addAttribute("members", results);
+//        return "member/list";  // 一覧テンプレートを再利用
+//    }
+//
+//}

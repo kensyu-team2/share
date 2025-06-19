@@ -8,14 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="books")
-public class Book {
+@Table(name="members")
+public class Member {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false) private String title;
-    private String author;
-    private String publisher;
+    @Column(nullable=false, length=100)
+    private String name;
+
+    @Column(length=13)
+    private String phone;
 
     // getter/setter
 }

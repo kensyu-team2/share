@@ -1,5 +1,5 @@
-package repository;
-
-public class PlaceRepository {
-
-}
+//package repository;
+//
+//import org.springframework.data.jpa.repository.JpaRepository;
+//
+//public interface PlaceRepository extends JpaRepository<Book,Long> { }

@@ -1,5 +1,8 @@
 package form;
 
-public class ReturnForm {
+import javax.validation.constraints.NotNull;
 
+public class ReturnForm {
+    @NotNull private Long lendingId;
+    // getter/setter
 }

@@ -1,95 +1,53 @@
-package controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import entity.Item;
-import form.ItemForm;
-import service.LendingService;
-
-@Controller
-@RequestMapping("item")
-public class LendingController {
-
-	/** itemサービス. */
-	@Autowired
-	private LendingService itemService;
-
-	/**
-	 * 入力画面表示メソッド.
-	 *
-	 * @param itemForm itemフォーム
-	 * @return
-	 */
-	@RequestMapping(value = "insert/input", method = { RequestMethod.GET, RequestMethod.POST })
-	public String input(@ModelAttribute("item") ItemForm itemForm) {
-		// 入力画面を表示するためだけのメソッド
-		return "item/insert_input";
-	}
-
-	/**
-	 * 確認画面表示メソッド.
-	 *
-	 * @param itemForm   商品
-	 * @param result バインド結果
-	 * @return View
-	 */
-	@RequestMapping(value = "insert/confirm", method = { RequestMethod.POST })
-	public String confirm(@ModelAttribute("item") @Validated ItemForm itemForm, BindingResult result) {
-
-		if (result.hasErrors()) {
-			return "item/insert_input";
-		}
-
-		return "item/insert_confirm";
-	}
-
-	/**
-	 * 登録入力画面.
-	 *
-	 * @param itemForm          商品
-	 * @param result        バインド結果
-	 * @param redirectAttrs リダイレクト属性
-	 * @return redirect
-	 */
-	@RequestMapping(value = "insert/insert", method = { RequestMethod.POST })
-	public String insert(@ModelAttribute("item") @Validated ItemForm itemForm, BindingResult result,
-			RedirectAttributes redirectAttrs) {
-
-		if (result.hasErrors()) {
-			return "item/insert_input";
-		}
-
-		// フォームからエンティティへの変換
-		Item item = new Item();
-		item.setId(itemForm.getId());
-		item.setName(itemForm.getName());
-		item.setPrice(itemForm.getPrice());
-
-		// 登録処理
-		item = itemService.insert(item);
-		itemForm.setId(item.getId());
-
-		redirectAttrs.addFlashAttribute("item", itemForm);
-
-		return "redirect:complete";
-	}
-
-	/**
-	 * 登録完了画面.
-	 *
-	 * @return View
-	 */
-	@RequestMapping(value = "insert/complete", method = { RequestMethod.GET })
-	public String complete() {
-		// 画面を表示するだけなので処理はなし。
-		return "item/insert_complete";
-	}
-
-}
+//package controller;
+//
+//import javax.validation.Valid;
+//
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.validation.BindingResult;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.ModelAttribute;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//
+//import form.LendingForm;
+//import service.LendingService;
+//
+//@Controller
+//@RequestMapping("/lendings")
+//public class LendingController {
+//
+//    private final LendingService service;
+//
+//    public LendingController(LendingService service) {
+//        this.service = service;
+//    }
+//
+//    /** 貸出フォーム表示 */
+//    @GetMapping("/new")
+//    public String newForm(Model m) {
+//        m.addAttribute("lendingForm", new LendingForm());
+//        m.addAttribute("members", service.findAllMembers());
+//        m.addAttribute("items", service.findAvailableItems());
+//        return "lending/form";
+//    }
+//
+//    /** 貸出処理 */
+//    @PostMapping
+//    public String create(@Valid @ModelAttribute LendingForm form, BindingResult br, Model m) {
+//        if (br.hasErrors()) {
+//            m.addAttribute("members", service.findAllMembers());
+//            m.addAttribute("items", service.findAvailableItems());
+//            return "lending/form";
+//        }
+//        service.lend(form);
+//        return "redirect:/lendings/history";
+//    }
+//
+//    /** 貸出履歴表示 */
+//    @GetMapping("/history")
+//    public String history(Model m) {
+//        m.addAttribute("records", service.findAllLendings());
+//        return "lending/history";
+//    }
+//}

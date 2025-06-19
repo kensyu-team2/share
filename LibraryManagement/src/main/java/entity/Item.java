@@ -1,37 +1,24 @@
 package entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "item")
+@Table(name="items")
 public class Item {
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @ManyToOne(optional=false) @JoinColumn(name="book_id")
+    private Book book;
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne @JoinColumn(name="status_id")
+    private Status status;
 
-    @Column(name = "price")
-    private int price;
-
-    @Column(name = "version")
-    @Version
-    private int version;
-
+    // getter/setter
 }

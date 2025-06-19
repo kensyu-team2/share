@@ -1,5 +1,5 @@
-package repository;
-
-public class CategoryRepository {
-
-}
+//package repository;
+//
+//import org.springframework.data.jpa.repository.JpaRepository;
+//
+//public interface CategoryRepository extends JpaRepository<Book,Long> { }
