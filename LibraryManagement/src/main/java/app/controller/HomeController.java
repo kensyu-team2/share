@@ -9,6 +9,6 @@ public class HomeController {
     /** トップメニュー */
     @GetMapping("/")
     public String home() {
-        return "main_menu";   // src/main/resources/templates/home.html
+        return "main_manu";   // src/main/resources/templates/home.html
     }
 }

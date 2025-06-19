@@ -1,38 +1,40 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メインメニュー</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>メインメニュー</title>
+  <!-- static/css/style.css への参照は  th:href を使う -->
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-    <div class="container menu-container">
-        <h1 class="menu-title">メインメニュー</h1>
-        
-        <div class="menu-rows-wrapper">
-            <div class="menu-row">
-                <a href="work/work_menu.html" class="menu-item menu-item-comms">
-                    <span class="menu-item-text">業務連絡</span>
-                </a>
-                <a href="book/book_mgmt_menu.html" class="menu-item menu-item-material">
-                    <span class="menu-item-text">資料管理</span>
-                </a>
-                <a href="member/member_mgmt_memu.html" class="menu-item menu-item-member">
-                    <span class="menu-item-text">会員管理</span>
-                </a>
-            </div>
-            <div class="menu-row">
-                <a href="lending/lending_input.html" class="menu-item menu-item-lending">
-                    <span class="menu-item-text">貸出</span>
-                </a>
-                <a href="return/return_input.html" class="menu-item menu-item-return">
-                    <span class="menu-item-text">返却</span>
-                </a>
-            </div>
-        </div>
-        </div>
+  <div class="container menu-container">
+    <h1 class="menu-title">メインメニュー</h1>
+
+    <div class="menu-rows-wrapper">
+      <div class="menu-row">
+        <!-- 各メニュー項目は th:href でコントローラのパスへ -->
+        <a th:href="@{/work/menu}"    class="menu-item menu-item-comms">
+          <span class="menu-item-text">業務連絡</span>
+        </a>
+        <a th:href="@{/books/menu}"   class="menu-item menu-item-material">
+          <span class="menu-item-text">資料管理</span>
+        </a>
+        <a th:href="@{/members/menu}" class="menu-item menu-item-member">
+          <span class="menu-item-text">会員管理</span>
+        </a>
+      </div>
+      <div class="menu-row">
+        <a th:href="@{/lendings/input}" class="menu-item menu-item-lending">
+          <span class="menu-item-text">貸出</span>
+        </a>
+        <a th:href="@{/returns/input}"  class="menu-item menu-item-return">
+          <span class="menu-item-text">返却</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
