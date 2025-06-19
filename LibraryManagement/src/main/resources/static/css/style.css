@@ -386,3 +386,37 @@ header h1 {
     border-color: #444;
     color: #000;
 }
+
+/* ===================================
+   サブメニュー画面のヘッダー
+   =================================== */
+
+   .header-sub-menu {
+    position: relative; /* 子要素を絶対配置するための基準点 */
+    padding: 15px 20px;
+    color: white;
+    text-align: center; /* タイトルを中央に配置 */
+}
+
+/* ヘッダーのタイトル */
+.header-sub-menu .header-title {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* 左上の「戻る」リンク */
+.header-sub-menu .header-back-link {
+    position: absolute; /* 親要素を基準に絶対配置 */
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* 上下中央揃えのテクニック */
+    color: white;
+    font-size: 14px;
+}
+
+/* --- サブメニューヘッダーの色 --- */
+
+/* 会員管理ヘッダーの赤色 */
+.header-member {
+    background-color: #e6a8a8;
+}

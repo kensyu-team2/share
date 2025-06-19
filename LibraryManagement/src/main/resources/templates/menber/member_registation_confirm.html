@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会員登録確認</title>
+</head>
+<body>
+    <div class="nav">
+        <a class="nav-list" href="../main_manu.html">ホーム</a> > <a class="nav-list" href="member_registation.html">会員登録</a>>現在の画面
+    </div>
+
+    <form action="member_registation_complete.html">
+    <h1>会員登録確認</h1>
+    <p>氏名:<span th:text="$membername"></span></p>
+    <p>氏名フリガナ:<span th:text="$membernamerubi"></span></p><br>
+    <p>生年月日:<span th:text="$birthday"></span></p>
+    <p>住所:<span th:text="$adress"></span></p><br>
+    <p>電話番号:<span th:text="$telnumber"></span></p>
+    <p>メールアドレス:<span th:text="$mail"></span></p><br>
+    
+    <p><input type="checkbox" name="confirm" value="yes">身分証明書と照合し、本人確認を完了しました。</p>
+    </form>
+    <p>上記の内容で登録しますか？</p>
+    <a href="member_registation_complete.html">登録</a>
+    <a href="member_registation.html">戻る</a>
+    
+</body>
+</html>
