@@ -1,27 +1,83 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="jp">
-
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>資料登録確認</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
 </head>
 <body>
-    <h1>資料登録確認</h1>
-    <p>書籍名:<span th:text="$bookname"></span></p>
-    <p>書籍名フリガナ:<span th:text="$bookrubi"></span></p>
-    <p>入荷年月日:<span th:text="$arrivaldate"></span></p>
-    <p>出版社:<span th:text="$publish"></span></p>
-    <p>著者名:<span th:text="$author"></span></p>
-    <p>著者名フリガナ:<span th:text="$authorrubi"></span></p>
-    <p>出版年月日:<span th:text="$publishdate"></span></p>
-    <p>資料ジャンル:<span th:text="$genere"></span></p>
-    <p>ISBN:<span th:text="$ISBN"></span></p>
-    <p>資料区分:<span th:text="$type"></span></p>
 
-    <p>上記の内容で登録しますか？</p>
-    <a href="book_registation.html">戻る</a>
-    <button name="登録">登録</button>
+    <div class="container">
+        <header class="header-sub-menu header-material">
+            <a href="book_registration_input.html" class="header-back-link">入力に戻る</a>
+            <h1 class="header-title">資料登録 確認</h1>
+        </header>
+
+        <main>
+            <form action="/books/register/execute" method="post" class="confirmation-content">
+                
+                <div class="confirmation-grid">
+                    <div class="details-column">
+                        <div class="info-box">
+                            <span class="info-label">書籍名</span>
+                            <span class="info-value">Spring Boot入門</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">書籍名フリガナ</span>
+                            <span class="info-value">スプリングブートニュウモン</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">著者名</span>
+                            <span class="info-value">AI 博士</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">著者名フリガナ</span>
+                            <span class="info-value">エイアイ ハカセ</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">ISBN</span>
+                            <span class="info-value">978-4-7741-9613-0</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">資料区分</span>
+                            <span class="info-value">一般書（単行本）</span>
+                        </div>
+                    </div>
+                    <div class="items-column">
+                        <div class="info-box">
+                            <span class="info-label">入荷年月日</span>
+                            <span class="info-value">2025/06/19</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">出版社</span>
+                            <span class="info-value">技術評論社</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">出版年月日</span>
+                            <span class="info-value">2025/04/01</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">ジャンル</span>
+                            <span class="info-value">コンピュータ・IT</span>
+                        </div>
+                         <div class="info-box">
+                            <span class="info-label">キーワード</span>
+                            <span class="info-value">Java, Spring</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="prompt-message">上記の内容で登録しますか？</p>
+
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">登録</button>
+                    <a href="book_registration_input.html" class="btn btn-danger">修正</a>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料検索</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+
+    <div class="container container-wide">
+        <main class="page-content">
+            <h1 class="page-title">資料検索</h1>
+
+            <div class="search-panel">
+                <div class="panel-header">
+                    キーワードで探す
+                </div>
+                <div class="panel-body">
+                    <p>くわしい条件を設定して、資料を検索することができます。</p>
+                    
+                    <form action="/books/results" method="get">
+                        <fieldset>
+                            <legend>検索条件</legend>
+                            
+                            <div class="form-group">
+                                <label class="form-label">資料区分</label>
+                                <div class="checkbox-group">
+                                    <label><input type="checkbox" name="type" value="book"> 一般書</label>
+                                    <label><input type="checkbox" name="type" value="child-book"> 児童書</label>
+                                    <label><input type="checkbox" name="type" value="magazine"> 雑誌・新聞</label>
+                                    <label><input type="checkbox" name="type" value="cd"> CD</label>
+                                    <label><input type="checkbox" name="type" value="dvd"> DVD</label>
+                                    <label><input type="checkbox" name="type" value="other-av"> その他視聴覚</label>
+                                    <label><input type="checkbox" name="type" value="ebook"> 電子書籍</label>
+                                </div>
+                            </div>
+
+                            <div class="search-criteria-rows">
+                                <div class="search-row">
+                                    <span class="row-label">検索条件1</span>
+                                    <select name="field1"><option>書名</option><option>著者名</option></select>
+                                    <input type="text" name="query1" class="search-query-input">
+                                    <select name="match1"><option>この言葉を含む</option></select>
+                                    <select name="op1"><option>かつ (AND条件)</option></select>
+                                </div>
+                                <div class="search-row">
+                                    <span class="row-label">検索条件2</span>
+                                    <select name="field2"><option>著者名</option><option>書名</option></select>
+                                    <input type="text" name="query2" class="search-query-input">
+                                    <select name="match2"><option>この言葉を含む</option></select>
+                                    <select name="op2"><option>かつ (AND条件)</option></select>
+                                </div>
+                                <div class="search-row">
+                                    <span class="row-label">検索条件3</span>
+                                    <select name="field3"><option>著者名</option></select>
+                                    <input type="text" name="query3" class="search-query-input">
+                                    <select name="match3"><option>この言葉を含む</option></select>
+                                    <select name="op3"><option>かつ (AND条件)</option></select>
+                                </div>
+                                <div class="search-row">
+                                    <span class="row-label">検索条件4</span>
+                                    <select name="field4"><option>出版者</option></select>
+                                    <input type="text" name="query4" class="search-query-input">
+                                    <select name="match4"><option>この言葉を含む</option></select>
+                                    <select name="op4"><option>かつ (AND条件)</option></select>
+                                </div>
+                                <div class="search-row">
+                                    <span class="row-label">検索条件5</span>
+                                    <select name="field5"><option>ISBN</option></select>
+                                    <input type="text" name="query5" class="search-query-input">
+                                    <select name="match5"><option>この言葉と一致する</option></select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>ジャンル指定</legend>
+                            <div class="form-group">
+                                <button type="button" class="btn-small">ジャンル</button>
+                                <input type="text" readonly class="search-query-input" style="width: 300px;">
+                            </div>
+                        </fieldset>
+                        
+                        <fieldset>
+                            <legend>検索結果一覧表示</legend>
+                             <div class="form-group">
+                                <label>表示数 <select name="limit"><option>10件</option><option>20件</option></select></label>
+                                <label style="margin-left: 20px;">ソート順 <select name="sort"><option>出版年逆順</option></select></label>
+                            </div>
+                        </fieldset>
+
+                        <div class="search-actions">
+                            <button type="submit" class="btn btn-primary">検索</button>
+                            <button type="reset" class="btn btn-secondary">クリア</button>
+                            <button type="button" class="btn-link-style">清音化する</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="page-footer-actions">
+                <a href="book_mgmt_menu.html" class="back-link">戻る</a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

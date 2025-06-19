@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料登録</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header-sub-menu header-material">
+            <a href="book_mgmt_menu.html" class="header-back-link">資料管理メニュー</a>
+            <h1 class="header-title">資料登録</h1>
+        </header>
+
+        <main>
+            <form action="/books/register/confirm" method="post" class="registration-form">
+                
+                <div class="form-columns">
+                    <div class="column">
+                        <div class="form-group">
+                            <label for="book-name">書籍名</label>
+                            <input type="text" id="book-name" name="bookName" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="book-kana">書籍名フリガナ</label>
+                            <input type="text" id="book-kana" name="bookKana" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="author-name">著者名</label>
+                            <input type="text" id="author-name" name="authorName" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="author-kana">著者名フリガナ</label>
+                            <input type="text" id="author-kana" name="authorKana" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="isbn">ISBN</label>
+                            <input type="text" id="isbn" name="isbn" class="input-field">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="form-group">
+                            <label for="arrival-date">入荷年月日</label>
+                            <input type="date" id="arrival-date" name="arrivalDate" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="publisher">出版社</label>
+                            <input type="text" id="publisher" name="publisher" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="publish-date">出版年月日</label>
+                            <input type="date" id="publish-date" name="publishDate" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="genre">ジャンル</label>
+                            <select id="genre" name="genreId" class="input-field">
+                                <option value="">選択してください</option>
+                                <option value="1">小説・エッセイ</option>
+                                <option value="2">ビジネス・経済</option>
+                                <option value="3">コンピュータ・IT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">資料区分</label>
+                            <select id="type" name="typeId" class="input-field">
+                                <option value="">選択してください</option>
+                                <option value="1">一般書（単行本）</option>
+                                <option value="2">文庫本</option>
+                                <option value="3">雑誌</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-button">登録</button>
+                    <a href="book_mgmt_menu.html" class="back-link">戻る</a>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料詳細</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+
+    <div class="container container-wide">
+        <header class="header-sub-menu header-material">
+            <a href="book_search_results.html" class="header-back-link">検索結果へ</a>
+            <h1 class="header-title">資料詳細</h1>
+        </header>
+
+        <main class="page-content">
+            <div class="detail-panel">
+                <div class="panel-body">
+                    <section class="book-details-section">
+                        <div class="book-summary">
+                            <span>蔵書数: 3</span>
+                            <span>在庫数: 1</span>
+                            <span>予約件数: 1</span>
+                        </div>
+                        <dl class="info-dl">
+                            <dt>書誌情報ID</dt><dd>B0001</dd>
+                            <dt>ISBN</dt><dd>978-4-7741-9613-0</dd>
+                            <dt>タイトル</dt><dd>Spring Boot入門</dd>
+                            <dt>著者名</dt><dd>AI 博士</dd>
+                            <dt>出版社</dt><dd>技術評論社</dd>
+                            <dt>出版年月日</dt><dd>2025/04/01</dd>
+                            <dt>資料区分</dt><dd>一般書（単行本）</dd>
+                        </dl>
+                    </section>
+                    
+                    <hr class="section-divider">
+
+                    <section class="item-list-section">
+                        <div class="item-list-header">
+                            <span>No.</span>
+                            <span>アイテムID</span>
+                            <span>入荷日</span>
+                            <span>在庫状況</span>
+                            <span>廃棄日</span>
+                            <span>紛失日</span>
+                            <span>選択</span>
+                        </div>
+                        <ol class="item-list">
+                            <li>
+                                <span>I0001</span><span>2025/04/10</span><span>貸出中</span><span>-</span><span>-</span>
+                                <input type="radio" name="selected_item" value="1" checked>
+                            </li>
+                            <li>
+                                <span>I0002</span><span>2025/04/10</span><span>在庫あり</span><span>-</span><span>-</span>
+                                <input type="radio" name="selected_item" value="2">
+                            </li>
+                            <li>
+                                <span>I0003</span><span>2025/04/10</span><span>-</span><span>2025/06/01</span><span>-</span>
+                                <input type="radio" name="selected_item" value="3" disabled>
+                            </li>
+                        </ol>
+                    </section>
+
+                    <div class="detail-actions">
+                        <a href="book_search_results.html" class="btn btn-secondary">戻る</a>
+                        <button type="button" class="btn btn-secondary">予約</button>
+                        <button type="button" class="btn btn-secondary">履歴</button>
+                        <button type="button" class="btn btn-danger">削除</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
