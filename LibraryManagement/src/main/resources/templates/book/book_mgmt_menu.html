@@ -1,26 +1,36 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資料管理</title>
+    <title>資料管理メニュー</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
 </head>
 <body>
-    <h1>資料管理</h1>
-    <div class="登録">
-        <a href="book_registation.html">登録</a>
+
+    <div class="container menu-container">
+        <header class="header-sub-menu header-material">
+            <a href="main_menu.html" class="header-back-link">メインメニュー</a>
+            <h1 class="header-title">資料管理</h1>
+        </header>
+
+        <main class="menu-container">
+            <div class="menu-row">
+                <a href="book_registration_input.html" class="menu-item menu-item-material">
+                    <span class="menu-item-text">資料登録</span>
+                </a>
+                <a href="book_search.html" class="menu-item menu-item-material">
+                    <div>
+                        <span class="menu-item-text">検索</span>
+                        <span class="menu-item-subtext">検索/変更/削除</span>
+                    </div>
+                </a>
+                <a href="book_history.html" class="menu-item menu-item-material">
+                    <span class="menu-item-text">履歴</span>
+                </a>
+            </div>
+             </main>
     </div>
 
-    <div class="一覧">
-        <a href="">一覧 検索/変更/削除</a>
-    </div>
-
-    <div class="遅延">
-        <a href="">遅延</a>
-    </div>
-
-    <div class="貸出履歴">
-        <a href="">貸出履歴</a>
-    </div>
 </body>
 </html>
