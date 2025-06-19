@@ -587,3 +587,361 @@ header h1 {
 .data-table td {
     white-space: nowrap; /* テキストの折り返しを禁止 */
 }
+/* ===================================
+   資料管理画面用のスタイル
+   =================================== */
+
+/* 資料管理ヘッダーの青紫色 */
+.header-material {
+    background-color: #c8c8e6;
+}
+
+/* メニューボタン内のサブテキストのスタイル */
+.menu-item-subtext {
+    display: block; /* メインテキストの下に表示 */
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: 8px;
+    color: #555;
+}
+
+/* サブテキストを持つボタン内のテキスト配置を調整 */
+.menu-item div {
+    text-align: center;
+}
+/* ===================================
+   フォームのセレクトボックス（プルダウン）
+   =================================== */
+
+/* .input-fieldクラスを持つselectタグにもスタイルを適用 */
+select.input-field {
+    -webkit-appearance: none; /* ブラウザ標準の見た目をリセット(Chrome/Safari) */
+    -moz-appearance: none;    /* (Firefox) */
+    appearance: none;         /* (標準) */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 1em top 50%;
+    background-size: 0.65em auto;
+    padding-right: 2.5em; /* 矢印のスペースを確保 */
+}
+/* ===================================
+   資料検索ページのスタイル
+   =================================== */
+
+   .page-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.search-panel {
+    border: 2px solid #a8c4e6;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.panel-header {
+    background-color: #e7f1ff;
+    padding: 10px 15px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #a8c4e6;
+}
+
+.panel-body {
+    padding: 20px 25px;
+}
+
+.panel-body p {
+    font-size: 14px;
+    margin-top: 0;
+}
+
+.search-panel fieldset {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.search-panel legend {
+    font-weight: bold;
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.form-group .form-label {
+    font-weight: bold;
+    margin-right: 15px;
+    font-size: 14px;
+}
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+.checkbox-group input {
+    margin-right: 5px;
+}
+
+.search-criteria-rows {
+    margin-top: 15px;
+}
+.search-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.search-row .row-label {
+    font-size: 14px;
+    width: 70px;
+}
+.search-row select,
+.search-row .search-query-input {
+    font-size: 14px;
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.search-row .search-query-input {
+    flex-grow: 1; /* 入力欄が伸びてスペースを埋める */
+}
+
+.btn-small {
+    padding: 5px 15px;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.search-actions {
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.btn-link-style {
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 15px;
+}
+/* ===================================
+   検索結果ページのスタイル
+   =================================== */
+
+   .results-summary {
+    font-size: 14px;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+.results-summary p {
+    margin: 5px 0;
+}
+
+.filter-form fieldset {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+.filter-form legend {
+    font-size: 1em; /* 14px */
+}
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.filter-controls label {
+    font-size: 14px;
+}
+.filter-controls .filter-input {
+    font-size: 14px;
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.filter-controls select {
+    font-size: 14px;
+    padding: 4px;
+}
+
+/* テーブル内の操作ボタン */
+.data-table .btn-table-action {
+    display: inline-block;
+    padding: 3px 10px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    margin: 0 2px;
+    transition: opacity 0.2s;
+}
+.data-table .btn-table-action:hover {
+    opacity: 0.85;
+}
+.btn-success {
+    background-color: #28a745; /* 緑色 */
+}
+
+/* ページネーション */
+.pagination {
+    margin: 30px 0 20px 0;
+}
+.pagination ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.pagination .page-link {
+    display: block;
+    padding: 8px 14px;
+    margin: 0 3px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.pagination .page-link:hover {
+    background-color: #f0f0f0;
+}
+.pagination .page-link.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    cursor: default;
+}
+
+.results-footer {
+    text-align: left; /* 戻るボタンを左寄せに */
+    margin-top: 20px;
+}
+/* ===================================
+   検索結果ページ専用のレイアウト
+   =================================== */
+   .search-results-container {
+    max-width: 95%; /* 画面幅の95%まで広がる */
+}
+/* ===================================
+   資料詳細ページのスタイル
+   =================================== */
+
+   .detail-panel {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.detail-panel .panel-body {
+    padding: 25px 30px;
+}
+
+.book-details-section {
+    margin-bottom: 20px;
+}
+
+.book-summary {
+    text-align: right;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+}
+.book-summary span {
+    margin-left: 20px;
+}
+
+/* 説明リスト（dl）のレイアウト */
+.info-dl {
+    display: grid;
+    grid-template-columns: 150px 1fr; /* 左（用語）と右（説明）の列幅 */
+    gap: 10px 15px;
+    font-size: 14px;
+}
+.info-dl dt { /* 用語側 */
+    font-weight: bold;
+    color: #333;
+    text-align: right;
+}
+.info-dl dd { /* 説明側 */
+    margin: 0;
+    color: #555;
+}
+
+.section-divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 25px 0;
+}
+
+/* 個別資料リストのヘッダー行 */
+.item-list-header {
+    display: flex;
+    font-size: 12px;
+    font-weight: bold;
+    color: #888;
+    padding: 0 10px 5px 35px; /* 番号分の左余白 */
+    border-bottom: 2px solid #ddd;
+}
+
+/* 個別資料リスト本体（ol） */
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: item-counter;
+}
+.item-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.item-list li:before { /* 番号 */
+    counter-increment: item-counter;
+    content: counter(item-counter);
+    font-weight: bold;
+    margin-right: 15px;
+    color: #888;
+}
+
+/* 各列の幅をヘッダーと合わせる */
+.item-list-header span,
+.item-list li span {
+    flex-basis: 120px; /* 基本の幅 */
+    flex-shrink: 0; /* 縮まないように */
+    padding-right: 10px;
+}
+.item-list-header span:last-of-type,
+.item-list li span:last-of-type {
+    flex-grow: 1; /* 最後の要素が残りのスペースを埋める */
+}
+
+.detail-actions {
+    text-align: center;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
