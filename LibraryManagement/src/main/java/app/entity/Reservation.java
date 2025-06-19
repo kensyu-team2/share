@@ -1,4 +1,4 @@
-package entity;
+package app.entity;
 
 import java.time.LocalDate;
 
@@ -11,19 +11,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="lending")
-public class Lending {
+@Table(name="reservation")
+public class Reservation {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne @JoinColumn(name="member_id")
     private Member member;
 
-    @ManyToOne @JoinColumn(name="item_id")
-    private Item item;
+    @ManyToOne @JoinColumn(name="book_id")
+    private Book book;
 
-    private LocalDate lendDate;
-    private LocalDate dueDate;
-    private LocalDate returnDate;
+    private LocalDate reserveDate;
     // getter/setter
 }

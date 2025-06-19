@@ -1,4 +1,4 @@
-package form;
+package app.form;
 
 public class BookSearchForm {
     /** タイトル部分検索 */

@@ -1,4 +1,4 @@
-package controller;
+package app.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +9,6 @@ public class HomeController {
     /** トップメニュー */
     @GetMapping("/")
     public String home() {
-        return "home";   // src/main/resources/templates/home.html
+        return "main_menu";   // src/main/resources/templates/home.html
     }
 }

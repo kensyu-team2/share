@@ -1,4 +1,4 @@
-package form;
+package app.form;
 
 public class MemberSearchForm {
     /** 会員名（あいまい検索） */

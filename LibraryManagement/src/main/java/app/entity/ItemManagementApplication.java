@@ -1,4 +1,4 @@
-package main;
+package app.entity;
 
 
 import org.springframework.boot.SpringApplication;

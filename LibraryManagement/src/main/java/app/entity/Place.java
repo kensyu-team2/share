@@ -1,4 +1,4 @@
-package entity;
+package app.entity;
 
 public class Place {
 

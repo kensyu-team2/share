@@ -1,4 +1,4 @@
-package form;
+package app.form;
 
 import javax.validation.constraints.NotBlank;
 
