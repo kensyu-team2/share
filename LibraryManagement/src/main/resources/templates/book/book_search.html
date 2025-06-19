@@ -28,50 +28,106 @@
                             <div class="form-group">
                                 <label class="form-label">資料区分</label>
                                 <div class="checkbox-group">
-                                    <label><input type="checkbox" name="type" value="book"> 一般書</label>
-                                    <label><input type="checkbox" name="type" value="child-book"> 児童書</label>
-                                    <label><input type="checkbox" name="type" value="magazine"> 雑誌・新聞</label>
-                                    <label><input type="checkbox" name="type" value="cd"> CD</label>
-                                    <label><input type="checkbox" name="type" value="dvd"> DVD</label>
-                                    <label><input type="checkbox" name="type" value="other-av"> その他視聴覚</label>
-                                    <label><input type="checkbox" name="type" value="ebook"> 電子書籍</label>
+                                    <label><input type="checkbox" name="type" value="general"> 一般書(単行本)</label>
+                                    <label><input type="checkbox" name="type" value="paperback book"> 文庫本</label>
+                                    <label><input type="checkbox" name="type" value="new book"> 新書</label>
+                                    <label><input type="checkbox" name="type" value="big"> 大型本</label>
+                                    <label><input type="checkbox" name="type" value="magazine">雑誌</label>
+                                    <label><input type="checkbox" name="type" value="newspaper"> 新聞</label>
+                                    <label><input type="checkbox" name="type" value="CD"> CD</label>
+                                    <label><input type="checkbox" name="type" value="DVD/Blu-ray"> DVD/Blu-ray</label>
+                                    <label><input type="checkbox" name="type" value="comic"> コミック</label>
                                 </div>
                             </div>
 
                             <div class="search-criteria-rows">
                                 <div class="search-row">
                                     <span class="row-label">検索条件1</span>
-                                    <select name="field1"><option>書名</option><option>著者名</option></select>
+                                    <select name="field1">
+                                        <option>資料名</option>
+                                        <option>著者名</option>
+                                        <option>出版者</option>
+                                    </select>
                                     <input type="text" name="query1" class="search-query-input">
-                                    <select name="match1"><option>この言葉を含む</option></select>
-                                    <select name="op1"><option>かつ (AND条件)</option></select>
+                                    <select name="match1">
+                                        <option>この言葉を含む</option>
+                                        <option>この言葉で始まる</option>
+                                        <option>この言葉と一致する</option>
+                                        <option>この言葉で終わる</option>
+                                    </select>
+                                    <select name="op1">
+                                        <option>かつ (AND条件)</option>
+                                        <option>または (OR条件)</option>
+                                        <option>除く (NOT条件)</option>
+                                    </select>
                                 </div>
                                 <div class="search-row">
                                     <span class="row-label">検索条件2</span>
-                                    <select name="field2"><option>著者名</option><option>書名</option></select>
+                                    <select name="field2">
+                                        <option>著者名</option>
+                                        <option>資料名</option>
+                                        <option>出版者</option>
+                                    </select>
                                     <input type="text" name="query2" class="search-query-input">
-                                    <select name="match2"><option>この言葉を含む</option></select>
-                                    <select name="op2"><option>かつ (AND条件)</option></select>
+                                    <select name="match1">
+                                        <option>この言葉を含む</option>
+                                        <option>この言葉で始まる</option>
+                                        <option>この言葉と一致する</option>
+                                        <option>この言葉で終わる</option>
+                                    </select>
+                                    <select name="op1">
+                                        <option>かつ (AND条件)</option>
+                                        <option>または (OR条件)</option>
+                                        <option>除く (NOT条件)</option>
+                                    </select>
                                 </div>
                                 <div class="search-row">
                                     <span class="row-label">検索条件3</span>
-                                    <select name="field3"><option>著者名</option></select>
+                                    <select name="field3">
+                                        <option>著者名</option>
+                                        <option>資料名</option>
+                                        <option>出版者</option>
+                                    </select>
                                     <input type="text" name="query3" class="search-query-input">
-                                    <select name="match3"><option>この言葉を含む</option></select>
-                                    <select name="op3"><option>かつ (AND条件)</option></select>
+                                    <select name="match3">
+                                        <option>この言葉を含む</option>
+                                        <option>この言葉で始まる</option>
+                                        <option>この言葉と一致する</option>
+                                        <option>この言葉で終わる</option>
+                                    </select>
+                                    <select name="op3">
+                                        <option>かつ (AND条件)</option>
+                                        <option>または (OR条件)</option>
+                                        <option>除く (NOT条件)</option>
+                                    </select>
                                 </div>
                                 <div class="search-row">
                                     <span class="row-label">検索条件4</span>
-                                    <select name="field4"><option>出版者</option></select>
+                                    <select name="field4">
+                                        <option>出版者</option>
+                                        <option>資料名</option>
+                                        <option>著者名</option>
+                                    </select>
                                     <input type="text" name="query4" class="search-query-input">
-                                    <select name="match4"><option>この言葉を含む</option></select>
-                                    <select name="op4"><option>かつ (AND条件)</option></select>
+                                    <select name="match4">
+                                        <option>この言葉を含む</option>
+                                        <option>この言葉で始まる</option>
+                                        <option>この言葉と一致する</option>
+                                        <option>この言葉で終わる</option>
+                                    </select>
+                                    <select name="op4">
+                                        <option>かつ (AND条件)</option>
+                                        <option>または (OR条件)</option>
+                                        <option>除く (NOT条件)</option>
+                                    </select>
                                 </div>
                                 <div class="search-row">
                                     <span class="row-label">検索条件5</span>
-                                    <select name="field5"><option>ISBN</option></select>
+                                    <select name="field5">
+                                        <option>ISBN</option>
+                                        <option>個別資料ID</option>
+                                    </select>
                                     <input type="text" name="query5" class="search-query-input">
-                                    <select name="match5"><option>この言葉と一致する</option></select>
                                 </div>
                             </div>
                         </fieldset>
@@ -86,16 +142,31 @@
                         
                         <fieldset>
                             <legend>検索結果一覧表示</legend>
-                             <div class="form-group">
-                                <label>表示数 <select name="limit"><option>10件</option><option>20件</option></select></label>
-                                <label style="margin-left: 20px;">ソート順 <select name="sort"><option>出版年逆順</option></select></label>
+                            <div class="form-group">
+                                <label>表示数 <select name="limit">
+                                        <option>10件</option>
+                                        <option>20件</option>
+                                        <option>50件</option>
+                                        <option>100件</option>
+                                    </select></label>
+                                <label style="margin-left: 20px;">ソート順 <select name="sort">
+                                        <option>書名順(あ→ん)</option>
+                                        <option>書名逆順(ん→あ)</option>
+                                        <option>著者名順(あ→ん)</option>
+                                        <option>著者名逆順(ん→あ)</option>
+                                        <option>出版者名順(あ→ん)</option>
+                                        <option>出版名逆順(ん→あ)</option>
+                                        <option>出版年順</option>
+                                        <option>出版年逆順</option>
+                                        <option>分類順</option>
+                                        <option>分類逆順</option>
+                                    </select></label>
                             </div>
                         </fieldset>
 
                         <div class="search-actions">
                             <button type="submit" class="btn btn-primary">検索</button>
                             <button type="reset" class="btn btn-secondary">クリア</button>
-                            <button type="button" class="btn-link-style">清音化する</button>
                         </div>
                     </form>
                 </div>
