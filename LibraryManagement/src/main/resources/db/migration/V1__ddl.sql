@@ -1,3 +1,20 @@
+---- データベースの作成
+--CREATE DATABASE library_management
+--  CHARACTER SET utf8mb4
+--  COLLATE utf8mb4_general_ci;
+--
+---- アプリ用ユーザーの作成
+--CREATE USER 'libuser'@'localhost'
+--  IDENTIFIED BY 'StrongPassword!';
+--
+---- 作成したユーザーに権限付与
+--GRANT ALL
+--  ON library_management.*
+--  TO 'libuser'@'localhost';
+--
+--FLUSH PRIVILEGES;
+
+
 -- ===================================================================
 -- 1. ジャンルテーブル (category)
 -- ===================================================================
