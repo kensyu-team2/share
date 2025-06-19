@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>資料登録</title>
     <link rel="stylesheet" href="../../static/css/style.css">
 </head>
-<body>
 
+<body>
     <div class="container">
         <header class="header-sub-menu header-material">
             <a href="book_mgmt_menu.html" class="header-back-link">資料管理メニュー</a>
             <h1 class="header-title">資料登録</h1>
         </header>
-
         <main>
             <form action="/books/register/confirm" method="post" class="registration-form">
-                
                 <div class="form-columns">
                     <div class="column">
                         <div class="form-group">
@@ -56,32 +55,42 @@
                         <div class="form-group">
                             <label for="genre">ジャンル</label>
                             <select id="genre" name="genreId" class="input-field">
-                                <option value="">選択してください</option>
-                                <option value="1">小説・エッセイ</option>
-                                <option value="2">ビジネス・経済</option>
-                                <option value="3">コンピュータ・IT</option>
+                                <option value="novel,essay">小説・エッセイ</option>
+                                <option value="business,economy">ビジネス・経済</option>
+                                <option value="computer,コンピュータ・IT">コンピュータ・IT</option>
+                                <option value="philosophy,ideology,history">哲学・思想・歴史</option>
+                                <option value="art,desigh">芸術・デザイン</option>
+                                <option value="language,study">語学・学習参考書</option>
+                                <option value="hobby,practical use">趣味・実用</option>
+                                <option value="cooking,living">料理・暮らし</option>
+                                <option value="traveling,guide">旅行、ガイドブック</option>
+                                <option value="picture,children's book ">絵本・児童書</option>
+                                <option value="novel,essay">コミック</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="type">資料区分</label>
                             <select id="type" name="typeId" class="input-field">
-                                <option value="">選択してください</option>
-                                <option value="1">一般書（単行本）</option>
-                                <option value="2">文庫本</option>
-                                <option value="3">雑誌</option>
+                                <option value="general">一般書(単行本)</option>
+                                <option value="paperback book">文庫本</option>
+                                <option value="new book">新書</option>
+                                <option value="big">大型本</option>
+                                <option value="magazine">雑誌</option>
+                                <option value="newspaper">新聞</option>
+                                <option value="CD">CD</option>
+                                <option value="DVD/Blu-ray">DVD/Blu-ray</option>
+                                <option value="comic">コミック</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                
                 <div class="form-actions">
                     <button type="submit" class="submit-button">登録</button>
                     <a href="book_mgmt_menu.html" class="back-link">戻る</a>
                 </div>
-
             </form>
         </main>
     </div>
-
 </body>
+
 </html>
