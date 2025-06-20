@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import app.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,8 +43,8 @@ public class MemberForm {
         Member m = new Member();
         m.setId(this.id);
         m.setName(name);
-        m.setKana(kana);
-        m.setTel(tel);
+//        m.setKana(kana);
+//        m.setTel(tel);
         m.setAddress(address);
         m.setEmail(email);
         return m;
@@ -54,8 +55,8 @@ public class MemberForm {
         MemberForm f = new MemberForm();
         f.setId(m.getId());
         f.setName(m.getName());
-        f.setKana(m.getKana());
-        f.setTel(m.getTel());
+//        f.setKana(m.getKana());
+//        f.setTel(m.getTel());
         f.setAddress(m.getAddress());
         f.setEmail(m.getEmail());
         f.setVerified(true);

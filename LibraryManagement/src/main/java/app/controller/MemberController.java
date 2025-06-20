@@ -36,7 +36,7 @@ public class MemberController {
     }
 
     // 会員登録処理
-    @PostMapping("/register")
+    @PostMapping("/member_registation")
     public String registerMember(@ModelAttribute Member member) {
         memberService.save(member);
         return "redirect:/member";
