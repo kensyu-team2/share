@@ -1,27 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="jp">
-
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>資料登録確認</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>資料登録確認</h1>
-    <p>書籍名:<span th:text="$bookname"></span></p>
-    <p>書籍名フリガナ:<span th:text="$bookrubi"></span></p>
-    <p>入荷年月日:<span th:text="$arrivaldate"></span></p>
-    <p>出版社:<span th:text="$publish"></span></p>
-    <p>著者名:<span th:text="$author"></span></p>
-    <p>著者名フリガナ:<span th:text="$authorrubi"></span></p>
-    <p>出版年月日:<span th:text="$publishdate"></span></p>
-    <p>資料ジャンル:<span th:text="$genere"></span></p>
-    <p>ISBN:<span th:text="$ISBN"></span></p>
-    <p>資料区分:<span th:text="$type"></span></p>
+<div class="container">
+    <header class="header-sub-menu header-material">
+        <h1 class="header-title">資料登録確認</h1>
+    </header>
+    <main>
+        <p>以下の内容で登録しますか？</p>
 
-    <p>上記の内容で登録しますか？</p>
-    <a href="book_registation.html">戻る</a>
-    <button name="登録">登録</button>
+        <div th:object="${bookForm}">
+            <h3>登録内容</h3>
+            <ul>
+                <li>ISBN: <span th:text="*{isbn}">978-4-xxxx-xxxx-x</span></li>
+                <li>書籍名: <span th:text="*{bookName}">書籍名が入ります</span></li>
+                <li>著者名: <span th:text="*{authorName}">著者名が入ります</span></li>
+                <li>出版年月日: <span th:text="*{publishDate}">2025-06-20</span></li>
+                <li>カテゴリID: <span th:text="*{categoryId}">1</span></li>
+                <li>タイプID: <span th:text="*{typeId}">1</span></li>
+            </ul>
+        </div>
+
+        <form th:action="@{/book/execute}" th:object="${bookForm}" method="post">
+
+            <input type="hidden" th:field="*{isbn}">
+            <input type="hidden" th:field="*{bookName}">
+            <input type="hidden" th:field="*{authorName}">
+            <input type="hidden" th:field="*{publishDate}">
+            <input type="hidden" th:field="*{categoryId}">
+            <input type="hidden" th:field="*{typeId}">
+            <div class="form-actions mt-4">
+                <a href="javascript:history.back()" class="btn btn-secondary">戻る</a>
+                <button type="submit" class="btn btn-primary">登録実行</button>
+            </div>
+        </form>
+    </main>
+</div>
 </body>
 </html>

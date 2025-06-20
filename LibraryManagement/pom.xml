@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>jp.co.systempack</groupId>
-	<artifactId>item</artifactId>
+	<artifactId>LibraryManagement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>itemManagement</name>
 	<description>item management application</description>

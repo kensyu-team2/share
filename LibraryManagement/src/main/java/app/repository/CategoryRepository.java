@@ -1,5 +1,11 @@
-//package repository;
-//
-//import org.springframework.data.jpa.repository.JpaRepository;
-//
-//public interface CategoryRepository extends JpaRepository<Book,Long> { }
+// src/main/java/app/repository/CategoryRepository.java
+package app.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import app.entity.Category;
+
+@Repository
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+}

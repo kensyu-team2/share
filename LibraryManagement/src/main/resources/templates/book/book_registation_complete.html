@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="jp">
-
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>資料登録完了</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>資料登録完了</h1>
-    <p>書籍名:<span th:text="$bookname"></span></p>
-    <p>書籍名フリガナ:<span th:text="$bookrubi"></span></p>
-    <p>入荷年月日:<span th:text="$arrivaldate"></span></p>
-    <p>出版社:<span th:text="$publish"></span></p>
-    <p>著者名:<span th:text="$author"></span></p>
-    <p>著者名フリガナ:<span th:text="$authorrubi"></span></p>
-    <p>出版年月日:<span th:text="$publishdate"></span></p>
-    <p>資料ジャンル:<span th:text="$genere"></span></p>
-    <p>ISBN:<span th:text="$ISBN"></span></p>
-    <p>資料区分:<span th:text="$type"></span></p>
+<div class="container">
+    <header class="header-sub-menu header-material">
+        <h1 class="header-title">資料登録完了</h1>
+    </header>
+    <main>
+        <div class="alert alert-success">
+            <p>資料の登録が完了しました。</p>
+        </div>
 
-    <p>上記の内容で登録しました</p>
-    <a href="book_registation.html">確認</a>
-    
+        <div class="mt-4">
+            <a th:href="@{/book/register}" class="btn btn-primary">続けて資料を登録する</a>
+            <a th:href="@{/book/menu}" class="btn btn-secondary">資料管理メニューに戻る</a>
+        </div>
+    </main>
+</div>
 </body>
 </html>
