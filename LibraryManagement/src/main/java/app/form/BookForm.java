@@ -45,6 +45,10 @@ public class BookForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate publishDate;
 
+    @NotNull(message = "入荷年月日を入力してください。")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate arrivalDate;
+
     @NotNull(message = "ジャンルを選択してください。")
     private Integer categoryId;
 

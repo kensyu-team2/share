@@ -68,6 +68,7 @@ public class BookController {
             bookForm.setBookRuby("リーダブルコード");
             bookForm.setAuthorName("Dustin Boswell");
             bookForm.setAuthorRuby("ダスティン ボズウェル");
+            bookForm.setArrivalDate(LocalDate.of(2025, 6, 22));
             bookForm.setPublisher("test社");
             bookForm.setPublishDate(LocalDate.of(2012, 6, 22));
             bookForm.setCategoryId(3); // 'コンピュータ・IT'

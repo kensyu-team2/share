@@ -53,11 +53,11 @@
 					<div class="column">
 						<div class="form-group">
 							<label for="arrival-date">入荷年月日</label> <input type="date"
-								id="arrival-date" name="arrivalDate" class="input-field">
+								id="arrival-date" name="*{arrivalDate}" class="input-field">
 						</div>
 						<div class="form-group">
 							<label for="publisher">出版社</label> <input type="text"
-								id="publisher" name="publisher" class="input-field">
+								th:field="*{publisher}" class="input-field">
 						</div>
 						<div class="form-group">
 							<label for="publish-date">出版年月日</label> <input type="date"
