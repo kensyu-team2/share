@@ -32,7 +32,14 @@ public class BookController {
 
     @Autowired
     private TypeRepository typeRepository;
-
+    /**
+     * 資料管理メニューを表示
+     * (GET /book/menu)
+     */
+    @GetMapping("/menu")
+    public String showMenu() {
+        return "book/book_mgmt_menu";
+    }
     /**
      * プルダウン用のマスタデータをModelに追加する共通メソッド
      */
@@ -47,7 +54,7 @@ public class BookController {
      * 資料登録フォーム画面を表示
      * (GET /book/register)
      */
-    @GetMapping("register")
+    @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         if (!model.containsAttribute("bookForm")) {
             model.addAttribute("bookForm", new BookForm());
