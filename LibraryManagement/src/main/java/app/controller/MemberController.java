@@ -1,7 +1,5 @@
 package app.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +21,12 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    // 会員一覧表示
-    @GetMapping
-    public String listMembers(Model model) {
-        List<Member> members = memberService.findAll();
-        model.addAttribute("members", members);
-        return "member/list";  // src/main/resources/templates/member/list.html
+ // 会員一覧
+    @GetMapping("/member_list")
+    public String showMemberList() {
+        return "member/member_list"; // このファイルを返す
     }
+
 
     // 会員登録画面表示
     @GetMapping("/member_registation")
