@@ -1,7 +1,8 @@
-//package controller;
+//package app.controller;
 //
 //import javax.validation.Valid;
 //
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 //import org.springframework.validation.BindingResult;
@@ -9,43 +10,45 @@
 //import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.SessionAttributes;
+//import org.springframework.web.bind.support.SessionStatus;
 //
-//import form.ReturnForm;
-//import service.ReturnService;
+//import app.form.ReturnForm;
+//import app.service.ReturnService;
 //
+///**
+// * 返却
+// *   ReturnConfirm, ReturnComplete
+// */
 //@Controller
 //@RequestMapping("/returns")
+//@SessionAttributes("returnForm")
 //public class ReturnController {
 //
-//    private final ReturnService service;
+//    private final ReturnService svc;
 //
-//    public ReturnController(ReturnService service) {
-//        this.service = service;
+//    @Autowired
+//    public ReturnController(ReturnService svc) {
+//        this.svc = svc;
 //    }
 //
-//    /** 返却フォーム表示 */
-//    @GetMapping("/new")
-//    public String newForm(Model m) {
-//        m.addAttribute("returnForm", new ReturnForm());
-//        m.addAttribute("lendings", service.findCurrentlyLent());
-//        return "return/form";
+//    @GetMapping("/confirm")
+//    public String showConfirm(@RequestParam Long loanId, Model m) {
+//        m.addAttribute("returnForm", new ReturnForm(loanId));
+//        return "return/confirm";
 //    }
 //
-//    /** 返却処理 */
-//    @PostMapping
-//    public String create(@Valid @ModelAttribute ReturnForm form, BindingResult br, Model m) {
-//        if (br.hasErrors()) {
-//            m.addAttribute("lendings", service.findCurrentlyLent());
-//            return "return/form";
-//        }
-//        service.returnItem(form);
-//        return "redirect:/returns/history";
-//    }
-//
-//    /** 返却履歴 */
-//    @GetMapping("/history")
-//    public String history(Model m) {
-//        m.addAttribute("records", service.findAllReturns());
-//        return "return/history";
+//    @PostMapping("/complete")
+//    public String complete(
+//            @Valid @ModelAttribute("returnForm") ReturnForm form,
+//            BindingResult res,
+//            SessionStatus st,
+//            Model m) {
+//        if (res.hasErrors()) return "return/confirm";
+//        Return r = svc.returnBook(form.getLoanId(), form.getReturnDate());
+//        st.setComplete();
+//        m.addAttribute("returned", r);
+//        return "return/complete";
 //    }
 //}

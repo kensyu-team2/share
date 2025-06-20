@@ -1,27 +1,22 @@
-package app.form;
+package com.example.library.web.form;
 
+import com.example.library.service.dto.MemberSearchCriteria;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class MemberSearchForm {
-    /** 会員名（あいまい検索） */
     private String name;
+    private String kana;
+    private Boolean active; // 在籍中／退会済み
 
-    /** 電話番号（あいまい or 完全一致） */
-    private String phone;
-
-    // 期間検索が必要なら以下を追加
-    // private LocalDate registeredFrom;
-    // private LocalDate registeredTo;
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-    public void setPhone(String phone) {
-        this.phone = phone;
+    /** Form → 検索条件 DTO 変換 */
+    public MemberSearchCriteria toCriteria() {
+        MemberSearchCriteria c = new MemberSearchCriteria();
+        c.setName(name);
+        c.setKana(kana);
+        c.setActive(active);
+        return c;
     }
 }

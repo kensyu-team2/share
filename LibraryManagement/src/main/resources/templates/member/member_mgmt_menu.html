@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>会員管理メニュー</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+  <div class="container menu-container">
+    <header class="header-sub-menu header-member">
+      <a th:href="@{/}" class="header-back-link">メインメニュー</a>
+      <h1 class="header-title">会員管理</h1>
+    </header>
+
+    <main class="menu-container">
+      <div class="menu-row">
+        <a th:href="@{/member/register}" class="menu-item menu-item-member">
+          <span class="menu-item-text">会員登録</span>
+        </a>
+        <a th:href="@{/member}" class="menu-item menu-item-member">
+          <span class="menu-item-text">会員一覧</span>
+        </a>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>
