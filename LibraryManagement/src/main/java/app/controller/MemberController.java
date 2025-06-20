@@ -1,6 +1,5 @@
 package app.controller;
 
-import java.lang.reflect.Member;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import app.entity.Member;
 import app.service.MemberService;
 
 @Controller
@@ -32,10 +32,10 @@ public class MemberController {
     }
 
     // 会員登録画面表示
-    @GetMapping("/register")
+    @GetMapping("/member_registation")
     public String showRegistrationForm(Model model) {
         model.addAttribute("member", new Member());
-        return "member/register"; // 会員登録フォーム
+        return "member/member_registation"; // 会員登録フォーム
     }
 
     // 会員登録処理
