@@ -19,7 +19,10 @@
             <ul>
                 <li>ISBN: <span th:text="*{isbn}">978-4-xxxx-xxxx-x</span></li>
                 <li>書籍名: <span th:text="*{bookName}">書籍名が入ります</span></li>
+                <li>書籍名フリガナ: <span th:text="*{bookRuby}">しょせきめいふりがな</span></li>
                 <li>著者名: <span th:text="*{authorName}">著者名が入ります</span></li>
+                <li>著者名フリガナ: <span th:text="*{authorRuby}">ちょしゃめいふりがな</span></li>
+                <li>出版社: <span th:text="*{publisher}">出版社が入ります</span></li>
                 <li>出版年月日: <span th:text="*{publishDate}">2025-06-20</span></li>
                 <li>カテゴリID: <span th:text="*{categoryId}">1</span></li>
                 <li>タイプID: <span th:text="*{typeId}">1</span></li>
@@ -27,13 +30,16 @@
         </div>
 
         <form th:action="@{/book/execute}" th:object="${bookForm}" method="post">
-
             <input type="hidden" th:field="*{isbn}">
             <input type="hidden" th:field="*{bookName}">
             <input type="hidden" th:field="*{authorName}">
             <input type="hidden" th:field="*{publishDate}">
             <input type="hidden" th:field="*{categoryId}">
             <input type="hidden" th:field="*{typeId}">
+
+            <input type="hidden" th:field="*{bookRuby}">
+            <input type="hidden" th:field="*{authorRuby}">
+            <input type="hidden" th:field="*{publisher}">
             <div class="form-actions mt-4">
                 <a href="javascript:history.back()" class="btn btn-secondary">戻る</a>
                 <button type="submit" class="btn btn-primary">登録実行</button>

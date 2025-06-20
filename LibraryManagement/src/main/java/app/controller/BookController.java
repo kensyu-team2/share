@@ -1,5 +1,6 @@
 package app.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,26 @@ public class BookController {
      */
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
+        // RedirectAttributesで渡されたエラーのあるフォームデータがなければ、
+        // テスト用の初期データを入れたフォームを生成する
         if (!model.containsAttribute("bookForm")) {
-            model.addAttribute("bookForm", new BookForm());
+            BookForm bookForm = new BookForm(); // まずはオブジェクトを作成
+
+         // --- ここからテスト用の初期データをセット（修正版） ---
+            bookForm.setIsbn("978-4-87311-565-8");
+            bookForm.setBookName("リーダブルコード");
+            bookForm.setBookRuby("リーダブルコード");
+            bookForm.setAuthorName("Dustin Boswell");
+            bookForm.setAuthorRuby("ダスティン ボズウェル");
+            bookForm.setPublisher("test社");
+            bookForm.setPublishDate(LocalDate.of(2012, 6, 22));
+            bookForm.setCategoryId(3); // 'コンピュータ・IT'
+            bookForm.setTypeId(1);     // '一般書（単行本）'
+            // --- ここまで ---
+
+            model.addAttribute("bookForm", bookForm); // データをセットしたオブジェクトをModelに追加
         }
+
         addMasterDataToModel(model);
         return "book/book_registration_input";
     }
