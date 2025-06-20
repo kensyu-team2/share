@@ -6,9 +6,9 @@ import java.time.LocalDate;
 // import文を jakarta から javax に修正
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue; // ← import文を追加
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -19,6 +19,7 @@ import lombok.Data;
 public class Book {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
     private Integer bookId;
 
@@ -43,11 +44,5 @@ public class Book {
     @Column(name = "publish_date", nullable = false)
     private LocalDate publishDate;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id", nullable = false)
-    private Type type;
 }

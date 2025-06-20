@@ -1,10 +1,11 @@
-// src/main/java/com/example/library/entity/Item.java
 package app.entity;
 
 import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,6 +19,7 @@ import lombok.Data;
 public class Item {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
     private Integer itemId;
 
@@ -41,4 +43,12 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
     private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "type_id", nullable = false)
+    private Type type;
 }
