@@ -13,7 +13,7 @@ public class HomeController {
     }
 
     /** 会員管理メニュー表示 */
-    @GetMapping("/member/member")
+    @GetMapping("/member/member_mgmt_menu")
     public String showMemberMenu() {
         return "member/member_mgmt_menu";  // templates/member/member_mgmt_menu.html
     }

@@ -1,5 +1,7 @@
 package app.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,21 +21,33 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "member_id")
+    private Long memberId;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    @Column(name = "name_ruby", nullable = false, length = 40)
+    private String nameRuby;
 
-    @Column(length = 15)
-    private String phone;
-
-    @Column(length = 200)
+    @Column(nullable = false, length = 40)
     private String address;
 
-    // 他に必要な会員情報のフィールドを追加
+    @Column(name = "phone_number", nullable = false, length = 20)
+    private String phone;
+
+    @Column(name = "mail", nullable = false, unique = true, length = 40)
+    private String email;
+
+    @Column(name = "birthday", nullable = false)
+    private LocalDate birthday;
+
+    @Column(name = "registration_date", nullable = false)
+    private LocalDate registrationDate;
+
+    @Column(name = "retire_date")
+    private LocalDate retireDate;
 }

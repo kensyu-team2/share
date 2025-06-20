@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>会員登録</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
@@ -22,9 +23,9 @@
         </label>
         <br/>
 
-        <label for="nameKana">
+        <label for="nameRuby">
             氏名フリガナ
-            <input type="text" th:field="*{nameKana}" id="nameKana" />
+            <input type="text" th:field="*{nameRuby}" id="nameRuby" />
         </label>
         <br/>
 
@@ -40,9 +41,9 @@
         </label>
         <br/>
 
-        <label for="telNumber">
+        <label for="phone">
             電話番号
-            <input type="text" th:field="*{telNumber}" id="telNumber" />
+            <input type="text" th:field="*{phone}" id="phone" />
         </label>
         <br/>
 
