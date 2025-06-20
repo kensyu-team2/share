@@ -9,6 +9,12 @@ public class HomeController {
     /** トップメニュー */
     @GetMapping("/")
     public String home() {
-        return "main_manu";   // src/main/resources/templates/home.html
+        return "main_manu";   // templates/main_manu.html を返す
+    }
+
+    /** 会員管理メニュー表示 */
+    @GetMapping("/member/member")
+    public String showMemberMenu() {
+        return "member/member_mgmt_menu";  // templates/member/member_mgmt_menu.html
     }
 }
