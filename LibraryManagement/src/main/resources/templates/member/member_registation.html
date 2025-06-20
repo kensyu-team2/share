@@ -1,37 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>会員登録</title>
 </head>
 <body>
-    
+
     <div class="nav">
-        <a class="home" href="../main_manu.html">ホーム</a> 
+        <a th:href="@{/}" class="home">ホーム</a>
     </div>
 
     <h1>会員登録</h1>
 
-    <form action="member_registation_confirm.html" method="post">
-        <label for="membername">
-        氏名<input type="text" name="氏名"></label>
-        <label for="membernamerubi">
-        氏名フリガナ<input type="text" name="氏名フリガナ"></label></br>
+    <!-- Memberオブジェクトをフォームにバインド -->
+    <form th:action="@{/member/member_registation}" th:object="${member}" method="post">
+
+        <label for="name">
+            氏名
+            <input type="text" th:field="*{name}" id="name" />
+        </label>
+        <br/>
+
+        <label for="nameKana">
+            氏名フリガナ
+            <input type="text" th:field="*{nameKana}" id="nameKana" />
+        </label>
+        <br/>
+
         <label for="birthday">
-        生年月日<input type="text" name="生年月日"></label>
-        <label for="adress">
-        住所<input type="text" name="住所"></label><br>
-        <label for="telnumber">
-        電話番号<input type="text" name="電話番号"></label>
-        <label for="mail">
-        メールアドレス<input type="date" name="メールアドレス"></label><br>
+            生年月日
+            <input type="date" th:field="*{birthday}" id="birthday" />
+        </label>
+        <br/>
 
-        
-        <a class="registation" href="member_registation_confirm.html">登録</a>
-    </form>   
+        <label for="address">
+            住所
+            <input type="text" th:field="*{address}" id="address" />
+        </label>
+        <br/>
 
-    <a class="back" href="member_mgmt_memu.html">戻る</a>
-    
+        <label for="telNumber">
+            電話番号
+            <input type="text" th:field="*{telNumber}" id="telNumber" />
+        </label>
+        <br/>
+
+        <label for="email">
+            メールアドレス
+            <input type="email" th:field="*{email}" id="email" />
+        </label>
+        <br/>
+
+        <button type="submit">登録</button>
+    </form>
+
+    <a th:href="@{/member/member_mgmt_menu}" class="back">戻る</a>
+
 </body>
 </html>

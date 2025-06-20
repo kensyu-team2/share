@@ -1,66 +1,54 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>会員一覧</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-    <div class="container container-wide">
-        <header class="header-sub-menu header-member">
-            <a href="../main_manu.html" class="header-back-link">メインメニュー</a>
-            <h1 class="header-title">会員一覧</h1>
-        </header>
+<div class="container container-wide">
+    <header class="header-sub-menu header-member">
+        <a th:href="@{/}" class="header-back-link">メインメニュー</a>
+        <h1 class="header-title">会員一覧</h1>
+    </header>
 
-        <main class="page-content">
-            <form action="/members/search" method="get" class="search-form">
-                <input type="search" name="keyword" class="search-input" placeholder="氏名、IDなどで検索...">
-                <button type="submit" class="search-button">検索</button>
-            </form>
+    <main class="page-content">
+        <form action="/member/search" method="get" class="search-form">
+            <input type="search" name="keyword" class="search-input" placeholder="氏名、IDなどで検索...">
+            <button type="submit" class="search-button">検索</button>
+        </form>
 
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>会員ID</th>
-                        <th>氏名</th>
-                        <th>住所</th>
-                        <th>電話番号</th>
-                        <th>メール</th>
-                        <th>生年月日</th>
-                        <th>登録日</th>
-                        <th>退会日</th>
-                        <th>変更</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>001</td>
-                        <td>山田 太郎</td>
-                        <td>北海道札幌市中央区1-2-3</td>
-                        <td>090-1234-5678</td>
-                        <td>taro.yamada@example.jp</td>
-                        <td>1985-07-15</td>
-                        <td>2024-01-05</td>
-                        <td>-</td>
-                        <td><a href="change_member_information.html" class="btn-table-edit">変更</a></td>
-                    </tr>
-                    <tr>
-                        <td>002</td>
-                        <td>佐藤 花子</td>
-                        <td>北海道札幌市博多区4-5-6</td>
-                        <td>080-9876-5432</td>
-                        <td>hanako.sato@example.jp</td>
-                        <td>1990-03-22</td>
-                        <td>2024-03-18</td>
-                        <td>-</td>
-                        <td><a href="change_member_information.html" class="btn-table-edit">変更</a></td>
-                    </tr>
-                    </tbody>
-            </table>
-        </main>
-    </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>会員ID</th>
+                    <th>氏名</th>
+                    <th>住所</th>
+                    <th>電話番号</th>
+                    <th>メール</th>
+                    <th>生年月日</th>
+                    <th>登録日</th>
+                    <th>退会日</th>
+                    <th>変更</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="member : ${members}">
+                    <td th:text="${member.id}">001</td>
+                    <td th:text="${member.name}">山田 太郎</td>
+                    <td th:text="${member.address}">北海道札幌市中央区1-2-3</td>
+                    <td th:text="${member.phone}">090-1234-5678</td>
+                    <td th:text="${member.email}">taro.yamada@example.jp</td>
+                    <td th:text="${member.birthDate}">1985-07-15</td>
+                    <td th:text="${member.registDate}">2024-01-05</td>
+                    <td th:text="${member.retireDate}">-</td>
+                    <td><a th:href="@{'/member/edit/' + ${member.id}}" class="btn-table-edit">変更</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
 
 </body>
 </html>

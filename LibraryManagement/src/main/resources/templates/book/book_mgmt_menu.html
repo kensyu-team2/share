@@ -1,36 +1,35 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資料管理メニュー</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資料管理メニュー</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 
-    <div class="container menu-container">
-        <header class="header-sub-menu header-material">
-            <a th:href="@{/}" class="header-back-link">メインメニュー</a>
-            <h1 class="header-title">資料管理</h1>
-        </header>
+	<div class="container menu-container">
+		<header class="header-sub-menu header-material">
+			<!-- SpringのController経由でメインメニューに戻る -->
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">資料管理</h1>
+		</header>
 
-        <main class="menu-container">
-            <div class="menu-row">
-                <a th:href="@{/book/register}" class="menu-item menu-item-material">
-                    <span class="menu-item-text">資料登録</span>
-                </a>
-                <a th:href="@{/book/search}" class="menu-item menu-item-material">
-                    <div>
-                        <span class="menu-item-text">検索</span>
-                        <span class="menu-item-subtext">検索/変更/削除</span>
-                    </div>
-                </a>
-                <a th:href="@{/book/history}" class="menu-item menu-item-material">
-                    <span class="menu-item-text">履歴</span>
-                </a>
-            </div>
-        </main>
-    </div>
+		<main class="menu-container">
+			<div class="menu-row">
+				<a th:href="@{/book/register}" class="menu-item menu-item-material">
+					<span class="menu-item-text">資料登録</span>
+				</a> <a th:href="@{/book/search}" class="menu-item menu-item-material">
+					<div>
+						<span class="menu-item-text">検索</span> <span
+							class="menu-item-subtext">検索/変更/削除</span>
+					</div>
+				</a> <a th:href="@{/book/history}" class="menu-item menu-item-material">
+					<span class="menu-item-text">履歴</span>
+				</a>
+			</div>
+		</main>
+	</div>
 
 </body>
 </html>
