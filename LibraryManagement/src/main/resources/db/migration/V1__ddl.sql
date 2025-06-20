@@ -16,6 +16,21 @@
 
 
 -- ===================================================================
+-- テーブルの削除（外部キー制約を考慮し、依存しているテーブルから先に削除）
+-- ===================================================================
+DROP TABLE IF EXISTS lending;
+DROP TABLE IF EXISTS reservation;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS staff;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS place;
+DROP TABLE IF EXISTS type;
+DROP TABLE IF EXISTS category;
+
+
+-- ===================================================================
 -- 1. ジャンルテーブル (category)
 -- ===================================================================
 CREATE TABLE category (
@@ -112,15 +127,15 @@ CREATE TABLE items (
 
 
 -- ===================================================================
--- 8. 予約テーブル (reservation)
+-- 8. 予約テーブル (reservation) ★★★修正箇所★★★
 -- ===================================================================
 CREATE TABLE reservation (
   reserve_id   INT    NOT NULL AUTO_INCREMENT COMMENT '予約ID',
-  item_id      INT    NOT NULL                COMMENT '個別資料ID',
+  book_id      INT    NOT NULL                COMMENT '書誌情報ID',
   member_id    INT    NOT NULL                COMMENT '会員ID',
   reserve_date DATE   NOT NULL                COMMENT '予約日',
   PRIMARY KEY (reserve_id),
-  FOREIGN KEY (item_id)   REFERENCES items   (item_id),
+  FOREIGN KEY (book_id)   REFERENCES books   (book_id),
   FOREIGN KEY (member_id) REFERENCES members (member_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='予約テーブル';
 
