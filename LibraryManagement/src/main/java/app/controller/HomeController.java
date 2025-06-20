@@ -17,4 +17,10 @@ public class HomeController {
     public String showMemberMenu() {
         return "member/member_mgmt_menu";  // templates/member/member_mgmt_menu.html
     }
+
+    /** 資料管理メニュー表示 */
+    @GetMapping("/book/book")
+    public String showBookrMenu() {
+        return "book/book_mgmt_menu";
+    }
 }
