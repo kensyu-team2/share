@@ -7,6 +7,5 @@ import app.entity.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    // メールで検索などのカスタムメソッドは必要に応じて追加
-    Member findByEmail(String email);
+    boolean existsByEmail(String email);  // メールの重複チェック用（任意）
 }
