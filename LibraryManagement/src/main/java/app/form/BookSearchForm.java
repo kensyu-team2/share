@@ -13,7 +13,8 @@ public class BookSearchForm {
 
     // 資料区分のIDを複数保持するリスト
     private List<Integer> typeIds;
-
+    // ジャンルIDを保持するリスト
+    private List<Integer> categoryIds;
     // 表示件数（デフォルト値を10に設定）
     private Integer limit = 10;
 

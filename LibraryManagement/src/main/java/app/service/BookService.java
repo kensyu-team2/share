@@ -5,22 +5,27 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification; // 追加
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import app.entity.Book;
 import app.entity.Category;
 import app.entity.Item;
+import app.entity.Member; // ← 正しいMemberクラス
 import app.entity.Place;
+import app.entity.Reservation;
 import app.entity.Status;
 import app.entity.Type;
 import app.form.BookForm;
-import app.form.BookSearchForm; // 追加
+import app.form.BookSearchForm;
+import app.form.ReservationForm;
 import app.repository.BookRepository;
 import app.repository.CategoryRepository;
 import app.repository.ItemRepository;
+import app.repository.MemberRepository;
 import app.repository.PlaceRepository;
+import app.repository.ReservationRepository;
 import app.repository.StatusRepository;
 import app.repository.TypeRepository;
 
@@ -28,140 +33,145 @@ import app.repository.TypeRepository;
 @Transactional
 public class BookService {
 
-	@Autowired
-	private BookRepository bookRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
-	@Autowired
-	private ItemRepository itemRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
-	@Autowired
-	private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-	@Autowired
-	private TypeRepository typeRepository;
+    @Autowired
+    private TypeRepository typeRepository;
 
-	// ItemでPlaceとStatusも使うため、リポジトリを追加
-	@Autowired
-	private PlaceRepository placeRepository;
+    @Autowired
+    private PlaceRepository placeRepository;
 
-	@Autowired
-	private StatusRepository statusRepository;
+    @Autowired
+    private StatusRepository statusRepository;
 
-	public void registerBook(BookForm bookForm) {
-		// ISBNの重複チェック
-		if (bookRepository.findByIsbn(bookForm.getIsbn()).isPresent()) {
-			throw new IllegalStateException("このISBNは既に登録されています。");
-		}
+    @Autowired
+    private MemberRepository memberRepository;
 
-		// --- Bookエンティティの作成と保存 ---
-		Book book = new Book();
-		book.setIsbn(bookForm.getIsbn());
-		book.setBookName(bookForm.getBookName());
-		book.setAuthorName(bookForm.getAuthorName());
-		book.setPublishDate(bookForm.getPublishDate());
-		book.setBookRuby(bookForm.getBookRuby());
-		book.setAuthorRuby(bookForm.getAuthorRuby());
-		book.setPublisher(bookForm.getPublisher());
-		// TODO: DTOに項目を追加し、rubyやpublisherなどもセットする
-		Book savedBook = bookRepository.save(book);
+    @Autowired
+    private ReservationRepository reservationRepository;
 
-		// --- Itemエンティティの作成と保存 ---
-		Item item = new Item();
-		item.setBook(savedBook);
-		item.setGetDate(LocalDate.now());
+    public Book registerBook(BookForm bookForm) {
+        if (bookRepository.findByIsbn(bookForm.getIsbn()).isPresent()) {
+            throw new IllegalStateException("このISBNは既に登録されています。");
+        }
 
-		// 各マスタテーブルからIDに対応するエンティティを取得してセット
-		Category category = categoryRepository.findById(bookForm.getCategoryId())
-				.orElseThrow(() -> new IllegalArgumentException("該当するカテゴリが存在しません。"));
-		Type type = typeRepository.findById(bookForm.getTypeId())
-				.orElseThrow(() -> new IllegalArgumentException("該当する資料区分が存在しません。"));
+        Book book = new Book();
+        book.setIsbn(bookForm.getIsbn());
+        book.setBookName(bookForm.getBookName());
+        book.setBookRuby(bookForm.getBookRuby());
+        book.setAuthorName(bookForm.getAuthorName());
+        book.setAuthorRuby(bookForm.getAuthorRuby());
+        book.setPublisher(bookForm.getPublisher());
+        book.setPublishDate(bookForm.getPublishDate());
 
-		// 仮でデフォルト値を設定（本来はフォームから受け取るか、別のロジックで決定）
-		Place place = placeRepository.findById("1F-A-1")
-				.orElseThrow(() -> new IllegalArgumentException("該当する配架場所が存在しません。"));
-		Status status = statusRepository.findById(1) // 1:在庫あり
-				.orElseThrow(() -> new IllegalArgumentException("該当するステータスが存在しません。"));
+        Book savedBook = bookRepository.save(book);
 
-		item.setCategory(category);
-		item.setType(type);
-		item.setPlace(place);
-		item.setStatus(status);
+        Item item = new Item();
+        item.setBook(savedBook);
+        item.setGetDate(bookForm.getArrivalDate());
 
-		itemRepository.save(item);
-	}
+        Category category = categoryRepository.findById(bookForm.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("該当するカテゴリが存在しません。"));
+        Type type = typeRepository.findById(bookForm.getTypeId())
+                .orElseThrow(() -> new IllegalArgumentException("該当する資料区分が存在しません。"));
+        Place place = placeRepository.findById("1F-A-1")
+                .orElseThrow(() -> new IllegalArgumentException("該当する配架場所が存在しません。"));
+        Status status = statusRepository.findById(1) // 1:在庫あり
+                .orElseThrow(() -> new IllegalArgumentException("該当するステータスが存在しません。"));
 
-	//search
-	// 引数に「Pageable pageable」を追加します。
-	public Page<Book> search(BookSearchForm form, Pageable pageable) {
-		Specification<Book> spec = buildSpecification(form);
-		return bookRepository.findAll(spec, pageable);
-	}
+        item.setCategory(category);
+        item.setType(type);
+        item.setPlace(place);
+        item.setStatus(status);
 
-	private Specification<Book> buildSpecification(BookSearchForm form) {
+        itemRepository.save(item);
 
-		Specification<Book> spec = Specification.where(null);
+        return savedBook; // 保存したBookオブジェクトを返す
+    }
 
-		// キーワード検索条件の組み立て
-		for (BookSearchForm.SearchCriterion criterion : form.getCriteria()) {
-			if (criterion.getField() != null && !criterion.getField().isEmpty() &&
-					criterion.getQuery() != null && !criterion.getQuery().isEmpty()) {
-				Specification<Book> nextSpec;
+    public Page<Book> search(BookSearchForm form, Pageable pageable) {
+        Specification<Book> spec = buildSpecification(form);
+        return bookRepository.findAll(spec, pageable);
+    }
 
-				// 個別資料ID(itemId)での検索は、JOINが必要なため特別扱い
-				if ("itemId".equals(criterion.getField())) {
-					nextSpec = (root, query, cb) -> {
-						try {
-							// 文字列を整数に変換して検索
-							Integer itemId = Integer.parseInt(criterion.getQuery());
-							return cb.equal(root.join("items").get("itemId"), itemId);
-						} catch (NumberFormatException e) {
-							// 数字でなければ条件に合致しないようにする
-							return cb.disjunction();
-						}
-					};
-				} else {
-					// それ以外の通常のフィールドでの検索
-					nextSpec = (root, query, cb) -> {
-						switch (criterion.getMatch()) {
-						case "startsWith":
-							return cb.like(root.get(criterion.getField()), criterion.getQuery() + "%");
-						case "endsWith":
-							return cb.like(root.get(criterion.getField()), "%" + criterion.getQuery());
-						case "equals":
-							return cb.equal(root.get(criterion.getField()), criterion.getQuery());
-						case "contains":
-						default:
-							return cb.like(root.get(criterion.getField()), "%" + criterion.getQuery() + "%");
-						}
-					};
-				}
-				// 演算子(op)に応じて、これまでの条件(spec)と結合する
-				if ("OR".equalsIgnoreCase(criterion.getOp())) {
-					spec = spec.or(nextSpec);
-				} else if ("NOT".equalsIgnoreCase(criterion.getOp())) {
-					// NOT条件の場合は、その条件を否定してANDで結合
-					spec = spec.and(Specification.not(nextSpec));
-				} else { // AND または 未指定の場合
-					spec = spec.and(nextSpec);
-				}
+    private Specification<Book> buildSpecification(BookSearchForm form) {
+        Specification<Book> spec = Specification.where(null);
 
-				if ("OR".equalsIgnoreCase(criterion.getOp())) {
-					spec = spec.or(nextSpec);
-				} else { // AND または 未指定の場合
-					spec = spec.and(nextSpec);
-				}
-			}
-		}
+        for (BookSearchForm.SearchCriterion criterion : form.getCriteria()) {
+            if (criterion.getField() != null && !criterion.getField().isEmpty() &&
+                criterion.getQuery() != null && !criterion.getQuery().isEmpty()) {
 
-		// 資料区分での絞り込み条件（変更なし）
-		if (form.getTypeIds() != null && !form.getTypeIds().isEmpty()) {
-			// ... (省略)
-		}
+                Specification<Book> nextSpec;
 
-		return spec;
-	}
-	public Book findById(Integer bookId) {
+                if ("itemId".equals(criterion.getField())) {
+                    nextSpec = (root, query, cb) -> {
+                        try {
+                            Integer itemId = Integer.parseInt(criterion.getQuery());
+                            return cb.equal(root.join("items").get("itemId"), itemId);
+                        } catch (NumberFormatException e) {
+                            return cb.disjunction();
+                        }
+                    };
+                } else {
+                    nextSpec = (root, query, cb) -> {
+                        switch (criterion.getMatch()) {
+                            case "startsWith":
+                                return cb.like(root.get(criterion.getField()), criterion.getQuery() + "%");
+                            case "endsWith":
+                                return cb.like(root.get(criterion.getField()), "%" + criterion.getQuery());
+                            case "equals":
+                                return cb.equal(root.get(criterion.getField()), criterion.getQuery());
+                            case "contains":
+                            default:
+                                return cb.like(root.get(criterion.getField()), "%" + criterion.getQuery() + "%");
+                        }
+                    };
+                }
+
+                if ("OR".equalsIgnoreCase(criterion.getOp())) {
+                    spec = spec.or(nextSpec);
+                } else if ("NOT".equalsIgnoreCase(criterion.getOp())) {
+                    spec = spec.and(Specification.not(nextSpec));
+                } else {
+                    spec = spec.and(nextSpec);
+                }
+            }
+        }
+
+        if (form.getTypeIds() != null && !form.getTypeIds().isEmpty()) {
+            spec = spec.and((root, query, cb) -> root.join("items").get("type").get("typeId").in(form.getTypeIds()));
+        }
+
+        if (form.getCategoryIds() != null && !form.getCategoryIds().isEmpty()) {
+            spec = spec.and((root, query, cb) -> root.join("items").get("category").get("categoryId").in(form.getCategoryIds()));
+        }
+
+        return spec;
+    }
+
+    public Book findById(Integer bookId) {
         return bookRepository.findById(bookId)
-            .orElseThrow(() -> new IllegalArgumentException("該当する書籍が見つかりません。"));
+                .orElseThrow(() -> new IllegalArgumentException("該当する書籍が見つかりません。"));
+    }
+
+    public Reservation createReservation(ReservationForm form) {
+        Book book = bookRepository.findById(form.getBookId())
+                .orElseThrow(() -> new IllegalArgumentException("該当する書籍が見つかりません。"));
+        Member member = memberRepository.findById(form.getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException("該当する会員が見つかりません。"));
+
+        Reservation reservation = new Reservation();
+        reservation.setBook(book);
+        reservation.setMember(member);
+        reservation.setReserveDate(LocalDate.now());
+
+        return reservationRepository.save(reservation);
     }
 }

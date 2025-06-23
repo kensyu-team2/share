@@ -291,7 +291,7 @@ public class BookController {
             @ModelAttribute("reservationForm") ReservationForm form,
             @ModelAttribute("member") Member member,
             Model model) {
-        
+
         // 予約対象の書籍情報を取得してモデルに追加
         Book book = bookService.findById(form.getBookId());
         model.addAttribute("book", book);
