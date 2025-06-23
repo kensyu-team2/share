@@ -24,5 +24,13 @@ public class ReservationService {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
+	public List<Reservation> findHoldReservations() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+	public List<Reservation> findAll() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }
 

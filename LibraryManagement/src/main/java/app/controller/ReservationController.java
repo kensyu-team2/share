@@ -21,11 +21,20 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/list")
-    public String showReservations(@RequestParam("memberId") Integer memberId, Model model) {
-        List<Reservation> reservations = reservationService.getReservationsByMemberId(memberId);
-        model.addAttribute("reservations", reservations);
-        return "reservation/list";  // Thymeleafなどのテンプレート名
+    @GetMapping("/work/reserve/list")
+    public String showReserveList(@RequestParam(value = "filter", required = false, defaultValue = "all") String filter,
+                                  Model model) {
+        List<Reservation> reservationList;
+
+        if ("hold".equals(filter)) {
+            reservationList = reservationService.findHoldReservations(); // 独自実装
+        } else {
+            reservationList = reservationService.findAll();
+        }
+
+        model.addAttribute("reservationList", reservationList);
+        return "work/reserve_list";
     }
+
 }
 
