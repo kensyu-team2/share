@@ -76,7 +76,7 @@ public class MemberController {
 
  // 予約一覧表示
     @GetMapping("/member_reservation_list/{memberId}")
-    public String showReservationList(@PathVariable Long memberId, Model model) {
+    public String showReservationList(@PathVariable Integer memberId, Model model) {
         List<Reservation> reservations = reservationService.findByMemberId(memberId);
         Member member = memberService.findById(memberId).orElse(null);
         model.addAttribute("reservations", reservations);

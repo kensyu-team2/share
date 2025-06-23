@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import app.entity.Member;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
-    boolean existsByEmail(String email);  // メールの重複チェック用（任意）
+//例: MemberRepository
+public interface MemberRepository extends JpaRepository<Member, Integer> {
+ // ここにfindByIdは定義しなくてOK
 }

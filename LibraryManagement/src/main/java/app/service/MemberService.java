@@ -21,8 +21,8 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Optional<Member> findById(Long id) {
-        return memberRepository.findById(id);
+    public Optional<Member> findById(Integer memberId) {
+        return memberRepository.findById(memberId);
     }
 
     public Member save(Member member) {

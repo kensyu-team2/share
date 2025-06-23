@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>遅延一覧</title>
 </head>
 <body>
-    
-    <a class="home" href="../main_manu.html">ホームに戻る</a>
+
+    <a class="home" th:href="@{/main/menu}">ホームに戻る</a>
 
     <h1>遅延一覧</h1>
 
@@ -32,11 +32,11 @@
             <td>本1</td>
             <td>著者1</td>
         </tbody>
-       
+
     </table>
 
-    <a class="back" href="work_menu.html">戻る</a>
+    <a class="back" th:href="@{/work/menu}">戻る</a>
 
-    
+
 </body>
 </html>

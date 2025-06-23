@@ -7,26 +7,26 @@ import javax.validation.constraints.NotNull;
 public class ReservationForm {
     /** 予約する会員 */
     @NotNull(message="会員を選択してください")
-    private Long memberId;
+    private Integer memberId;  // Long → Integer に変更
 
     /** 予約する書籍（書誌） */
     @NotNull(message="書籍を選択してください")
-    private Long bookId;
+    private Integer bookId;  // Long → Integer に変更
 
     /** 予約日（デフォルトで today をセットしておく） */
     private LocalDate reserveDate = LocalDate.now();
 
-    public Long getMemberId() {
+    public Integer getMemberId() {
         return memberId;
     }
-    public void setMemberId(Long memberId) {
+    public void setMemberId(Integer memberId) {
         this.memberId = memberId;
     }
 
-    public Long getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
-    public void setBookId(Long bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 

@@ -17,7 +17,7 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
     @EntityGraph(attributePaths = {"books"})
-    public List<Reservation> findByMemberId(Long memberId) {
+    public List<Reservation> findByMemberId(Integer memberId) {
         return reservationRepository.findByMember_MemberId(memberId);
     }
 }

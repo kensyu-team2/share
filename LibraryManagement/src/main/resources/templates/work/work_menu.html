@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>業務連絡メニュー</title>
+    <link rel="stylesheet" th:href="@{/css/1_base.css}">
+    <link rel="stylesheet" th:href="@{/css/2_layout.css}">
+    <link rel="stylesheet" th:href="@{/css/3_component.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/work.css}">
+
 </head>
 <body>
-    
-    <a class="home" href="../main_manu.html">ホームに戻る</a>
-    
+
+    <a class="home" th:href="@{/main/menu}">ホームに戻る</a>
+
     <h1>業務連絡</h1>
 
-    <a class="delay" href="delay_list.html">遅延</a>
-    <a class="reserve" href="reserve_list.html">予約</a>
-    
+    <a class="delay" th:href="@{/work/delay/list}">遅延</a>
+    <a class="reserve" th:href="@{/work/reserve/list}">予約</a>
+
 </body>
 </html>
