@@ -27,13 +27,13 @@ public class HomeController {
     /** 貸出メニュー表示 */
     @GetMapping("/lending/menu")
     public String showLendingMenu() {
-        return "lending/lending_menu"; // templates/lending/lending_menu.html
+        return "lending/lending_input"; // templates/lending/lending_menu.html
     }
 
     /** 返却メニュー表示 */
     @GetMapping("/return/menu")
     public String showReturnMenu() {
-        return "return/return_menu"; // templates/return/return_menu.html
+        return "return/return_input"; // templates/return/return_menu.html
     }
 
     /** 連絡業務メニュー表示 */
