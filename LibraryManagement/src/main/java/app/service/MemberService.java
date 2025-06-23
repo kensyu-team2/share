@@ -1,5 +1,6 @@
 package app.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,12 @@ public class MemberService {
     }
 
     public Member save(Member member) {
+        if (member.getRegistrationDate() == null) {
+            member.setRegistrationDate(LocalDate.now());
+        }
         return memberRepository.save(member);
     }
+
 
     public void deleteById(Integer id) {
         memberRepository.deleteById(id);
