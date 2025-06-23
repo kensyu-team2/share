@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>予約一覧</title>
+</head>
+<body>
+  <h2>予約一覧</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>予約ID</th>
+        <th>タイトル</th>
+        <th>著者</th>
+        <th>予約日</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="res : ${reservations}">
+        <td th:text="${res.reserveId}"></td>
+        <td th:text="${res.book.bookName}"></td>
+        <td th:text="${res.book.authorName}"></td>
+        <td th:text="${res.reserveDate}"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

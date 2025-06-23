@@ -1,5 +1,7 @@
 package app.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,16 +11,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import app.entity.Member;
+import app.entity.Reservation;
 import app.service.MemberService;
+import app.service.ReservationService;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
+    private final ReservationService reservationService;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, ReservationService reservationService) {
         this.memberService = memberService;
+        this.reservationService = reservationService;
     }
 
  // 会員一覧
@@ -53,7 +59,7 @@ public class MemberController {
     // 会員更新処理
     @PostMapping("/edit/{id}")
     public String updateMember(@PathVariable Long id, @ModelAttribute Member member) {
-        member.setId(id);
+        member.setMemberId(id);
         memberService.save(member);
         return "redirect:/member";
     }
@@ -63,5 +69,14 @@ public class MemberController {
     public String deleteMember(@PathVariable Long id) {
         memberService.deleteById(id);
         return "redirect:/member";
+    }
+
+ // 予約一覧表示（追加）
+    @GetMapping("/reservation_list/{memberId}")
+    public String showReservationList(@PathVariable Long memberId, Model model) {
+        List<Reservation> reservations = reservationService.findByMemberId(memberId);
+        model.addAttribute("reservations", reservations);
+        model.addAttribute("member", memberService.findById(memberId).orElse(null));
+        return "member/reservation_list";  // 予約一覧表示用のテンプレートを作成
     }
 }
