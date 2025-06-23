@@ -1,131 +1,51 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>検索結果</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
-    <div class="container search-results-container">
+    <div class="container container-wide">
+        <header class="header-sub-menu header-material">
+            <a th:href="@{/book/search}" class="header-back-link">検索画面へ戻る</a>
+            <h1 class="header-title">検索結果</h1>
+        </header>
         <main class="page-content">
-            <h1 class="page-title">検索結果</h1>
-
             <div class="search-panel">
-                <div class="panel-header">
-                    検索結果書誌一覧
-                </div>
+                <div class="panel-header">検索結果書誌一覧</div>
                 <div class="panel-body">
-                    
-                    <div class="results-summary">
-                        <p><strong>書名：</strong>愛</p>
-                        <p>該当件数は、43件です。1件目から10件目を表示しています。</p>
-                    </div>
-
-                    <form action="/books/results" method="get" class="filter-form">
-                        <fieldset>
-                            <legend>しぼり込み</legend>
-                            <div class="filter-controls">
-                                <select name="filter_field"><option>書名</option></select>
-                                <input type="text" name="filter_query" class="filter-input" placeholder="この言葉を含む">
-                                <label>在庫状況 <select name="stock_status"><option>全て表示</option></select></label>
-                                <label style="margin-left: auto;">表示件数 <select name="limit"><option>10件</option></select></label>
-                            </div>
-                        </fieldset>
-                    </form>
-                    <div class="table-wrapper">
+                    <p th:text="|該当件数は、${#lists.size(bookList)}件です。|"></p>
+                    <div th:if="${not #lists.isEmpty(bookList)}">
                         <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>書誌種別</th>
-                                <th>書名</th>
-                                <th>著者</th>
-                                <th>出版者</th>
-                                <th>出版年月</th>
-                                <th>分類</th>
-                                <th>貸出</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>CD</td>
-                                <td>わが母の教え給いし歌/ミレルラ・フレーニ</td>
-                                <td>ゲオルク・フリードリヒ・ヘンデル/作曲</td>
-                                <td>ポリドール株式会社</td>
-                                <td></td>
-                                <td>M17</td>
-                                <td>貸出可</td>
-                                <td>
-                                    <a href="#" class="btn-table-action btn-success">カート</a>
-                                    <a href="#" class="btn-table-action btn-success">予約</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>CD</td>
-                                <td>猪本隆 メモリアル・コンサート</td>
-                                <td>猪本隆/作曲</td>
-                                <td>コジマ録音</td>
-                                <td></td>
-                                <td>M38</td>
-                                <td>貸出可</td>
-                                <td>
-                                    <a href="#" class="btn-table-action btn-success">カート</a>
-                                    <a href="#" class="btn-table-action btn-success">予約</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>図書</td>
-                                <td>全著作<森繁久彌コレクション>4 愛</td>
-                                <td>森繁久彌/著</td>
-                                <td>藤原書店</td>
-                                <td>2020/05</td>
-                                <td>778.21</td>
-                                <td>貸出可</td>
-                                <td>
-                                    <a href="#" class="btn-table-action btn-success">カート</a>
-                                    <a href="#" class="btn-table-action btn-success">予約</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>図書</td>
-                                <td>愛</td>
-                                <td>苫野一徳/著</td>
-                                <td>講談社</td>
-                                <td>2019/08</td>
-                                <td>158</td>
-                                <td>貸出可</td>
-                                <td>
-                                    <a href="#" class="btn-table-action btn-success">カート</a>
-                                    <a href="#" class="btn-table-action btn-success">予約</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <thead>
+                                <tr>
+                                    <th>書籍名</th>
+                                    <th>著者名</th>
+                                    <th>出版社</th>
+                                    <th>出版年月日</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="book : ${bookList}">
+                                    <td th:text="${book.bookName}">リーダブルコード</td>
+                                    <td th:text="${book.authorName}">Dustin Boswell</td>
+                                    <td th:text="${book.publisher}">オライリー</td>
+                                    <td th:text="${book.publishDate}">2012-06-22</td>
+                                    <td>
+                                        <a href="#" class="btn-table-action btn-success">詳細</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <nav class="pagination">
-                        <ul>
-                            <li><span class="page-link active">1</span></li>
-                            <li><a href="#" class="page-link">2</a></li>
-                            <li><a href="#" class="page-link">3</a></li>
-                            <li><a href="#" class="page-link">次へ &gt;</a></li>
-                        </ul>
-                    </nav>
-
-                    <div class="results-footer">
-                        <a href="book_search.html" class="btn btn-secondary">戻る</a>
+                    <div th:if="${#lists.isEmpty(bookList)}">
+                        <p>該当する書籍は見つかりませんでした。</p>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-
 </body>
 </html>

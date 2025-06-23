@@ -1,8 +1,10 @@
 package app.service;
 
 import java.time.LocalDate;
+import java.util.List; // 追加
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification; // 追加
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,13 +15,13 @@ import app.entity.Place;
 import app.entity.Status;
 import app.entity.Type;
 import app.form.BookForm;
+import app.form.BookSearchForm; // 追加
 import app.repository.BookRepository;
 import app.repository.CategoryRepository;
 import app.repository.ItemRepository;
 import app.repository.PlaceRepository;
 import app.repository.StatusRepository;
 import app.repository.TypeRepository;
-
 @Service
 @Transactional
 public class BookService {
@@ -84,5 +86,41 @@ public class BookService {
         item.setStatus(status);
 
         itemRepository.save(item);
+    }
+
+    //search
+    public List<Book> search(BookSearchForm form) {
+        return bookRepository.findAll(Specification.where(buildSpecification(form)));
+    }
+
+    private Specification<Book> buildSpecification(BookSearchForm form) {
+
+        Specification<Book> spec = Specification.where(null);
+
+        // キーワード検索条件の組み立て
+        for (BookSearchForm.SearchCriterion criterion : form.getCriteria()) {
+            if (criterion.getQuery() != null && !criterion.getQuery().isEmpty()) {
+                Specification<Book> nextSpec = (root, query, cb) ->
+                    cb.like(root.get(criterion.getField()), "%" + criterion.getQuery() + "%");
+
+                if (criterion.getOp() == null || "AND".equalsIgnoreCase(criterion.getOp())) {
+                    spec = spec.and(nextSpec);
+                } else if ("OR".equalsIgnoreCase(criterion.getOp())) {
+                    spec = spec.or(nextSpec);
+                }
+                // TODO: NOT条件のハンドリングも後で追加
+            }
+        }
+
+        // 資料区分での絞り込み条件
+        if (form.getTypeIds() != null && !form.getTypeIds().isEmpty()) {
+            spec = spec.and((root, query, cb) ->
+                // items -> type -> typeId のパスをたどる
+                // DDLの items に type_id がある前提
+                root.join("items").get("type").get("typeId").in(form.getTypeIds())
+            );
+        }
+
+        return spec;
     }
 }

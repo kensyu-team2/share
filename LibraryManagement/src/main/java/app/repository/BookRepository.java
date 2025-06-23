@@ -1,18 +1,13 @@
 // src/main/java/app/repository/BookRepository.java
 package app.repository;
 
-import app.entity.Book;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
-@Repository
-public interface BookRepository extends JpaRepository<Book, Integer> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor; // 追加
 
-    /**
-     * ISBNをキーにBookを検索します。
-     * @param isbn 検索するISBN
-     * @return 該当するBook（存在しない場合は空のOptional）
-     */
+import app.entity.Book;
+
+public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecificationExecutor<Book> { // JpaSpecificationExecutor を追加
     Optional<Book> findByIsbn(String isbn);
 }

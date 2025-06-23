@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import app.entity.Book; // 追加
 import app.entity.Category;
 import app.entity.Type;
 import app.form.BookForm;
+import app.form.BookSearchForm; // 追加
 import app.repository.CategoryRepository;
 import app.repository.TypeRepository;
 import app.service.BookService;
-
 @Controller
 @RequestMapping("book")
 public class BookController {
@@ -137,5 +138,29 @@ public class BookController {
     @GetMapping("/complete")
     public String showComplete() {
         return "book/book_registation_complete";
+    }
+
+    /**
+     * 資料検索フォームを表示
+     * (GET /book/search)
+     */
+    @GetMapping("/search")
+    public String showSearchForm(Model model) {
+        model.addAttribute("bookSearchForm", new BookSearchForm());
+        // プルダウン用のマスタデータをModelに追加
+        addMasterDataToModel(model);
+        return "book/book_search";
+    }
+
+    /**
+     * 検索を実行し、結果画面を表示
+     * (GET /book/search/results)
+     */
+    @GetMapping("/search/results")
+    public String searchBooks(@ModelAttribute BookSearchForm form, Model model) {
+        List<Book> bookList = bookService.search(form);
+        model.addAttribute("bookList", bookList);
+        model.addAttribute("searchForm", form); // 検索条件を画面に戻す
+        return "book/book_search_results";
     }
 }

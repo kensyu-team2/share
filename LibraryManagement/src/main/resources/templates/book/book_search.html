@@ -1,166 +1,108 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>資料検索</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
     <div class="container container-wide">
+         <header class="header-sub-menu header-material">
+            <a th:href="@{/book/menu}" class="header-back-link">資料管理メニュー</a>
+            <h1 class="header-title">資料検索</h1>
+        </header>
         <main class="page-content">
-<a href="../main_manu.html">ホームに戻る</a>
-
-            <h1 class="page-title">資料検索</h1>
-
             <div class="search-panel">
                 <div class="panel-header">
                     キーワードで探す
                 </div>
                 <div class="panel-body">
                     <p>くわしい条件を設定して、資料を検索することができます。</p>
-                    
-                    <form action="book_search_results.html" method="get">
+
+                    <form th:action="@{/book/search/results}" th:object="${bookSearchForm}" method="get">
                         <fieldset>
                             <legend>検索条件</legend>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">資料区分</label>
                                 <div class="checkbox-group">
-                                    <label><input type="checkbox" name="type" value="general"> 一般書(単行本)</label>
-                                    <label><input type="checkbox" name="type" value="paperback book"> 文庫本</label>
-                                    <label><input type="checkbox" name="type" value="new book"> 新書</label>
-                                    <label><input type="checkbox" name="type" value="big"> 大型本</label>
-                                    <label><input type="checkbox" name="type" value="magazine">雑誌</label>
-                                    <label><input type="checkbox" name="type" value="newspaper"> 新聞</label>
-                                    <label><input type="checkbox" name="type" value="CD"> CD</label>
-                                    <label><input type="checkbox" name="type" value="DVD/Blu-ray"> DVD/Blu-ray</label>
-                                    <label><input type="checkbox" name="type" value="comic"> コミック</label>
+                                    <label th:each="type : ${types}">
+                                        <input type="checkbox" th:field="*{typeIds}" th:value="${type.typeId}">
+                                        <span th:text="${type.typeName}"></span>
+                                    </label>
                                 </div>
                             </div>
 
                             <div class="search-criteria-rows">
                                 <div class="search-row">
                                     <span class="row-label">検索条件1</span>
-                                    <select name="field1">
-                                        <option>資料名</option>
-                                        <option>著者名</option>
-                                        <option>出版者</option>
+                                    <select th:field="*{criteria[0].field}">
+                                        <option value="">(未選択)</option>
+                                        <option value="bookName">資料名</option>
+                                        <option value="authorName">著者名</option>
+                                        <option value="publisher">出版者</option>
                                     </select>
-                                    <input type="text" name="query1" class="search-query-input">
-                                    <select name="match1">
-                                        <option>この言葉を含む</option>
-                                        <option>この言葉で始まる</option>
-                                        <option>この言葉と一致する</option>
-                                        <option>この言葉で終わる</option>
-                                    </select>
-                                    <select name="op1">
-                                        <option>かつ (AND条件)</option>
-                                        <option>または (OR条件)</option>
-                                        <option>除く (NOT条件)</option>
+                                    <input type="text" th:field="*{criteria[0].query}" class="search-query-input">
+                                    <select th:field="*{criteria[0].op}">
+                                        <option value="AND">かつ (AND条件)</option>
+                                        <option value="OR">または (OR条件)</option>
                                     </select>
                                 </div>
                                 <div class="search-row">
                                     <span class="row-label">検索条件2</span>
-                                    <select name="field2">
-                                        <option>著者名</option>
-                                        <option>資料名</option>
-                                        <option>出版者</option>
+                                    <select th:field="*{criteria[1].field}">
+                                        <option value="">(未選択)</option>
+                                        <option value="authorName">著者名</option>
+                                        <option value="bookName">資料名</option>
+                                        <option value="publisher">出版者</option>
                                     </select>
-                                    <input type="text" name="query2" class="search-query-input">
-                                    <select name="match1">
-                                        <option>この言葉を含む</option>
-                                        <option>この言葉で始まる</option>
-                                        <option>この言葉と一致する</option>
-                                        <option>この言葉で終わる</option>
-                                    </select>
-                                    <select name="op1">
-                                        <option>かつ (AND条件)</option>
-                                        <option>または (OR条件)</option>
-                                        <option>除く (NOT条件)</option>
+                                    <input type="text" th:field="*{criteria[1].query}" class="search-query-input">
+                                    <select th:field="*{criteria[1].op}">
+                                        <option value="AND">かつ (AND条件)</option>
+                                        <option value="OR">または (OR条件)</option>
                                     </select>
                                 </div>
                                 <div class="search-row">
                                     <span class="row-label">検索条件3</span>
-                                    <select name="field3">
-                                        <option>著者名</option>
-                                        <option>資料名</option>
-                                        <option>出版者</option>
+                                    <select th:field="*{criteria[2].field}">
+                                        <option value="">(未選択)</option>
+                                        <option value="publisher">出版者</option>
+                                        <option value="bookName">資料名</option>
+                                        <option value="authorName">著者名</option>
                                     </select>
-                                    <input type="text" name="query3" class="search-query-input">
-                                    <select name="match3">
-                                        <option>この言葉を含む</option>
-                                        <option>この言葉で始まる</option>
-                                        <option>この言葉と一致する</option>
-                                        <option>この言葉で終わる</option>
-                                    </select>
-                                    <select name="op3">
-                                        <option>かつ (AND条件)</option>
-                                        <option>または (OR条件)</option>
-                                        <option>除く (NOT条件)</option>
+                                    <input type="text" th:field="*{criteria[2].query}" class="search-query-input">
+                                    <select th:field="*{criteria[2].op}">
+                                        <option value="AND">かつ (AND条件)</option>
+                                        <option value="OR">または (OR条件)</option>
                                     </select>
                                 </div>
                                 <div class="search-row">
                                     <span class="row-label">検索条件4</span>
-                                    <select name="field4">
-                                        <option>出版者</option>
-                                        <option>資料名</option>
-                                        <option>著者名</option>
+                                    <select th:field="*{criteria[3].field}">
+                                        <option value="">(未選択)</option>
+                                        <option value="bookName">資料名</option>
+                                        <option value="authorName">著者名</option>
+                                        <option value="publisher">出版者</option>
                                     </select>
-                                    <input type="text" name="query4" class="search-query-input">
-                                    <select name="match4">
-                                        <option>この言葉を含む</option>
-                                        <option>この言葉で始まる</option>
-                                        <option>この言葉と一致する</option>
-                                        <option>この言葉で終わる</option>
-                                    </select>
-                                    <select name="op4">
-                                        <option>かつ (AND条件)</option>
-                                        <option>または (OR条件)</option>
-                                        <option>除く (NOT条件)</option>
+                                    <input type="text" th:field="*{criteria[3].query}" class="search-query-input">
+                                    <select th:field="*{criteria[3].op}">
+                                        <option value="AND">かつ (AND条件)</option>
+                                        <option value="OR">または (OR条件)</option>
                                     </select>
                                 </div>
                                 <div class="search-row">
                                     <span class="row-label">検索条件5</span>
-                                    <select name="field5">
-                                        <option>ISBN</option>
-                                        <option>個別資料ID</option>
+                                    <select th:field="*{criteria[4].field}">
+                                        <option value="">(未選択)</option>
+                                        <option value="isbn">ISBN</option>
                                     </select>
-                                    <input type="text" name="query5" class="search-query-input">
+                                    <input type="text" th:field="*{criteria[4].query}" class="search-query-input">
+                                    <select th:field="*{criteria[4].op}" disabled>
+                                        <option value="AND">かつ (AND条件)</option>
+                                    </select>
                                 </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>ジャンル指定</legend>
-                            <div class="form-group">
-                                <button type="button" class="btn-small">ジャンル</button>
-                                <input type="text" readonly class="search-query-input" style="width: 300px;">
-                            </div>
-                        </fieldset>
-                        
-                        <fieldset>
-                            <legend>検索結果一覧表示</legend>
-                            <div class="form-group">
-                                <label>表示数 <select name="limit">
-                                        <option>10件</option>
-                                        <option>20件</option>
-                                        <option>50件</option>
-                                        <option>100件</option>
-                                    </select></label>
-                                <label style="margin-left: 20px;">ソート順 <select name="sort">
-                                        <option>書名順(あ→ん)</option>
-                                        <option>書名逆順(ん→あ)</option>
-                                        <option>著者名順(あ→ん)</option>
-                                        <option>著者名逆順(ん→あ)</option>
-                                        <option>出版者名順(あ→ん)</option>
-                                        <option>出版名逆順(ん→あ)</option>
-                                        <option>出版年順</option>
-                                        <option>出版年逆順</option>
-                                        <option>分類順</option>
-                                        <option>分類逆順</option>
-                                    </select></label>
                             </div>
                         </fieldset>
 
@@ -170,10 +112,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
-
-            <div class="page-footer-actions">
-                <a href="book_mgmt_menu.html" class="back-link">戻る</a>
             </div>
         </main>
     </div>
