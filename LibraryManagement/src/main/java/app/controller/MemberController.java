@@ -29,9 +29,12 @@ public class MemberController {
 
  // 会員一覧
     @GetMapping("/member_list")
-    public String showMemberList() {
-        return "member/member_list"; // このファイルを返す
+    public String showMemberList(Model model) {
+        List<Member> members = memberService.findAll();
+        model.addAttribute("members", members);
+        return "member/member_list";
     }
+
 
 
     // 会員登録画面表示
@@ -71,12 +74,13 @@ public class MemberController {
         return "redirect:/member";
     }
 
- // 予約一覧表示（追加）
-    @GetMapping("/reservation_list/{memberId}")
+ // 予約一覧表示
+    @GetMapping("/member_reservation_list/{memberId}")
     public String showReservationList(@PathVariable Long memberId, Model model) {
         List<Reservation> reservations = reservationService.findByMemberId(memberId);
+        Member member = memberService.findById(memberId).orElse(null);
         model.addAttribute("reservations", reservations);
         model.addAttribute("member", memberService.findById(memberId).orElse(null));
-        return "member/reservation_list";  // 予約一覧表示用のテンプレートを作成
+        return "member/member_reservation_list";  // 予約一覧表示用のテンプレートを作成
     }
 }

@@ -2,6 +2,7 @@ package app.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 
 import app.entity.Reservation;
@@ -15,7 +16,7 @@ public class ReservationService {
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
-
+    @EntityGraph(attributePaths = {"books"})
     public List<Reservation> findByMemberId(Long memberId) {
         return reservationRepository.findByMember_MemberId(memberId);
     }

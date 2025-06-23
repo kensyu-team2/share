@@ -36,16 +36,18 @@
             </thead>
             <tbody>
                 <tr th:each="member : ${members}">
-                    <td th:text="${member.id}">001</td>
-                    <td th:text="${member.name}">山田 太郎</td>
-                    <td th:text="${member.address}">北海道札幌市中央区1-2-3</td>
-                    <td th:text="${member.phone}">090-1234-5678</td>
-                    <td th:text="${member.email}">taro.yamada@example.jp</td>
-                    <td th:text="${member.birthDate}">1985-07-15</td>
-                    <td th:text="${member.registDate}">2024-01-05</td>
-                    <td th:text="${member.retireDate}">-</td>
-                    <td><a th:href="@{'/member/edit/' + ${member.id}}" class="btn-table-edit">変更</a></td>
-                </tr>
+    <td th:text="${member.memberId}">001</td>
+    <td th:text="${member.name}">山田 太郎</td>
+    <td th:text="${member.address}">北海道札幌市中央区1-2-3</td>
+    <td th:text="${member.phone}">090-1234-5678</td>
+    <td th:text="${member.email}">taro.yamada@example.jp</td>
+    <td th:text="${member.birthday}">1985-07-15</td>
+    <td th:text="${member.registrationDate}">2024-01-05</td>
+    <td th:text="${member.retireDate != null ? member.retireDate : '-'}">-</td>
+    <td><a th:href="@{'/member/edit/' + ${member.memberId}}" class="btn-table-edit">変更</a></td>
+    <td><a th:href="@{'/member/member_reservation_list/' + ${member.memberId}}" class="btn-table-edit">一覧</a></td>
+</tr>
+
             </tbody>
         </table>
     </main>
