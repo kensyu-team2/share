@@ -35,5 +35,6 @@ public class BookSearchForm {
         private String field;      // 検索対象フィールド (bookName, authorName など)
         private String query;      // 検索キーワード
         private String op = "AND"; // 結合演算子 (デフォルトはAND)
+        private String match = "contains";
     }
 }

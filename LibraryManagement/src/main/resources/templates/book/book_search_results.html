@@ -15,12 +15,19 @@
             <div class="search-panel">
                 <div class="panel-header">検索結果書誌一覧</div>
                 <div class="panel-body">
-                    <p th:text="|該当件数は、${#lists.size(bookList)}件です。|"></p>
-                    <div th:if="${not #lists.isEmpty(bookList)}">
+                    <div class="results-summary">
+                        <p th:if="${bookPage.totalElements > 0}"
+                           th:text="|全 ${bookPage.totalElements}件中 ${bookPage.number * bookPage.size + 1}件目から ${bookPage.number * bookPage.size + bookPage.numberOfElements}件目を表示しています。|">
+                        </p>
+                        <p th:if="${bookPage.totalElements == 0}">該当する書籍は見つかりませんでした。</p>
+                    </div>
+
+                    <div th:if="${bookPage.hasContent()}" class="table-wrapper">
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>書籍名</th>
+                                    <th>書誌種別</th>
+                                    <th>書名</th>
                                     <th>著者名</th>
                                     <th>出版社</th>
                                     <th>出版年月日</th>
@@ -28,22 +35,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="book : ${bookList}">
+                                <tr th:each="book : ${bookPage.content}">
+                                    <td>
+                                        <span>一般書</span>
+                                    </td>
                                     <td th:text="${book.bookName}">リーダブルコード</td>
                                     <td th:text="${book.authorName}">Dustin Boswell</td>
                                     <td th:text="${book.publisher}">オライリー</td>
-                                    <td th:text="${book.publishDate}">2012-06-22</td>
+                                    <td th:text="${#temporals.format(book.publishDate, 'yyyy/MM/dd')}">2012/06/22</td>
                                     <td>
-                                        <a href="#" class="btn-table-action btn-success">詳細</a>
+                                        <a th:href="@{/book/{id}(id=${book.bookId})}" class="btn-table-action btn-success">詳細</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div th:if="${#lists.isEmpty(bookList)}">
-                        <p>該当する書籍は見つかりませんでした。</p>
+
+                    <nav th:if="${bookPage.totalPages > 1}" class="pagination" aria-label="Page navigation">
+                        <ul>
+                            <li th:class="${bookPage.first} ? 'disabled' : ''">
+                                <a th:href="@{/book/search/results(page=${bookPage.number - 1}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}">&laquo; 前へ</a>
+                            </li>
+
+                            <li th:each="i : ${#numbers.sequence(0, bookPage.totalPages - 1)}" th:class="${i == bookPage.number} ? 'active' : ''">
+                                <a th:href="@{/book/search/results(page=${i}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}" th:text="${i + 1}">1</a>
+                            </li>
+
+                            <li th:class="${bookPage.last} ? 'disabled' : ''">
+                                <a th:href="@{/book/search/results(page=${bookPage.number + 1}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}">次へ &raquo;</a>
+                            </li>
+                        </ul>
+                    </nav>
                     </div>
-                </div>
             </div>
         </main>
     </div>
