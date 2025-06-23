@@ -33,7 +33,7 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-    public Optional<Member> findByEmail(String email) {
-        return Optional.ofNullable(memberRepository.findByEmail(email));
-    }
+//    public Optional<Member> findByEmail(String email) {
+//        return Optional.ofNullable(memberRepository.findByEmail(email));
+//    }
 }
