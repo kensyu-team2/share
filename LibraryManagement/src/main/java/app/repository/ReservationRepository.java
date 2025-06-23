@@ -2,15 +2,13 @@ package app.repository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import app.entity.Reservation;
 
-@Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+public interface ReservationRepository extends JpaRepository<Reservation, Integer>, JpaSpecificationExecutor<Reservation> {
 
-    @EntityGraph(attributePaths = {"book"})
-    List<Reservation> findByMember_MemberId(Long memberId);
+	List<Reservation> findByMember_MemberId(Integer memberId); // ★ LongからIntegerに修正
+
 }

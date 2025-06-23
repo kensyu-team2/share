@@ -17,8 +17,12 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
     @EntityGraph(attributePaths = {"books"})
-    public List<Reservation> findByMemberId(Long memberId) {
+    public List<Reservation> findByMemberId(Integer memberId) {
         return reservationRepository.findByMember_MemberId(memberId);
     }
+	public List<Reservation> getReservationsByMemberId(Integer memberId) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }
 

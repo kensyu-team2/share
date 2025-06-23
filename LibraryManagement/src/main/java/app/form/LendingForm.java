@@ -1,42 +1,35 @@
+// src/main/java/app/form/LendingForm.java
 package app.form;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
+import java.util.List;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+/**
+ * 貸出画面の入力フォームと対応するDTO(Data Transfer Object)
+ */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class LendingForm {
+
     /**
      * 会員ID
-     * 必須入力とし、数値であることを検証します。
-     * メッセージは messages.properties で定義します。
      */
-    @NotNull
-    @Digits(integer = 5, fraction = 0)
-    @Min(value = 1)
-    private Integer memberId;
+    @NotBlank(message = "会員IDを入力してください。")
+    @Pattern(regexp = "^[0-9]{1,5}$", message = "会員IDは5桁までの数字で入力してください。")
+    private String memberId;
+
     /**
-     * 個別資料ID
-     * 必須入力とし、数値であることを検証します。
-     * メッセージは messages.properties で定義します。
+     * 貸し出す個別資料IDのリスト
      */
-    @NotNull
-    @Digits(integer = 10, fraction = 0)
-    @Min(value = 1)
-    private Integer itemId;
+    @Size(min = 1, message = "貸出希望の資料を1冊以上入力してください。")
+    private List<
+                @NotBlank(message = "資料IDを入力してください。")
+                @Pattern(regexp = "^[0-9]{1,10}$", message = "個別資料IDは10桁までの数字で入力してください。")
+                String
+            > itemIds;
+
 }
-
-
-
-
-
-
-
-
-
-
-

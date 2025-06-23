@@ -21,7 +21,7 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Optional<Member> findById(Long id) {
+    public Optional<Member> findById(Integer id) {
         return memberRepository.findById(id);
     }
 
@@ -29,11 +29,11 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         memberRepository.deleteById(id);
     }
 
-    public Optional<Member> findByEmail(String email) {
-        return Optional.ofNullable(memberRepository.findByEmail(email));
+    public Optional<Object> findByEmail(String mail) {
+        return Optional.ofNullable(memberRepository.findByMail(mail));
     }
 }
