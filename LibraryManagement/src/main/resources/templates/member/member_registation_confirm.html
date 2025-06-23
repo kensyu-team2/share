@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="jp">
-
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,23 +7,37 @@
 </head>
 <body>
     <div class="nav">
-        <a class="home" href="../main_manu.html">ホーム</a> 
+        <a class="home" href="../main_menu.html">ホーム</a>
     </div>
 
-    <form action="member_registation_complete.html">
     <h1>会員登録確認</h1>
-    <p>氏名:<span th:text="$membername"></span></p>
-    <p>氏名フリガナ:<span th:text="$membernamerubi"></span></p><br>
-    <p>生年月日:<span th:text="$birthday"></span></p>
-    <p>住所:<span th:text="$adress"></span></p><br>
-    <p>電話番号:<span th:text="$telnumber"></span></p>
-    <p>メールアドレス:<span th:text="$mail"></span></p><br>
-    
-    <p><input type="checkbox" name="confirm" value="yes">身分証明書と照合し、本人確認を完了しました。</p>
+
+    <form th:action="@{/member/confirm}" method="post">
+        <p>氏名: <span th:text="${member.name}"></span></p>
+        <p>氏名フリガナ: <span th:text="${member.nameRuby}"></span></p><br>
+        <p>生年月日: <span th:text="${member.birthday}"></span></p>
+        <p>住所: <span th:text="${member.address}"></span></p><br>
+        <p>電話番号: <span th:text="${member.phone}"></span></p>
+        <p>メールアドレス: <span th:text="${member.mail}"></span></p><br>
+
+        <p>
+            <label>
+                <input type="checkbox" name="confirm" required>
+                身分証明書と照合し、本人確認を完了しました。
+            </label>
+        </p>
+
+        <!-- hiddenで値も渡す -->
+        <input type="hidden" name="name" th:value="${member.name}" />
+        <input type="hidden" name="nameRuby" th:value="${member.nameRuby}" />
+        <input type="hidden" name="birthday" th:value="${member.birthday}" />
+        <input type="hidden" name="address" th:value="${member.address}" />
+        <input type="hidden" name="phoneNumber" th:value="${member.phoneNumber}" />
+        <input type="hidden" name="mail" th:value="${member.mail}" />
+
+        <p>上記の内容で登録しますか？</p>
+        <button type="submit">登録</button>
+        <a th:href="@{/member/regist}">戻る</a>
     </form>
-    <p>上記の内容で登録しますか？</p>
-    <a href="member_registation_complete.html">登録</a>
-    <a href="member_registation.html">戻る</a>
-    
 </body>
 </html>
