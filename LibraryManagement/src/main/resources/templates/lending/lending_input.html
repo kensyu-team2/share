@@ -1,50 +1,57 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>貸出画面</title>
-    <!-- <link rel="stylesheet" href="/css/style.css"> -->
-    <link rel="stylesheet" href="../../static/css/style.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>貸出画面</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>貸出</h1>
-        </header>
+	<div class="container">
+		<header>
+			<h1>貸出</h1>
+		</header>
 
-        <main>
-            <form action="#" method="post" class="lending-form">
+		<main>
+			<form th:action="@{/lending/confirm}" method="post" class="lending-form" th:object="${lendingForm}">
 
-                <div class="error-message">
-                    </div>
+				<div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+				<div class="error-message" th:if="${#fields.hasGlobalErrors()}">
+					<ul>
+						<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+					</ul>
+				</div>
 
-                <input type="text" class="input-field" name="memberId" placeholder="会員ID入力欄">
+				<input type="text" class="input-field" th:field="*{memberId}" placeholder="会員ID入力欄">
+				<div class="error-message" th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></div>
 
-                <div class="form-columns">
-                    <div class="column">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                    </div>
-                    <div class="column">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                        <input type="text" class="input-field" name="itemId[]" placeholder="資料ID入力欄">
-                    </div>
-                </div>
-                <a href="lending_confirm.html" class="submit-button">登録</a>
-                <a href="../main_manu.html" class="back-link">戻る</a>
-                
-            </form>
-        </main>
-    </div>
+
+				<div class="form-columns">
+					<div class="column">
+						<input type="text" class="input-field" th:field="*{itemIds[0]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[1]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[2]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[3]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[4]}" placeholder="資料ID入力欄">
+					</div>
+					<div class="column">
+						<input type="text" class="input-field" th:field="*{itemIds[5]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[6]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[7]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[8]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[9]}" placeholder="資料ID入力欄">
+					</div>
+				</div>
+				<div class="error-message" th:if="${#fields.hasErrors('itemIds')}" th:errors="*{itemIds}"></div>
+
+				<button type="submit" class="submit-button">登録</button>
+
+				<a th:href="@{/}" class="back-link">戻る</a>
+
+			</form>
+		</main>
+	</div>
 
 </body>
 </html>
