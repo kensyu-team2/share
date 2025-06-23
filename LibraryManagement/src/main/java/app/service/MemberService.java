@@ -29,7 +29,7 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         memberRepository.deleteById(id);
     }
 

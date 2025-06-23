@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 import app.entity.Reservation;
 
 @Repository
+
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
     @EntityGraph(attributePaths = {"book"})
     List<Reservation> findByMember_MemberId(Integer memberId);
 }
+

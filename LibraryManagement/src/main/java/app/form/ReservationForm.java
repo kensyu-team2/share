@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 
+
 public class ReservationForm {
+
     /** 予約する会員 */
     @NotNull(message="会員を選択してください")
     private Integer memberId;  // Long → Integer に変更
@@ -37,3 +39,10 @@ public class ReservationForm {
         this.reserveDate = reserveDate;
     }
 }
+
+//    @NotNull
+//    private Integer bookId; // 予約対象の書籍ID
+//
+//    @NotNull(message = "会員IDを入力してください。")
+//    private Integer memberId; // 予約する会員のID
+//}

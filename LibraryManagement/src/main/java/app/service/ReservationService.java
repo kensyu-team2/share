@@ -20,5 +20,9 @@ public class ReservationService {
     public List<Reservation> findByMemberId(Integer memberId) {
         return reservationRepository.findByMember_MemberId(memberId);
     }
+	public List<Reservation> getReservationsByMemberId(Integer memberId) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }
 
