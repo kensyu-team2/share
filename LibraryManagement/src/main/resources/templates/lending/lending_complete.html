@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>貸出完了画面</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../../static/css/style.css">
 </head>
 <body>
 
@@ -15,45 +15,45 @@
 
         <main>
             <div class="completion-content">
-
-                <p class="prompt-message" th:text="${message}">上記の内容で登録しました</p>
-
-                <div class="confirmation-grid" th:if="${completedData != null}">
-
+                <div class="confirmation-grid">
+                    
                     <div class="details-column">
                         <div class="info-box">
                             <span class="info-label">会員ID</span>
-                            <span class="info-value" th:text="${completedData.member.memberId}">10001</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">会員名</span>
-                            <span class="info-value" th:text="${completedData.member.name}">山田 太郎</span>
+                            <span class="info-value">10001</span>
                         </div>
                         <div class="info-box">
                             <span class="info-label">貸出年月日</span>
-                            <span class="info-value" th:text="${#temporals.format(completedData.lendDate, 'yyyy/MM/dd')}">2025/06/23</span>
+                            <span class="info-value">2025/06/18</span>
                         </div>
                         <div class="info-box">
                             <span class="info-label">返却期日</span>
-                            <span class="info-value" th:text="${#temporals.format(completedData.dueDate, 'yyyy/MM/dd')}">2025/07/07</span>
+                            <span class="info-value">2025/07/02</span>
                         </div>
                     </div>
 
                     <div class="items-column">
                         <div class="item-list-box">
-                            <div class="info-label">貸出資料一覧</div>
+                            <div class="info-label">貸出資料ID</div>
                             <ul>
-                                <li th:each="item : ${completedData.items}"
-                                    th:text="|資料ID: ${item.itemId} / ${item.book.bookName}|">
-                                    資料ID: 2001 / Spring Boot入門
-                                </li>
-                            </ul>
+                                <li>資料ID: 2001 / Spring Boot入門</li>
+                                <li>資料ID: 2005 / データベース設計の基礎</li>
+                                <li>資料ID: 3010 / はじめてのJavaScript</li>
+                                <li>資料ID: 2001 / Spring Boot入門</li>
+                                <li>資料ID: 2005 / データベース設計の基礎</li>
+                                <li>資料ID: 3010 / はじめてのJavaScript</li>
+                                <li>資料ID: 2001 / Spring Boot入門</li>
+                                <li>資料ID: 2005 / データベース設計の基礎</li>
+                                <li>資料ID: 3010 / はじめてのJavaScript</li>
+                                </ul>
                         </div>
                     </div>
                 </div>
 
+                <p class="prompt-message">上記の内容で登録しました</p>
+
                 <div class="action-buttons">
-                    <a th:href="@{/}" class="btn btn-confirm">確認</a>
+                    <a href="../main_manu.html" class="btn btn-confirm">確認</a>
                 </div>
 
             </div>

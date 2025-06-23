@@ -1,11 +1,10 @@
 package app.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -14,13 +13,12 @@ import lombok.Data;
 @Table(name = "status")
 @Data
 public class Status {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "status_id")
-    private Integer statusId;
+    private Integer statusId; // ← ★★★フィールド名が 'statusId' になっているか確認してください★★★
 
     @Column(name = "status_name", nullable = false, length = 10)
     private String statusName;
-
-    @OneToMany(mappedBy = "status")
-    private List<Item> items;
 }

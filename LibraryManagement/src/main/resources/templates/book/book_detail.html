@@ -53,7 +53,7 @@
 
                     <div class="detail-actions">
                         <a th:href="@{/book/search}" class="btn btn-secondary">戻る</a>
-                        <button type="button" class="btn btn-secondary">予約</button>
+                        <a th:href="@{/book/{id}/reserve(id=*{bookId})}" class="btn btn-secondary">予約</a>
                         <button type="button" class="btn btn-secondary">履歴</button>
                         <button type="button" class="btn btn-danger">削除</button>
                     </div>

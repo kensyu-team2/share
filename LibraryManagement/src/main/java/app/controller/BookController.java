@@ -22,10 +22,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.entity.Book; // 追加
 import app.entity.Category;
+import app.entity.Member;
+import app.entity.Reservation;
 import app.entity.Type;
 import app.form.BookForm;
 import app.form.BookSearchForm; // 追加
+import app.form.ReservationForm;
 import app.repository.CategoryRepository;
+import app.repository.MemberRepository;
+import app.repository.ReservationRepository;
 import app.repository.TypeRepository;
 import app.service.BookService;
 
@@ -41,6 +46,11 @@ public class BookController {
 
 	@Autowired
 	private TypeRepository typeRepository;
+	@Autowired
+	private MemberRepository memberRepository;
+
+	@Autowired
+	private ReservationRepository reservationRepository;
 
 	/**
 	 * プルダウン用のマスタデータをModelに追加する共通メソッド
@@ -158,35 +168,36 @@ public class BookController {
 	 * (GET /book/search/results)
 	 */
 	@GetMapping("/search/results")
-    public String searchBooks(@ModelAttribute BookSearchForm form,
-                              @PageableDefault(page = 0, size = 10) Pageable pageable, // sortのデフォルトは一旦削除
-                              Model model) {
+	public String searchBooks(@ModelAttribute BookSearchForm form,
+			@PageableDefault(page = 0, size = 10) Pageable pageable, // sortのデフォルトは一旦削除
+			Model model) {
 
-        // ★★★ ソート条件の組み立て ★★★
-        String sortProperty = "bookName"; // デフォルトのソート項目
-        Sort.Direction direction = Sort.Direction.ASC; // デフォルトのソート順
+		// ★★★ ソート条件の組み立て ★★★
+		String sortProperty = "bookName"; // デフォルトのソート項目
+		Sort.Direction direction = Sort.Direction.ASC; // デフォルトのソート順
 
-        if (form.getSort() != null && !form.getSort().isEmpty()) {
-            String[] sortParts = form.getSort().split(",");
-            sortProperty = sortParts[0];
-            if (sortParts.length > 1) {
-                direction = Sort.Direction.fromString(sortParts[1]);
-            }
-        }
+		if (form.getSort() != null && !form.getSort().isEmpty()) {
+			String[] sortParts = form.getSort().split(",");
+			sortProperty = sortParts[0];
+			if (sortParts.length > 1) {
+				direction = Sort.Direction.fromString(sortParts[1]);
+			}
+		}
 
-        // 新しいPageableオブジェクトを生成
-        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(direction, sortProperty));
+		// 新しいPageableオブジェクトを生成
+		Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+				Sort.by(direction, sortProperty));
 
-        Page<Book> bookPage = bookService.search(form, sortedPageable);
+		Page<Book> bookPage = bookService.search(form, sortedPageable);
 
-        model.addAttribute("bookPage", bookPage);
-        model.addAttribute("bookSearchForm", form);
+		model.addAttribute("bookPage", bookPage);
+		model.addAttribute("bookSearchForm", form);
 
-        // 検索条件をURLパラメータとして渡すための処理（変更なし）
-        model.addAttribute("query", buildQuery(form));
+		// 検索条件をURLパラメータとして渡すための処理（変更なし）
+		model.addAttribute("query", buildQuery(form));
 
-        return "book/book_search_results";
-    }
+		return "book/book_search_results";
+	}
 
 	// ページネーションのリンクで使うクエリ文字列を生成するヘルパーメソッド
 	private String buildQuery(BookSearchForm form) {
@@ -206,14 +217,117 @@ public class BookController {
 		}
 		return query.toString();
 	}
+
 	/**
-     * 資料詳細画面を表示
-     * (GET /book/{id})
+	 * 資料詳細画面を表示
+	 * (GET /book/{id})
+	 */
+	@GetMapping("/{id}")
+	public String showDetailPage(@PathVariable("id") Integer bookId, Model model) {
+		Book book = bookService.findById(bookId);
+		model.addAttribute("book", book);
+		return "book/book_detail";
+	}
+
+	/**
+	 * 予約入力画面を表示
+	 * (GET /book/{bookId}/reserve)
+	 */
+	@GetMapping("/{bookId}/reserve")
+	public String showReservationForm(@PathVariable("bookId") Integer bookId, Model model) {
+		// 表示する書籍の情報を取得
+		Book book = bookService.findById(bookId);
+
+		// フォームオブジェクトを生成し、予約対象の書籍IDをセット
+		ReservationForm reservationForm = new ReservationForm();
+		reservationForm.setBookId(bookId);
+
+		model.addAttribute("book", book);
+		model.addAttribute("reservationForm", reservationForm);
+
+		return "book/book_reservation_input";
+	}
+
+	/**
+	 * 予約内容を確認画面に渡す
+	 * (POST /book/reserve)
+	 */
+	@PostMapping("/reserve")
+	public String confirmReservation(@Validated @ModelAttribute ReservationForm form, BindingResult result, Model model,
+			RedirectAttributes redirectAttributes) {
+		// 会員IDの入力チェック
+		if (result.hasErrors()) {
+			Book book = bookService.findById(form.getBookId());
+			model.addAttribute("book", book);
+			return "book/book_reservation_input";
+		}
+
+		try {
+			// 会員が存在するかチェック
+			Member member = memberRepository.findById(form.getMemberId())
+					.orElseThrow(() -> new IllegalArgumentException("入力された会員IDは存在しません。"));
+
+			// 情報をリダイレクト先に渡す
+			redirectAttributes.addFlashAttribute("reservationForm", form);
+			redirectAttributes.addFlashAttribute("member", member); // 会員情報も渡す
+
+		} catch (IllegalArgumentException e) {
+			// 会員が見つからないエラー
+			Book book = bookService.findById(form.getBookId());
+			model.addAttribute("book", book);
+			model.addAttribute("errorMessage", e.getMessage());
+			return "book/book_reservation_input";
+		}
+
+		return "redirect:/book/reserve/confirm"; // 確認画面へリダイレクト
+	}
+
+	/**
+     * 予約確認画面を表示
+     * (GET /book/reserve/confirm)
      */
-    @GetMapping("/{id}")
-    public String showDetailPage(@PathVariable("id") Integer bookId, Model model) {
-        Book book = bookService.findById(bookId);
+    @GetMapping("/reserve/confirm")
+    public String showReservationConfirm(
+            @ModelAttribute("reservationForm") ReservationForm form,
+            @ModelAttribute("member") Member member,
+            Model model) {
+        
+        // 予約対象の書籍情報を取得してモデルに追加
+        Book book = bookService.findById(form.getBookId());
         model.addAttribute("book", book);
-        return "book/book_detail";
+
+        // memberオブジェクトは@ModelAttributeにより自動でModelに追加されているので、
+        // Thymeleaf側で ${member} として参照できます。
+
+        return "book/book_reservation_confirm";
     }
+
+	/**
+	 * ★★★ 追加 ★★★
+	 * 予約処理を実行
+	 * (POST /book/reserve/execute)
+	 */
+	@PostMapping("/reserve/execute")
+	public String executeReservation(@ModelAttribute ReservationForm form, RedirectAttributes redirectAttributes) {
+
+		Reservation savedReservation = bookService.createReservation(form);
+
+		// 完了画面に情報を渡す
+		redirectAttributes.addFlashAttribute("completedReservation", savedReservation);
+
+		return "redirect:/book/reserve/complete";
+	}
+
+	/**
+	 * ★★★ 追加 ★★★
+	 * 予約完了画面を表示
+	 * (GET /book/reserve/complete)
+	 */
+	@GetMapping("/reserve/complete")
+	public String showReservationComplete(Model model) {
+		if (!model.containsAttribute("completedReservation")) {
+			return "redirect:/"; // トップページなどへ
+		}
+		return "book/book_reservation_complete";
+	}
 }

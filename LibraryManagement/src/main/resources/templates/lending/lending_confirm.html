@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>貸出確認画面</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../../static/css/style.css">
 </head>
 
 <body>
@@ -16,25 +16,56 @@
         </header>
 
         <main>
-            <form th:action="@{/lending/execute}" method="post" th:object="${lendingForm}">
+            <div class="confirmation-content">
+                <div class="confirmation-grid">
 
-                <input type="hidden" th:field="*{memberId}" />
-                <th:block th:each="itemId, iterStat : *{itemIds}">
-                    <input type="hidden" th:if="${itemId ne ''}" th:field="*{itemIds[__${iterStat.index}__]}" />
-                </th:block>
+                    <div class="details-column">
+                        <div class="info-box">
+                            <span class="info-label">会員ID</span>
+                            <span class="info-value">10001</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">貸出年月日</span>
+                            <span class="info-value">2025/06/18</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">返却期日</span>
+                            <span class="info-value">2025/07/02</span>
+                        </div>
+                    </div>
 
-                <div class="confirmation-content">
-                    <div class="confirmation-grid">
+                    <div class="items-column">
+                        <div class="item-list-box">
+                            <div class="info-label">貸出資料一覧</div>
+                            <ul>
+                                <li>資料ID: 2001 / Spring Boot入門</li>
+                                <li>資料ID: 2005 / データベース設計の基礎</li>
+                                <li>資料ID: 3010 / はじめてのJavaScript</li>
+                                <li>資料ID: 2001 / Spring Boot入門</li>
+                                <li>資料ID: 2005 / データベース設計の基礎</li>
+                                <li>資料ID: 3010 / はじめてのJavaScript</li>
+                                <li>資料ID: 2001 / Spring Boot入門</li>
+                                <li>資料ID: 2005 / データベース設計の基礎</li>
+                                <li>資料ID: 3010 / はじめてのJavaScript</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-                        <div class="details-column">
-                            <div class="info-box">
-                                <span class="info-label">会員ID</span>
-                                <span class="info-value" th:text="${confirmationData.member.memberId}">10001</span>
-                            </div>
-                            <div class.info-box>
-                                <span class="info-label">会員名</span>
-                                <span class="info-value" th:text="${confirmationData.member.name}">山田 太郎</span>
-                            </div>
-                            <div class="info-box">
-                                <span class="info-label">貸出年月日</span>
-                                <span class="info-value" th:text="${#temporals.format(confirmationData.lendDate, 'yyyy/MM/dd')}">2025/06/23</span>
+                <p class="prompt-message">上記の内容でよろしいでしょうか？</p>
+
+                <div class="action-buttons">
+
+                    <a href="lending_complete.html" class="btn btn-confirm">登録</button>
+
+                    <a href="lending_input.html" class="btn btn-back">戻る</a>
+                </div>
+
+
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>
