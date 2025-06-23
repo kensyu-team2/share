@@ -16,7 +16,7 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public List<Reservation> findByMemberId(Integer memberId) {
+    public List<Reservation> findByMemberId(Long memberId) {
         return reservationRepository.findByMember_MemberId(memberId);
     }
 }
