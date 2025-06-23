@@ -52,27 +52,27 @@ public class MemberController {
     }
 
     // 会員詳細表示・編集画面
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
-        Member member = memberService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid member Id:" + id));
-        model.addAttribute("member", member);
-        return "member/edit";
-    }
+//    @GetMapping("/edit/{id}")
+//    public String showEditForm(@PathVariable Long id, Model model) {
+//        Member member = memberService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid member Id:" + id));
+//        model.addAttribute("member", member);
+//        return "member/edit";
+//    }
 
     // 会員更新処理
-    @PostMapping("/edit/{id}")
-    public String updateMember(@PathVariable Integer id, @ModelAttribute Member member) {
-        member.setMemberId(id);
-        memberService.save(member);
-        return "redirect:/member";
-    }
+//    @PostMapping("/edit/{id}")
+//    public String updateMember(@PathVariable Long id, @ModelAttribute Member member) {
+//        member.setMemberId(id);
+//        memberService.save(member);
+//        return "redirect:/member";
+//    }
 
     // 会員削除処理
-    @GetMapping("/delete/{id}")
-    public String deleteMember(@PathVariable Integer id) {
-        memberService.deleteById(id);
-        return "redirect:/member";
-    }
+//    @GetMapping("/delete/{id}")
+//    public String deleteMember(@PathVariable Long id) {
+//        memberService.deleteById(id);
+//        return "redirect:/member";
+//    }
 
  // 予約一覧表示
     @GetMapping("/member_reservation_list/{memberId}")

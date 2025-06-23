@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,17 +24,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1111</td>
-                <td>2025/6/19</td>
-                <td>2025/7/3</td>
-                <td>2222</td>
-                <td>資料1</td>
-                <td>著者1</td>
-                <td><a class="cnacel" href="reserve_cancel_confirm.html"></a></td>
-            </tr>
-        </tbody>
+<tr th:each="res : ${reservationList}">
+    <td th:text="${res.member.memberId}">会員ID</td>
+    <td th:text="${#temporals.format(res.reserveDate, 'yyyy/MM/dd')}">予約日</td>
+    <td th:text="${#temporals.format(res.reserveDate.plusDays(14), 'yyyy/MM/dd')}">取り置き期限</td>
+    <td th:text="${res.book.bookId}">資料ID</td>
+    <td th:text="${res.book.bookName}">資料タイトル</td>
+    <td th:text="${res.book.authorName}">著者名</td>
+    <td>
+        <a th:href="@{'/work/reserve/cancel/confirm/' + ${res.reserveId}}">キャンセル</a>
+    </td>
+</tr>
+</tbody>
+
     </table>
 
+	<a class="" th:href="@{/work/menu}">戻る</a>
 </body>
 </html>
