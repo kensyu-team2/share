@@ -2,17 +2,19 @@
 package app.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 // import文を jakarta から javax に修正
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue; // ← import文を追加
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
-
 @Entity
 @Table(name = "books")
 @Data
@@ -43,6 +45,8 @@ public class Book {
 
     @Column(name = "publish_date", nullable = false)
     private LocalDate publishDate;
-
+ // 1つのBookが複数のItemを持つことを示す
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private List<Item> items;
 
 }
