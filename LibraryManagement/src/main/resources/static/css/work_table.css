@@ -1,0 +1,154 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+  .container {
+  width: 95%;
+  max-width: 1300px; /* 必要に応じて 1400px なども可 */
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+
+
+.header h1{
+	font-size: 20px;
+  margin: 10px 0;
+}
+
+.header {
+  background-color: #ADD8E6;
+  padding: 10px 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.form-group {
+  padding: 15px 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.button-area {
+  padding: 15px 20px;
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+}
+
+.menu-button {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+  text-align: center;
+  background-color: #ADD8E6;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 6px #aaa;
+  transition: background-color 0.3s;
+}
+
+.menu-button:hover {
+  background-color: #90c8f0;
+}
+
+.back-link {
+  text-align: left;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.back-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+
+.cancel-link {
+  display: inline-block;
+  background-color: #ff6666;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.cancel-link:hover {
+  background-color: #cc3333;
+}
+
+/* ラジオボタンのマージン調整 */
+input[type="radio"] {
+  margin-right: 6px;
+  margin-left: 12px;
+  font-size: 14px;
+}
+
+/* 表の見た目 */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.data-table thead {
+  background-color: #e0f0ff;
+  font-weight: bold;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+/* 「戻る」リンクのスタイル */
+.container > a {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 14px;
+}
+
+.container > a:hover {
+  text-decoration: underline;
+}
