@@ -455,4 +455,22 @@ public class BookController {
         return "book/history/lending_history";
 
     }
+
+    /**
+     * 特定の書籍に紐づく全個別資料の貸出履歴画面を表示します。
+     * (GET /book/history/item/{bookId})
+     */
+    @GetMapping("/history/item/{bookId}")
+    public String showItemHistory(@PathVariable("bookId") Integer bookId, Model model) {
+
+        // 1. 書籍情報を取得して、画面上部に表示するためにModelに追加
+        Book book = bookService.findById(bookId);
+        model.addAttribute("book", book);
+
+        // 2. この書籍の全貸出履歴を取得して、一覧表示するためにModelに追加
+        List<Lending> historyList = lendingService.findLendingHistoryByBookId(bookId);
+        model.addAttribute("historyList", historyList);
+
+        return "book/book_item_history"; // 新しく作成するHTMLファイル
+    }
 }

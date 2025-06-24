@@ -1,30 +1,30 @@
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>業務連絡メニュー</title>
-
-    <link rel="stylesheet" th:href="@{/css/work.css}">
-
+  <meta charset="UTF-8" />
+  <title>業務連絡メニュー</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 
-	<div class="container menu-container">
-        <header class="header">
-        <div class="back-link">
-    <a th:href="@{/}" class="header-back-link">メインメニュー</a>
-	</div>
-	<h1>業務連絡</h1>
-	</header>
+  <div class="container menu-container">
+    <header class="header-sub-menu header-work">
+      <a th:href="@{/}" class="header-back-link">メインメニュー</a>
+      <h1 class="header-title">業務連絡</h1>
+    </header>
 
-	<div class="button-area">
-  <a class="menu-button" th:href="@{/work/delay/list}">遅延</a>
-  <a class="menu-button" th:href="@{/work/reserve/list}">予約</a>
-</div>
-    </div>
-
-
+    <main class="menu-container">
+      <div class="menu-row">
+        <a th:href="@{/work/delay/list}" class="menu-item menu-item-work">
+          <span class="menu-item-text">遅延</span>
+        </a>
+        <a th:href="@{/work/reserve/list}" class="menu-item menu-item-work">
+          <span class="menu-item-text">予約</span>
+        </a>
+      </div>
+    </main>
+  </div>
 
 </body>
 </html>
