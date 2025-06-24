@@ -1,62 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>会員登録</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>会員登録</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+  <div class="container">
+    <header class="header-member">
+      <h1>会員登録</h1>
+    </header>
 
-    <div class="nav">
-        <a th:href="@{/}" class="home">ホーム</a>
-    </div>
+    <form th:action="@{/member/member_registation_confirm}" th:object="${member}" method="post" class="lending-form">
+      <div class="form-columns">
+        <div class="column">
+          <div class="form-group">
+            <label for="name">氏名</label>
+            <input type="text" th:field="*{name}" id="name" class="input-field" />
+          </div>
+          <div class="form-group">
+            <label for="birthday">生年月日</label>
+            <input type="date" th:field="*{birthday}" id="birthday" class="input-field" />
+          </div>
+          <div class="form-group">
+            <label for="phone">電話番号</label>
+            <input type="text" th:field="*{phone}" id="phone" class="input-field" />
+          </div>
+        </div>
+        <div class="column">
+          <div class="form-group">
+            <label for="nameRuby">氏名フリガナ</label>
+            <input type="text" th:field="*{nameRuby}" id="nameRuby" class="input-field" />
+          </div>
+          <div class="form-group">
+            <label for="address">住所</label>
+            <input type="text" th:field="*{address}" id="address" class="input-field" />
+          </div>
+          <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input type="email" th:field="*{email}" id="email" class="input-field" />
+          </div>
+        </div>
+      </div>
 
-    <h1>会員登録</h1>
-
-    <!-- Memberオブジェクトをフォームにバインド -->
-    <form th:action="@{/member/member_registation_confirm}" th:object="${member}" method="post">
-
-        <label for="name">
-            氏名
-            <input type="text" th:field="*{name}" id="name" />
-        </label>
-        <br/>
-
-        <label for="nameRuby">
-            氏名フリガナ
-            <input type="text" th:field="*{nameRuby}" id="nameRuby" />
-        </label>
-        <br/>
-
-        <label for="birthday">
-            生年月日
-            <input type="date" th:field="*{birthday}" id="birthday" />
-        </label>
-        <br/>
-
-        <label for="address">
-            住所
-            <input type="text" th:field="*{address}" id="address" />
-        </label>
-        <br/>
-
-        <label for="phone">
-            電話番号
-            <input type="text" th:field="*{phone}" id="phone" />
-        </label>
-        <br/>
-
-        <label for="email">
-            メールアドレス
-            <input type="email" th:field="*{email}" id="email" />
-        </label>
-        <br/>
-
-        <button type="submit">登録</button>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary submit-button">登録</button>
+        <a th:href="@{/member/member_mgmt_menu}" class="back-link btn btn-danger">戻る</a>
+      </div>
     </form>
-
-    <a th:href="@{/member/member_mgmt_menu}" class="back">戻る</a>
-
+  </div>
 </body>
 </html>

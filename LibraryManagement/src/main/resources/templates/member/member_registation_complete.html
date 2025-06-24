@@ -4,23 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>会員登録完了</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div class="nav">
-        <a class="home" th:href="@{/main_menu.html}">ホーム</a>
+    <div class="container">
+        <header class="header-member">
+            <div class="nav">
+                <a class="btn btn-secondary" th:href="@{/main_menu.html}">ホーム</a>
+            </div>
+            <h1>会員登録完了</h1>
+        </header>
+
+        <div class="lending-form">
+            <p>氏名: <span th:text="${member.name}"></span></p>
+            <p>氏名フリガナ: <span th:text="${member.nameRuby}"></span></p>
+            <p>生年月日: <span th:text="${member.birthday}"></span></p>
+            <p>住所: <span th:text="${member.address}"></span></p>
+            <p>電話番号: <span th:text="${member.phone}"></span></p>
+            <p>メールアドレス: <span th:text="${member.email}"></span></p>
+
+            <p>上記の内容で会員登録を完了しました。</p>
+
+            <div class="form-actions">
+                <a th:href="@{/member/member_registation}" class="btn btn-primary submit-button">別の会員を登録</a>
+                <a th:href="@{/}" class="back-link btn btn-secondary">メインメニューに戻る</a>
+            </div>
+        </div>
     </div>
-
-    <h1>会員登録完了</h1>
-
-<p>氏名: <span th:text="${member.name}"></span></p>
-<p>氏名フリガナ: <span th:text="${member.nameRuby}"></span></p>
-<p>生年月日: <span th:text="${member.birthday}"></span></p>
-<p>住所: <span th:text="${member.address}"></span></p>
-<p>電話番号: <span th:text="${member.phone}"></span></p>
-<p>メールアドレス: <span th:text="${member.email}"></span></p>
-
-<p>上記の内容で会員登録を完了しました。</p>
-
-    <a th:href="@{/member/regist}">戻る</a>
 </body>
 </html>

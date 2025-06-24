@@ -1,54 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>会員登録確認</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会員登録確認</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-	<div class="nav">
-		<a class="home" href="../main_menu.html">ホーム</a>
-	</div>
+  <div class="container">
+    <header class="header-member">
+      <div class="nav">
+        <a class="btn btn-secondary" th:href="@{/main_menu.html}">ホーム</a>
+      </div>
+      <h1>会員登録確認</h1>
+    </header>
 
-	<h1>会員登録確認</h1>
+    <form th:action="@{/member/member_registation_complete}" th:object="${member}" method="post" class="lending-form">
+      <p>氏名: <span th:text="*{name}"></span></p>
+      <p>氏名フリガナ: <span th:text="*{nameRuby}"></span></p>
+      <p>生年月日: <span th:text="*{birthday}"></span></p>
+      <p>住所: <span th:text="*{address}"></span></p>
+      <p>電話番号: <span th:text="*{phone}"></span></p>
+      <p>メールアドレス: <span th:text="*{email}"></span></p>
 
-	<form th:action="@{/member/member_registation_complete}" th:object="${member}"
-		method="post">
-		<p>
-			氏名: <span th:text="*{name}"></span>
-		</p>
-		<p>
-			氏名フリガナ: <span th:text="*{nameRuby}"></span>
-		</p>
-		<p>
-			生年月日: <span th:text="*{birthday}"></span>
-		</p>
-		<p>
-			住所: <span th:text="*{address}"></span>
-		</p>
-		<p>
-			電話番号: <span th:text="*{phone}"></span>
-		</p>
-		<p>
-			メールアドレス: <span th:text="*{email}"></span>
-		</p>
+      <div class="verification-checkbox">
+        <input type="checkbox" name="confirm" id="confirm" required />
+        <label for="confirm">身分証明書と照合し、本人確認を完了しました。</label>
+      </div>
 
-		<p>
-			<label> <input type="checkbox" name="confirm" required>
-				身分証明書と照合し、本人確認を完了しました。
-			</label>
-		</p>
+      <!-- hiddenフィールド -->
+      <input type="hidden" th:field="*{name}" />
+      <input type="hidden" th:field="*{nameRuby}" />
+      <input type="hidden" th:field="*{birthday}" />
+      <input type="hidden" th:field="*{address}" />
+      <input type="hidden" th:field="*{phone}" />
+      <input type="hidden" th:field="*{email}" />
 
-		<!-- hiddenフィールド -->
-		<input type="hidden" th:field="*{name}" /> <input type="hidden"
-			th:field="*{nameRuby}" /> <input type="hidden"
-			th:field="*{birthday}" /> <input type="hidden" th:field="*{address}" />
-		<input type="hidden" th:field="*{phone}" /> <input type="hidden"
-			th:field="*{email}" />
-
-		<button type="submit">登録</button>
-		<button type="button" onclick="history.back()">戻る</button>
-	</form>
-
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary submit-button">登録</button>
+        <button type="button" onclick="history.back()" class="btn btn-danger back-link">戻る</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
