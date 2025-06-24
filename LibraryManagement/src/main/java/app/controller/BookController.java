@@ -362,6 +362,8 @@ public class BookController {
 
         return "book/book_disposal_loss_input"; // 新しいHTMLファイル
     }
+ // ... (BookControllerクラス内に追加)
+
     /**
      * 廃棄・紛失の入力内容を検証し、確認画面へ渡す
      */
@@ -371,6 +373,7 @@ public class BookController {
                                       RedirectAttributes redirectAttributes,
                                       Model model) {
 
+        // 日付や処理種別が未入力の場合のエラーチェック
         if (result.hasErrors()) {
             // エラーがあった場合、表示に必要なItem情報を再度取得して入力画面に戻る
             Item item = itemService.findById(form.getItemId());
@@ -387,11 +390,10 @@ public class BookController {
      * 廃棄・紛失の確認画面を表示
      */
     @GetMapping("/item/delete/confirm")
-    public String showDisposalLossConfirm(
-            @ModelAttribute("itemActionForm") ItemActionForm form,
-            Model model) {
+    public String showDisposalLossConfirm(@ModelAttribute("itemActionForm") ItemActionForm form,
+                                          Model model) {
 
-        // 画面表示に必要なItem情報を取得してモデルに追加
+        // フォーム情報からitemIdを取得し、改めてItem情報を取得して画面に渡す
         Item item = itemService.findById(form.getItemId());
         model.addAttribute("item", item);
 
@@ -400,21 +402,28 @@ public class BookController {
     /**
      * 廃棄・紛失処理を実行
      */
-    @PostMapping("/item/delete/execute")
-    public String executeDisposalLoss(@ModelAttribute ItemActionForm form, RedirectAttributes redirectAttributes) {
+    @PostMapping("/item/delete/execute") // ← 修正点1
+    public String executeDisposalLoss(@ModelAttribute ItemActionForm form,
+                                      RedirectAttributes redirectAttributes,
+                                      Model model) { // ← 修正点2 のためにModelを追加
         try {
             Item updatedItem = itemService.processItemDisposalOrLoss(form);
-            // 完了画面に情報を渡す
             redirectAttributes.addFlashAttribute("updatedItem", updatedItem);
             redirectAttributes.addFlashAttribute("actionType", form.getActionType());
 
         } catch (Exception e) {
-            // エラーが発生した場合は、元の詳細画面に戻ってエラーメッセージを表示
-            redirectAttributes.addFlashAttribute("errorMessage", "エラーが発生しました: " + e.getMessage());
-            return "redirect:/book/" + form.getItemId(); // 詳細画面へ戻す（要調整）
+            // ★★★ 修正点2 ★★★
+            // エラーが発生した場合は、リダイレクトではなく、
+            // エラーメッセージと再表示用のデータをModelに詰めて、直接入力画面を返す
+            model.addAttribute("errorMessage", "エラーが発生しました: " + e.getMessage());
+            // 表示に必要なItem情報を再度取得
+            Item item = itemService.findById(form.getItemId());
+            model.addAttribute("item", item);
+            model.addAttribute("itemActionForm", form); // 入力値を保持したフォームを渡す
+            return "book/book_disposal_loss_input";
         }
 
-        return "redirect:/book/item/delete/complete";
+        return "redirect:/book/item/delete/complete"; // ← 修正点3
     }
 
     /**
@@ -422,10 +431,12 @@ public class BookController {
      */
     @GetMapping("/item/delete/complete")
     public String showDisposalLossComplete(Model model) {
-        // リダイレクトされた情報がなければメニューに戻す
+        // executeメソッドから渡された情報がない場合は、メニューへリダイレクト
         if (!model.containsAttribute("updatedItem")) {
             return "redirect:/book/menu";
         }
+
+        // ★★★ ".html" を削除するのが正しい書き方です ★★★
         return "book/book_disposal_loss_complete";
     }
 

@@ -18,10 +18,9 @@ import lombok.Data;
 @Data
 public class Reservation {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reserve_id")
-    private int reserveId;
+    private Integer reserveId;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
@@ -64,6 +63,13 @@ public class Reservation {
 
     public void setReserveDate(LocalDate reserveDate) {
         this.reserveDate = reserveDate;
+    }
+
+    public LocalDate getDeadline() {
+        if (reserveDate == null) {
+            return null;
+        }
+        return reserveDate.plusDays(10);  // 例：予約日の14日後を取り置き期限とする
     }
 }
 

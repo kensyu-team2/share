@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>予約キャンセル確認画面</title>
+    <link rel="stylesheet" th:href="@{/css/work_table.css}">
 </head>
 <body>
 
-    <a class="home" th:href="@{/main/menu}">ホームに戻る</a>
+    <a th:href="@{/}" class="header-back-link">メインメニュー</a>
 
     <h1>予約キャンセル確認</h1>
 
@@ -15,7 +16,7 @@
 
     <p>この予約をキャンセルしてよろしいですか？</p>
 
-    <a class="" th:href="@{/work/reserve/cancel/complete}">はい</a>
+    <a th:href="@{/work/reserve/cancel/complete/{reserveId}(reserveId=${reservation.reserveId})}">はい</a>
     <a class="" th:href="@{/work/reserve/list}">戻る</a>
 
 </body>
