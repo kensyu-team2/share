@@ -66,10 +66,12 @@
 			</nav>
 
 			<!-- 戻るボタンのリンク先を修正 -->
-			<div class="action-buttons">
-				<a th:href="@{/book/history/menu}" class="btn btn-secondary">履歴メニューへ戻る</a>
-				<a th:href="@{/}" class="btn btn-secondary">メインメニューへ戻る</a>
-			</div>
+			 <div class="action-buttons">
+                 <!-- 「資料管理メニューに戻る」ボタン -->
+                 <a th:href="@{/book/menu}" class="btn btn-secondary">資料管理メニューへ戻る</a>
+                 <!-- 「メインメニューに戻る」ボタン -->
+                 <a th:href="@{/}" class="btn btn-secondary">メインメニューへ戻る</a>
+            </div>
 		</main>
 	</div>
 </body>
