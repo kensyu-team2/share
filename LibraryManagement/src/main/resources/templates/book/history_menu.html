@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>履歴メニュー</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header><h1>履歴メニュー</h1></header>
+        <main>
+            <!-- ★貸出履歴一覧へのリンク -->
+            <a th:href="@{/book/history/lending}" class="menu-link">貸出履歴</a>
+
+            <a th:href="@{/book/menu}" class="back-link">資料管理メニューへ戻る</a>
+        </main>
+    </div>
+</body>
+</html>

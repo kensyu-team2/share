@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -105,5 +107,14 @@ public class LendingService {
                                       .map(Integer::parseInt)
                                       .collect(Collectors.toList());
         return itemRepository.findAllById(itemIds);
+    }
+
+
+
+    /**
+     * すべての貸出履歴を、ページネーションとソートを適用して取得します。
+     */
+    public Page<Lending> findAllLendingHistory(Pageable pageable) {
+        return lendingRepository.findAll(pageable);
     }
 }
