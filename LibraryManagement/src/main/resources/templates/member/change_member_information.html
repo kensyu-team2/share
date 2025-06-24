@@ -1,57 +1,40 @@
+<!-- templates/member/change_member_information.html -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>会員情報変更</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<div class="container">
+    <header>
+        <a th:href="@{/member/member_list}">会員一覧へ</a>
+        <h1>会員変更</h1>
+    </header>
+    <main>
+        <form th:action="@{/member/edit/confirm}" th:object="${member}" method="post">
+            <input type="hidden" th:field="*{memberId}"/>
 
-    <div class="container">
-        <header class="header-sub-menu header-member">
-            <a href="member_list.html" class="header-back-link">会員一覧へ</a>
-            <h1 class="header-title">会員変更</h1>
-        </header>
+            <label>氏名</label>
+            <input type="text" th:field="*{name}" required/>
 
-        <main>
-            <form action="/members/update" method="post" class="registration-form">
-                
-                <div class="form-columns">
-                    <div class="column">
-                        <div class="form-group">
-                            <label for="name">氏名</label>
-                            <input type="text" id="name" name="name" class="input-field" value="山田 太郎">
-                        </div>
-                        <div class="form-group">
-                            <label for="name-kana">フリガナ</label>
-                            <input type="text" id="name-kana" name="nameKana" class="input-field" value="ヤマダ タロウ">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">電話番号</label>
-                            <input type="tel" id="phone" name="phone" class="input-field" value="090-1234-5678">
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="form-group">
-                            <label for="email">メール</label>
-                            <input type="email" id="email" name="email" class="input-field" value="taro.yamada@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="address">住所</label>
-                            <input type="text" id="address" name="address" class="input-field" value="北海道札幌市中央区1-2-3">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-actions">
-                    <div class="center-bottun"><a href="change_member_information_confirm.html" class="btn btn-primary">変更</a></div>
-                    <a href="member_list.html" class="back-link">戻る</a>
-                </div>
+            <label>フリガナ</label>
+            <input type="text" th:field="*{nameRuby}" required/>
 
-            </form>
-        </main>
-    </div>
+            <label>電話番号</label>
+            <input type="tel" th:field="*{phone}" required/>
 
+            <label>メール</label>
+            <input type="email" th:field="*{email}" required/>
+
+            <label>住所</label>
+            <input type="text" th:field="*{address}" required/>
+
+            <button type="submit">確認</button>
+            <a th:href="@{/member/member_list}">戻る</a>
+        </form>
+    </main>
+</div>
 </body>
 </html>

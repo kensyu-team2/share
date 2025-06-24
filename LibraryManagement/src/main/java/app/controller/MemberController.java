@@ -1,6 +1,7 @@
 package app.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,4 +63,43 @@ public class MemberController {
         model.addAttribute("member", memberService.findById(memberId).orElse(null));
         return "member/member_reservation_list";  // 予約一覧表示用のテンプレートを作成
     }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable("id") Integer id, Model model) {
+        Member member = memberService.findById(id).orElse(null);
+        if (member == null) {
+            throw new IllegalArgumentException("Invalid member ID: " + id);
+        }
+        model.addAttribute("member", member);
+        return "member/change_member_information";
+    }
+
+    @PostMapping("/edit/confirm")
+    public String confirmEdit(@ModelAttribute("member") Member member, Model model) {
+        model.addAttribute("member", member);
+        return "member/change_member_information_confirm";
+    }
+
+    @PostMapping("/edit/complete")
+    public String completeEdit(@ModelAttribute Member formMember, Model model) {
+        // DBから元のMemberを取得（Optional対応）
+        Optional<Member> optionalMember = memberService.findById(formMember.getMemberId());
+        if (optionalMember.isPresent()) {
+            Member existing = optionalMember.get();
+            // 変更禁止項目を復元
+            formMember.setBirthday(existing.getBirthday());
+            formMember.setRegistrationDate(existing.getRegistrationDate());
+            // 保存
+            memberService.save(formMember);
+            model.addAttribute("member", formMember);
+            return "member/change_member_information_complete";
+
+        } else {
+            // ID不正などで会員が存在しない場合の処理
+            model.addAttribute("errorMessage", "会員情報が見つかりませんでした。");
+            return "error";
+        }
+    }
+
+
 }
