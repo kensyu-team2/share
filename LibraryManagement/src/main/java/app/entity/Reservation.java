@@ -33,13 +33,13 @@ public class Reservation {
     @Column(name = "reserve_date", nullable = false)
     private LocalDate reserveDate;
 
-    public int getReserveId() {
-        return reserveId;
-    }
+//    public int getReserveId() {
+//        return reserveId;
+//    }
 
-    public void setReserveId(int reserveId) {
-        this.reserveId = reserveId;
-    }
+//    public void setReserveId(int reserveId) {
+//        this.reserveId = reserveId;
+//    }
 
     public Book getBook() {
         return book;
