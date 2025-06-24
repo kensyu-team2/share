@@ -35,45 +35,24 @@ public class MemberController {
         return "member/member_list";
     }
 
-
-
-    // 会員登録画面表示
+    // 会員登録入力
     @GetMapping("/member_registation")
     public String showRegistrationForm(Model model) {
         model.addAttribute("member", new Member());
-        return "member/member_registation"; // 会員登録フォーム
+        return "member/member_registation";
     }
-
-    // 会員登録処理
-    @PostMapping("/member_registation")
-    public String registerMember(@ModelAttribute Member member) {
-        memberService.save(member);
-        return "redirect:/member";
+    // 会員登録確認
+    @PostMapping("/member_registation_confirm")
+    public String confirmRegistration(@ModelAttribute("member") Member member, Model model) {
+        model.addAttribute("member", member); // 明示的に渡す
+        return "member/member_registation_confirm";
     }
-
-    // 会員詳細表示・編集画面
-//    @GetMapping("/edit/{id}")
-//    public String showEditForm(@PathVariable Long id, Model model) {
-//        Member member = memberService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid member Id:" + id));
-//        model.addAttribute("member", member);
-//        return "member/edit";
-//    }
-
-    // 会員更新処理
-//    @PostMapping("/edit/{id}")
-//    public String updateMember(@PathVariable Long id, @ModelAttribute Member member) {
-//        member.setMemberId(id);
-//        memberService.save(member);
-//        return "redirect:/member";
-//    }
-
-    // 会員削除処理
-//    @GetMapping("/delete/{id}")
-//    public String deleteMember(@PathVariable Long id) {
-//        memberService.deleteById(id);
-//        return "redirect:/member";
-//    }
-
+    // 会員登録完了
+    @PostMapping("/member_registation_complete")
+    public String completeRegistration(@ModelAttribute("member") Member member) {
+        memberService.save(member); // 登録日もここでセットされる
+        return "member/member_registation_complete";
+    }
  // 予約一覧表示
     @GetMapping("/member_reservation_list/{memberId}")
     public String showReservationList(@PathVariable Integer memberId, Model model) {
