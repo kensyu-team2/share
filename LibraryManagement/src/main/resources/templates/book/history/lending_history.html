@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>貸出履歴</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>貸出履歴</h1>
+        </header>
+
+        <main>
+            <div class="history-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>資料ID</th>
+                            <th>資料名</th>
+                            <th>貸出日</th>
+                            <th>利用会員ID</th>
+                            <th>利用会員名</th>
+                            <th>返却日</th>
+                            <th>廃棄状態</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="lending : ${lendingPage.content}">
+                            <td th:text="${lending.item.itemId}"></td>
+                            <td th:text="${lending.item.book.bookName}"></td>
+                            <td th:text="${#temporals.format(lending.lendDate, 'yyyy/MM/dd')}"></td>
+                            <td th:text="${lending.member.memberId}"></td>
+                            <td th:text="${lending.member.name}"></td>
+                            <td th:text="${lending.returnDate != null} ? ${#temporals.format(lending.returnDate, 'yyyy/MM/dd')} : '-' "></td>
+                            <td th:text="${lending.item.deleteDate != null} ? '廃棄済' : ' - '"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ページネーション コントロール -->
+            <nav class="pagination" th:if="${lendingPage.totalPages > 1}">
+            <ul>
+                <li><a th:href="@{/book/history/lending(page=0, ...)}">...</a></li>
+                <!-- ... 他のページリンクも同様に修正 ... -->
+            </ul>
+        </nav>
+
+        <!-- 戻るボタンのリンク先を修正 -->
+        <div class="action-buttons">
+             <a th:href="@{/book/history/menu}" class="btn btn-secondary">履歴メニューへ戻る</a>
+             <a th:href="@{/}" class="btn btn-secondary">メインメニューへ戻る</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

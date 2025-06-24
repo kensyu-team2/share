@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.entity.Book; // 追加
 import app.entity.Category;
+import app.entity.Lending;
 import app.entity.Member;
 import app.entity.Reservation;
 import app.entity.Type;
@@ -33,6 +34,7 @@ import app.repository.MemberRepository;
 import app.repository.ReservationRepository;
 import app.repository.TypeRepository;
 import app.service.BookService;
+import app.service.LendingService;
 
 @Controller
 @RequestMapping("book")
@@ -51,6 +53,9 @@ public class BookController {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+
+	@Autowired
+    private LendingService lendingService;
 
 	/**
 	 * プルダウン用のマスタデータをModelに追加する共通メソッド
@@ -329,4 +334,31 @@ public class BookController {
 		}
 		return "book/book_reservation_complete";
 	}
+
+	/**
+     * 履歴メニュー画面を表示します。
+     * (GET /book/history_menu)
+     */
+    @GetMapping("/history_menu")
+    public String showHistoryMenu() {
+        return "book/history_menu"; // templates/book/history_menu.html を表示
+    }
+
+    /**
+     * 貸出履歴一覧画面を表示します。
+     * (GET /book/history/lending)
+     * @param pageable デフォルトは0ページ目、10件表示、貸出日の降順
+     */
+    @GetMapping("/history/lending") // ← パスを "/lending_history" から "/history/lending" に変更
+    public String showLendingHistory(
+            @PageableDefault(page = 0, size = 10, sort = "lendDate", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model) {
+
+        Page<Lending> lendingPage = lendingService.findAllLendingHistory(pageable);
+
+        model.addAttribute("lendingPage", lendingPage);
+
+        // ★ 返すビューのパスも、フォルダ構成に合わせて修正
+        return "book/history/lending_history";
+    }
 }
