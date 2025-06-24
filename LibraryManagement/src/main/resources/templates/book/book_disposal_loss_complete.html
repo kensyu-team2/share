@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>資料処理完了</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="header-sub-menu header-material">
+            <h1 class="header-title">資料処理完了</h1>
+        </header>
+        <main class="confirmation-content">
+            <div class="alert alert-success" th:object="${updatedItem}">
+                <p>以下の情報で登録しました。</p>
+                <p>
+                    アイテムID「<b th:text="*{itemId}"></b>」の資料を
+                    <b th:if="${actionType == 'dispose'}" th:text="|*{#temporals.format(deleteDate, 'yyyy/MM/dd')}付で廃棄しました。|"></b>
+                    <b th:if="${actionType == 'lose'}" th:text="|*{#temporals.format(lostDate, 'yyyy/MM/dd')}付で紛失登録しました。|"></b>
+                </p>
+            </div>
+            <div class="action-buttons">
+                <a th:href="@{/book/{id}(id=${updatedItem.book.bookId})}" class="btn btn-secondary">詳細画面へ戻る</a>
+                <a th:href="@{/book/menu}" class="btn btn-secondary">資料管理メニューへ</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

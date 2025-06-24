@@ -18,22 +18,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.entity.Book; // 追加
 import app.entity.Category;
+import app.entity.Item;
 import app.entity.Member;
 import app.entity.Reservation;
 import app.entity.Type;
 import app.form.BookForm;
 import app.form.BookSearchForm; // 追加
+import app.form.ItemActionForm;
 import app.form.ReservationForm;
 import app.repository.CategoryRepository;
 import app.repository.MemberRepository;
 import app.repository.ReservationRepository;
 import app.repository.TypeRepository;
 import app.service.BookService;
-
+import app.service.ItemService; // ItemServiceを後で作成
 @Controller
 @RequestMapping("book")
 public class BookController {
@@ -51,7 +54,8 @@ public class BookController {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
-
+	@Autowired
+    private ItemService itemService;
 	/**
 	 * プルダウン用のマスタデータをModelに追加する共通メソッド
 	 */
@@ -329,4 +333,86 @@ public class BookController {
 		}
 		return "book/book_reservation_complete";
 	}
+	/**
+     * 廃棄・紛失登録フォーム画面を表示
+     */
+    @PostMapping("/item/delete/form")
+    public String showDisposalLossForm(@RequestParam("itemId") Integer itemId, Model model) {
+
+        Item item = itemService.findById(itemId);
+
+        ItemActionForm form = new ItemActionForm();
+        form.setItemId(itemId);
+
+        model.addAttribute("item", item);
+        model.addAttribute("itemActionForm", form);
+
+        return "book/book_disposal_loss_input"; // 新しいHTMLファイル
+    }
+    /**
+     * 廃棄・紛失の入力内容を検証し、確認画面へ渡す
+     */
+    @PostMapping("/item/delete/confirm")
+    public String confirmDisposalLoss(@Validated @ModelAttribute("itemActionForm") ItemActionForm form,
+                                      BindingResult result,
+                                      RedirectAttributes redirectAttributes,
+                                      Model model) {
+
+        if (result.hasErrors()) {
+            // エラーがあった場合、表示に必要なItem情報を再度取得して入力画面に戻る
+            Item item = itemService.findById(form.getItemId());
+            model.addAttribute("item", item);
+            return "book/book_disposal_loss_input";
+        }
+
+        // エラーがなければ、フォーム情報をリダイレクト先に渡す
+        redirectAttributes.addFlashAttribute("itemActionForm", form);
+        return "redirect:/book/item/delete/confirm";
+    }
+
+    /**
+     * 廃棄・紛失の確認画面を表示
+     */
+    @GetMapping("/item/delete/confirm")
+    public String showDisposalLossConfirm(
+            @ModelAttribute("itemActionForm") ItemActionForm form,
+            Model model) {
+
+        // 画面表示に必要なItem情報を取得してモデルに追加
+        Item item = itemService.findById(form.getItemId());
+        model.addAttribute("item", item);
+
+        return "book/book_disposal_loss_confirm";
+    }
+    /**
+     * 廃棄・紛失処理を実行
+     */
+    @PostMapping("/item/delete/execute")
+    public String executeDisposalLoss(@ModelAttribute ItemActionForm form, RedirectAttributes redirectAttributes) {
+        try {
+            Item updatedItem = itemService.processItemDisposalOrLoss(form);
+            // 完了画面に情報を渡す
+            redirectAttributes.addFlashAttribute("updatedItem", updatedItem);
+            redirectAttributes.addFlashAttribute("actionType", form.getActionType());
+
+        } catch (Exception e) {
+            // エラーが発生した場合は、元の詳細画面に戻ってエラーメッセージを表示
+            redirectAttributes.addFlashAttribute("errorMessage", "エラーが発生しました: " + e.getMessage());
+            return "redirect:/book/" + form.getItemId(); // 詳細画面へ戻す（要調整）
+        }
+
+        return "redirect:/book/item/delete/complete";
+    }
+
+    /**
+     * 廃棄・紛失の完了画面を表示
+     */
+    @GetMapping("/item/delete/complete")
+    public String showDisposalLossComplete(Model model) {
+        // リダイレクトされた情報がなければメニューに戻す
+        if (!model.containsAttribute("updatedItem")) {
+            return "redirect:/book/menu";
+        }
+        return "book/book_disposal_loss_complete";
+    }
 }
