@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>予約一覧</title>
+    <meta charset="UTF-8">
+    <title>予約一覧</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-  <h2>予約一覧</h2>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>予約ID</th>
-        <th>タイトル</th>
-        <th>著者</th>
-        <th>予約日</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="res : ${reservations}">
-        <td th:text="${res.reserveId}"></td>
-        <td th:text="${res.book.bookName}"></td>
-        <td th:text="${res.book.authorName}"></td>
-        <td th:text="${res.reserveDate}"></td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="container container-wide">
+        <header class="header-sub-menu header-member">
+            <a th:href="@{/}" class="header-back-link">メインメニューへ</a>
+            <h1 class="header-title">予約一覧</h1>
+        </header>
+
+        <main class="page-content">
+            <div class="panel-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>予約ID</th>
+                            <th>タイトル</th>
+                            <th>著者</th>
+                            <th>予約日</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="res : ${reservations}">
+                            <td th:text="${res.reserveId}"></td>
+                            <td th:text="${res.book.bookName}"></td>
+                            <td th:text="${res.book.authorName}"></td>
+                            <td th:text="${res.reserveDate}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

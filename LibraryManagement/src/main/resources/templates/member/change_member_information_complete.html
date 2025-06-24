@@ -1,4 +1,3 @@
-<!-- templates/member/change_member_information_complete.html -->
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -8,20 +7,37 @@
 </head>
 <body>
 <div class="container">
-    <header>
-        <a th:href="@{/member/member_list}">会員一覧へ</a>
-        <h1>会員変更完了</h1>
+    <header class="header-sub-menu header-member">
+        <h1 class="header-title">会員変更完了</h1>
     </header>
-    <main>
-        <p>以下の内容で会員情報を変更しました。</p>
 
-        <p>氏名：<span th:text="${member.name}"></span></p>
-        <p>フリガナ：<span th:text="${member.nameRuby}"></span></p>
-        <p>電話番号：<span th:text="${member.phone}"></span></p>
-        <p>メール：<span th:text="${member.email}"></span></p>
-        <p>住所：<span th:text="${member.address}"></span></p>
+    <main class="confirmation-content">
+        <div class="alert alert-success">
+            <p>以下の内容で会員情報を変更しました。</p>
+        </div>
 
-        <a th:href="@{/member/member_list}" class="btn btn-primary">戻る</a>
+        <div class="info-box" th:object="${member}">
+            <dl class="info-dl">
+                <dt>氏名</dt>
+                <dd th:text="*{name}"></dd>
+
+                <dt>フリガナ</dt>
+                <dd th:text="*{nameRuby}"></dd>
+
+                <dt>電話番号</dt>
+                <dd th:text="*{phone}"></dd>
+
+                <dt>メール</dt>
+                <dd th:text="*{email}"></dd>
+
+                <dt>住所</dt>
+                <dd th:text="*{address}"></dd>
+            </dl>
+        </div>
+
+        <div class="action-buttons">
+            <a th:href="@{/member/member_list}" class="btn btn-primary">会員一覧へ</a>
+        </div>
     </main>
 </div>
 </body>

@@ -2,7 +2,6 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>資料登録確認</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -11,37 +10,58 @@
     <header class="header-sub-menu header-material">
         <h1 class="header-title">資料登録確認</h1>
     </header>
-    <main>
-        <p>以下の内容で登録しますか？</p>
 
-        <div th:object="${bookForm}">
-            <h3>登録内容</h3>
-            <ul>
-                <li>ISBN: <span th:text="*{isbn}">978-4-xxxx-xxxx-x</span></li>
-                <li>書籍名: <span th:text="*{bookName}">書籍名が入ります</span></li>
-                <li>書籍名フリガナ: <span th:text="*{bookRuby}">しょせきめいふりがな</span></li>
-                <li>著者名: <span th:text="*{authorName}">著者名が入ります</span></li>
-                <li>著者名フリガナ: <span th:text="*{authorRuby}">ちょしゃめいふりがな</span></li>
-                <li>出版社: <span th:text="*{publisher}">出版社が入ります</span></li>
-                <li>出版年月日: <span th:text="*{publishDate}">2025-06-20</span></li>
-                <li>カテゴリID: <span th:text="*{categoryId}">1</span></li>
-                <li>タイプID: <span th:text="*{typeId}">1</span></li>
-            </ul>
+    <main class="confirmation-content">
+        <p class="prompt-message">以下の内容で登録しますか？</p>
+
+        <div class="info-box">
+            <dl class="info-dl" th:object="${bookForm}">
+                <dt>ISBN</dt>
+                <dd th:text="*{isbn}">978-4-xxxx-xxxx-x</dd>
+
+                <dt>書籍名</dt>
+                <dd th:text="*{bookName}">書籍名が入ります</dd>
+
+                <dt>書籍名フリガナ</dt>
+                <dd th:text="*{bookRuby}">しょせきめいふりがな</dd>
+
+                <dt>著者名</dt>
+                <dd th:text="*{authorName}">著者名が入ります</dd>
+
+                <dt>著者名フリガナ</dt>
+                <dd th:text="*{authorRuby}">ちょしゃめいふりがな</dd>
+
+                <dt>出版社</dt>
+                <dd th:text="*{publisher}">出版社が入ります</dd>
+
+                <dt>出版年月日</dt>
+                <dd th:text="*{#temporals.format(publishDate, 'yyyy/MM/dd')}">2025/06/20</dd>
+
+                <dt>入荷年月日</dt>
+                <dd th:text="*{#temporals.format(arrivalDate, 'yyyy/MM/dd')}">2025/06/24</dd>
+
+                <dt>カテゴリID</dt>
+                <dd th:text="*{categoryId}">1</dd>
+
+                <dt>タイプID</dt>
+                <dd th:text="*{typeId}">1</dd>
+            </dl>
         </div>
 
         <form th:action="@{/book/execute}" th:object="${bookForm}" method="post">
             <input type="hidden" th:field="*{isbn}">
             <input type="hidden" th:field="*{bookName}">
+            <input type="hidden" th:field="*{bookRuby}">
             <input type="hidden" th:field="*{authorName}">
+            <input type="hidden" th:field="*{authorRuby}">
+            <input type="hidden" th:field="*{publisher}">
             <input type="hidden" th:field="*{publishDate}">
+            <input type="hidden" th:field="*{arrivalDate}">
             <input type="hidden" th:field="*{categoryId}">
             <input type="hidden" th:field="*{typeId}">
 
-            <input type="hidden" th:field="*{bookRuby}">
-            <input type="hidden" th:field="*{authorRuby}">
-            <input type="hidden" th:field="*{publisher}">
-            <div class="form-actions mt-4">
-                <a href="javascript:history.back()" class="btn btn-secondary">戻る</a>
+            <div class="action-buttons mt-4">
+                <a href="javascript:history.back()" class="btn btn-danger">戻る</a>
                 <button type="submit" class="btn btn-primary">登録実行</button>
             </div>
         </form>

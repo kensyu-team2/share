@@ -1,40 +1,53 @@
-<!-- templates/member/change_member_information.html -->
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>会員情報変更</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<title>会員情報変更</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<div class="container">
-    <header>
-        <a th:href="@{/member/member_list}">会員一覧へ</a>
-        <h1>会員変更</h1>
-    </header>
-    <main>
-        <form th:action="@{/member/edit/confirm}" th:object="${member}" method="post">
-            <input type="hidden" th:field="*{memberId}"/>
+	<div class="container">
+		<header class="header-sub-menu header-member">
+			<a th:href="@{/member/member_list}">会員一覧へ</a>
+			<h1>会員変更</h1>
+		</header>
+		<main>
+			<form th:action="@{/member/edit/confirm}" th:object="${member}"
+				method="post" class="registration-form">
 
-            <label>氏名</label>
-            <input type="text" th:field="*{name}" required/>
+				<input type="hidden" th:field="*{memberId}" />
 
-            <label>フリガナ</label>
-            <input type="text" th:field="*{nameRuby}" required/>
+				<div class="form-group">
+					<label>氏名</label>
+					<input type="text" th:field="*{name}" class="input-field" required />
+				</div>
 
-            <label>電話番号</label>
-            <input type="tel" th:field="*{phone}" required/>
+				<div class="form-group">
+					<label>フリガナ</label>
+					<input type="text" th:field="*{nameRuby}" class="input-field" required />
+				</div>
 
-            <label>メール</label>
-            <input type="email" th:field="*{email}" required/>
+				<div class="form-group">
+					<label>電話番号</label>
+					<input type="tel" th:field="*{phone}" class="input-field" required />
+				</div>
 
-            <label>住所</label>
-            <input type="text" th:field="*{address}" required/>
+				<div class="form-group">
+					<label>メール</label>
+					<input type="email" th:field="*{email}" class="input-field" required />
+				</div>
 
-            <button type="submit">確認</button>
-            <a th:href="@{/member/member_list}">戻る</a>
-        </form>
-    </main>
-</div>
+				<div class="form-group">
+					<label>住所</label>
+					<input type="text" th:field="*{address}" class="input-field" required />
+				</div>
+
+				<div class="action-buttons">
+					<a th:href="@{/member/member_list}" class="btn btn-secondary">戻る</a>
+					<button type="submit" class="btn btn-primary">確認</button>
+				</div>
+			</form>
+		</main>
+	</div>
 </body>
 </html>
