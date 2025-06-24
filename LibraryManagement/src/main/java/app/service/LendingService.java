@@ -116,5 +116,14 @@ public class LendingService {
      */
     public Page<Lending> findAllLendingHistory(Pageable pageable) {
         return lendingRepository.findAll(pageable);
+    } // ★★★ 閉じ括弧をここに移動 ★★★
+
+    /**
+     * 特定の書籍(bookId)に関する全貸出履歴を取得します。
+     * @param bookId 検索対象の書籍ID
+     * @return 貸出エンティティのリスト
+     */
+    public List<Lending> findLendingHistoryByBookId(Integer bookId) {
+        return lendingRepository.findByItem_Book_BookIdOrderByLendDateDesc(bookId);
     }
 }
