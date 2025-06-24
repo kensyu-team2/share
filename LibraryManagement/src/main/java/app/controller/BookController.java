@@ -429,15 +429,6 @@ public class BookController {
         return "book/book_disposal_loss_complete";
     }
 
-	/**
-     * 履歴メニュー画面を表示します。
-     * (GET /book/history/menu)
-     */
-    @GetMapping("/history/menu")
-    public String showHistoryMenu() {
-        return "book/history_menu";
-    }
-
     /**
      * 貸出履歴一覧画面を表示します。
      * (GET /book/history/lending)
