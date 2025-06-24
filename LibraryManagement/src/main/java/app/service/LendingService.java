@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,5 +93,17 @@ public class LendingService {
             item.setStatus(statusLent);
             itemRepository.save(item);
         }
+    }
+
+    public Member findMemberById(Integer memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("会員が見つかりません: " + memberId));
+    }
+
+    public List<Item> findItemsByIds(List<String> itemIdStrings) {
+        List<Integer> itemIds = itemIdStrings.stream()
+                                      .map(Integer::parseInt)
+                                      .collect(Collectors.toList());
+        return itemRepository.findAllById(itemIds);
     }
 }

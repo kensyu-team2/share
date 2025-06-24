@@ -29,19 +29,19 @@
                         <div class="details-column">
                             <div class="info-box">
                                 <span class="info-label">会員ID</span>
-                                <span class="info-value" th:text="${confirmationData.member.memberId}">10001</span>
+                                <span class="info-value" th:text="${member.memberId}">10001</span>
                             </div>
-                            <div class.info-box>
+                            <div class="info-box">
                                 <span class="info-label">会員名</span>
-                                <span class="info-value" th:text="${confirmationData.member.name}">山田 太郎</span>
+                                <span class="info-value" th:text="${member.name}">山田 太郎</span>
                             </div>
                             <div class="info-box">
                                 <span class="info-label">貸出年月日</span>
-                                <span class="info-value" th:text="${#temporals.format(confirmationData.lendDate, 'yyyy/MM/dd')}">2025/06/23</span>
+                                <span class="info-value" th:text="${#temporals.format(lendDate, 'yyyy/MM/dd')}">2025/06/24</span>
                             </div>
                             <div class="info-box">
                                 <span class="info-label">返却期日</span>
-                                <span class="info-value" th:text="${#temporals.format(confirmationData.dueDate, 'yyyy/MM/dd')}">2025/07/07</span>
+                                <span class="info-value" th:text="${#temporals.format(dueDate, 'yyyy/MM/dd')}">2025/07/08</span>
                             </div>
                         </div>
 
@@ -49,7 +49,7 @@
                             <div class="item-list-box">
                                 <div class="info-label">貸出資料一覧</div>
                                 <ul>
-                                    <li th:each="item : ${confirmationData.items}"
+                                    <li th:each="item : ${items}"
                                         th:text="|資料ID: ${item.itemId} / ${item.book.bookName}|">
                                         資料ID: 2001 / Spring Boot入門
                                     </li>

@@ -27,7 +27,7 @@ public class HomeController {
     /** 貸出メニュー表示 */
     @GetMapping("/lending/menu")
     public String showLendingMenu() {
-        return "lending/lending_input"; // templates/lending/lending_menu.html
+        return "redirect:/lending/input";  // templates/lending/lending_menu.html
     }
 
     /** 返却メニュー表示 */
