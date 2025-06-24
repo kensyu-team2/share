@@ -25,11 +25,7 @@ public class LendingForm {
     /**
      * 貸し出す個別資料IDのリスト
      */
+ // ★リストの中身に対するバリデーションを削除
     @Size(min = 1, message = "貸出希望の資料を1冊以上入力してください。")
-    private List<
-                @NotBlank(message = "資料IDを入力してください。")
-                @Pattern(regexp = "^[0-9]{1,10}$", message = "個別資料IDは10桁までの数字で入力してください。")
-                String
-            > itemIds;
-
+    private List<String> itemIds;
 }

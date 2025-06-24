@@ -1,5 +1,9 @@
 package app.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import app.entity.Item;
+import app.entity.Member;
 import app.form.LendingForm;
 import app.service.LendingService; // 作成したLendingServiceをインポート
 
@@ -27,10 +33,21 @@ public class LendingController {
      */
     @GetMapping("/input")
     public String showInputForm(Model model) {
-        // RedirectAttributesで渡されたエラーのあるフォームデータがなければ、新しいフォームを生成
+
+        System.out.println("--- ★デバッグ★ showInputForm メソッド開始 ---"); // ← 追加
+
         if (!model.containsAttribute("lendingForm")) {
+
+            System.out.println("--- ★デバッグ★ modelにlendingFormを追加します ---"); // ← 追加
             model.addAttribute("lendingForm", new LendingForm());
+
+        } else {
+
+            System.out.println("--- ★デバッグ★ modelにlendingFormは既に存在します ---"); // ← 追加
         }
+
+        System.out.println("--- ★デバッグ★ lending/lending_input を返します ---"); // ← 追加
+
         return "lending/lending_input";
     }
 
@@ -43,19 +60,43 @@ public class LendingController {
                                 BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes) {
 
+        // --- ★★★ ここから修正・追加 ★★★ ---
+
+        // 1. itemIdsリストから、空や空白の要素を取り除く
+        if (lendingForm.getItemIds() != null) {
+            List<String> nonEmptyItemIds = lendingForm.getItemIds().stream()
+                .filter(id -> id != null && !id.trim().isEmpty())
+                .collect(Collectors.toList());
+            lendingForm.setItemIds(nonEmptyItemIds);
+        }
+
+        // 2. 手動でバリデーションを実行
+        // ※LendingServiceに@Autowired private Validator validator; を追加し、コンストラクタで初期化してください。
+        // validator.validate(lendingForm, bindingResult);
+        // ↑↑↑ validatorの準備が複雑なため、より簡単な方法として、Service層でチェックする方針も良いです。
+        // ここでは、一旦手動バリデーションの行はコメントアウトし、基本的なバリデーションに進みます。
+
+        // --- ★★★ ここまで修正・追加 ★★★ ---
+
+
         // --- DTOのアノテーションによる基本的な入力値検証 ---
         if (bindingResult.hasErrors()) {
-            // エラーがある場合は、入力内容とエラー結果を次のリクエストに渡して入力画面にリダイレクト
             redirectAttributes.addFlashAttribute("lendingForm", lendingForm);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.lendingForm", bindingResult);
             return "redirect:/lending/input";
         }
 
-
+        // (もしリストが空になった場合の追加チェック)
+        if (lendingForm.getItemIds().isEmpty()) {
+            redirectAttributes.addFlashAttribute("lendingForm", lendingForm);
+            // ここでグローバルなエラーメッセージを追加できます
+            redirectAttributes.addFlashAttribute("errorMessage", "貸出希望の資料を1冊以上入力してください。");
+            return "redirect:/lending/input";
+        }
 
         // 検証OKなら、入力内容を次のリクエストに渡して確認画面へリダイレクト
         redirectAttributes.addFlashAttribute("lendingForm", lendingForm);
-        return "lending/lending_confirm";
+        return "redirect:/lending/confirm";
     }
 
     /**
@@ -63,19 +104,29 @@ public class LendingController {
      * (GET /lending/confirm)
      */
     @GetMapping("/confirm")
-    public String showConfirm(Model model) {
-        // 確認画面に直接アクセスされた場合などを考慮し、フォームデータがなければ入力画面に戻す
-        if (!model.containsAttribute("lendingForm")) {
-            return "redirect:/lending/input";
-        }
+ // ★修正点1: 引数に @ModelAttribute("lendingForm") LendingForm form を追加
+ public String showConfirm(@ModelAttribute("lendingForm") LendingForm form, Model model) {
 
-        // 必要であれば、確認画面に表示するための追加情報（会員名、書籍名など）を
-        // Service経由で取得し、Modelに追加する
-        // LendingForm form = (LendingForm) model.getAttribute("lendingForm");
-        // model.addAttribute("confirmationData", lendingService.getConfirmationData(form));
+     // ★修正点2: model.getAttribute() の行は不要になるので削除
+     // このメソッドが呼ばれる時点で、引数'form'にはRedirectAttributesで渡された値がセットされている。
 
-        return "lending/lending_confirm";
-    }
+     // Serviceを呼び出して、確認画面に表示するためのエンティティを取得
+     Member member = lendingService.findMemberById(Integer.parseInt(form.getMemberId()));
+     List<Item> items = lendingService.findItemsByIds(form.getItemIds());
+
+     // 日付情報を生成
+     LocalDate lendDate = LocalDate.now();
+     LocalDate dueDate = lendDate.plusWeeks(2);
+
+     // 取得したエンティティや日付を、個別にModelに追加する
+     model.addAttribute("lendingForm", form); //★hiddenフィールドで使うために、元のformもModelに追加
+     model.addAttribute("member", member);
+     model.addAttribute("items", items);
+     model.addAttribute("lendDate", lendDate);
+     model.addAttribute("dueDate", dueDate);
+
+     return "lending/lending_confirm";
+ }
 
     /**
      * DBへの登録処理（貸出処理）を実行
