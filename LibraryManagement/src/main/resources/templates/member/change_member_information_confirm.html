@@ -1,64 +1,45 @@
+<!-- templates/member/change_member_information_confirm.html -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>会員変更確認</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<div class="container">
+    <header>
+        <a th:href="@{'/member/edit/' + ${member.memberId}}">入力に戻る</a>
+        <h1>会員変更確認</h1>
+    </header>
+    <main>
+        <form th:action="@{/member/edit/complete}" th:object="${member}" method="post">
+            <input type="hidden" th:field="*{memberId}"/>
+            <input type="hidden" th:field="*{name}"/>
+            <input type="hidden" th:field="*{nameRuby}"/>
+            <input type="hidden" th:field="*{phone}"/>
+            <input type="hidden" th:field="*{email}"/>
+            <input type="hidden" th:field="*{address}"/>
+            <input type="hidden" th:field="*{registrationDate}"/>
 
-    <div class="container">
-        <header class="header-sub-menu header-member">
-            <a href="change_member_information.html" class="header-back-link">入力に戻る</a>
-            <h1 class="header-title">会員変更確認</h1>
-        </header>
+            <p>氏名：<span th:text="*{name}"></span></p>
+            <p>フリガナ：<span th:text="*{nameRuby}"></span></p>
+            <p>電話番号：<span th:text="*{phone}"></span></p>
+            <p>メール：<span th:text="*{email}"></span></p>
+            <p>住所：<span th:text="*{address}"></span></p>
 
-        <main>
-            <form action="/members/update/execute" method="post" class="confirmation-content">
-                
-                <div class="confirmation-grid">
-                    <div class="details-column">
-                        <div class="info-box">
-                            <span class="info-label">氏名</span>
-                            <span class="info-value">山田 太郎</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">フリガナ</span>
-                            <span class="info-value">ヤマダ タロウ</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">電話番号</span>
-                            <span class="info-value">090-1234-5678</span>
-                        </div>
-                    </div>
-                    <div class="items-column">
-                        <div class="info-box">
-                            <span class="info-label">メール</span>
-                            <span class="info-value">taro.yamada@example.com</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">住所</span>
-                            <span class="info-value">北海道札幌市中央区1-2-3</span>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <label>
+                    <input type="checkbox" required>
+                    身分証明書と照合し、本人確認を完了しました。
+                </label>
+            </div>
 
-                <div class="verification-checkbox">
-                    <input type="checkbox" id="identity-verified" name="identityVerified" required>
-                    <label for="identity-verified">身分証明書と照合し、本人確認を完了しました。</label>
-                </div>
-
-                <p class="prompt-message">上記の内容でよろしいでしょうか？</p>
-
-                <div class="action-buttons">
-                    <a href="change_member_information_complete.html" class="btn btn-primary">変更</a>
-                    <a href="change_member_information.html" class="btn btn-danger">修正</a>
-                </div>
-
-            </form>
-        </main>
-    </div>
-
+            <p>上記の内容でよろしいですか？</p>
+            <button type="submit">変更</button>
+            <a th:href="@{'/member/edit/' + ${member.memberId}}">修正</a>
+        </form>
+    </main>
+</div>
 </body>
 </html>

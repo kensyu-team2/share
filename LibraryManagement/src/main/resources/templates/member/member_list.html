@@ -45,6 +45,7 @@
     <td th:text="${member.registrationDate}">2024-01-05</td>
     <td th:text="${member.retireDate != null ? member.retireDate : '-'}">-</td>
     <td><a th:href="@{'/member/edit/' + ${member.memberId}}" class="btn-table-edit">変更</a></td>
+
     <td><a th:href="@{'/member/member_reservation_list/' + ${member.memberId}}" class="btn-table-edit">一覧</a></td>
 </tr>
 
