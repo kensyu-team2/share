@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>資料履歴</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>資料履歴</h1>
+        </header>
+
+        <main>
+            <!-- 書籍情報の表示 -->
+            <div class="book-info-box" th:object="${book}">
+                <h2 th:text="|*{bookId} : *{bookName}|"></h2>
+                <p th:text="|著者: *{authorName} / 出版社: *{publisher} / 発行日: ${#temporals.format(book.publishDate, 'yyyy/MM/dd')}|"></p>
+            </div>
+
+            <!-- 履歴一覧テーブル -->
+            <div class="history-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>個別資料ID</th>
+                            <th>会員ID</th>
+                            <th>会員名</th>
+                            <th>貸出日</th>
+                            <th>返却日</th>
+                            <th>状態</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${historyList.isEmpty()}">
+                            <td colspan="6" style="text-align: center;">この資料の貸出履歴はありません。</td>
+                        </tr>
+                        <tr th:each="lending : ${historyList}">
+                            <td th:text="${lending.item.itemId}"></td>
+                            <td th:text="${lending.member.memberId}"></td>
+                            <td th:text="${lending.member.name}"></td>
+                            <td th:text="${#temporals.format(lending.lendDate, 'yyyy/MM/dd')}"></td>
+                            <td th:text="${lending.returnDate != null} ? ${#temporals.format(lending.returnDate, 'yyyy/MM/dd')} : '貸出中' "></td>
+                            <td th:text="${lending.item.deleteDate != null} ? '廃棄済' : '-' "></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="action-buttons">
+                <!-- 元の資料詳細ページに戻る -->
+                <a th:href="@{/book/detail/{id}(id=${book.bookId})}" class="btn btn-secondary">資料詳細に戻る</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
