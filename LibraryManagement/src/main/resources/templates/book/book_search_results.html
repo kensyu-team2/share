@@ -1,74 +1,87 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>検索結果</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<title>検索結果</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div class="container container-wide">
-        <header class="header-sub-menu header-material">
-            <a th:href="@{/book/search}" class="header-back-link">検索画面へ戻る</a>
-            <h1 class="header-title">検索結果</h1>
-        </header>
-        <main class="page-content">
-            <div class="search-panel">
-                <div class="panel-header">検索結果書誌一覧</div>
-                <div class="panel-body">
-                    <div class="results-summary">
-                        <p th:if="${bookPage.totalElements > 0}"
-                           th:text="|全 ${bookPage.totalElements}件中 ${bookPage.number * bookPage.size + 1}件目から ${bookPage.number * bookPage.size + bookPage.numberOfElements}件目を表示しています。|">
-                        </p>
-                        <p th:if="${bookPage.totalElements == 0}">該当する書籍は見つかりませんでした。</p>
-                    </div>
+	<div class="container container-wide">
+		<header class="header-sub-menu header-material">
+			<a th:href="@{/book/search}" class="header-back-link">検索画面へ戻る</a>
+			<h1 class="header-title">検索結果</h1>
+		</header>
+		<main class="page-content">
+			<div class="search-panel">
+				<div class="panel-header">検索結果書誌一覧</div>
+				<div class="panel-body">
+					<div class="results-summary">
+						<p th:if="${bookPage.totalElements > 0}"
+							th:text="|全 ${bookPage.totalElements}件中 ${bookPage.number * bookPage.size + 1}件目から ${bookPage.number * bookPage.size + bookPage.numberOfElements}件目を表示しています。|">
+						</p>
+						<p th:if="${bookPage.totalElements == 0}">該当する書籍は見つかりませんでした。</p>
+					</div>
 
-                    <div th:if="${bookPage.hasContent()}" class="table-wrapper">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>書誌種別</th>
-                                    <th>書名</th>
-                                    <th>著者名</th>
-                                    <th>出版社</th>
-                                    <th>出版年月日</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="book : ${bookPage.content}">
-                                    <td>
-                                        <span>一般書</span>
+					<div th:if="${bookPage.hasContent()}" class="table-wrapper">
+						<table class="data-table">
+							<thead>
+								<tr>
+									<th>書誌種別</th>
+									<th>書名</th>
+									<th>著者名</th>
+									<th>出版社</th>
+									<th>出版年月日</th>
+									<th>在庫状況</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="book, stat : ${bookPage.content}">
+									<!-- No.を表示 -->
+									<td th:text="${not #lists.isEmpty(book.items)} ? ${book.items[0].type.typeName} : 'N/A'"></td>
+									<!-- ★★★ ここまで ★★★ -->
+
+									<td th:text="${book.bookName}"></td>
+									<td th:text="${book.authorName}"></td>
+									<td th:text="${book.publisher}"></td>
+									<td th:text="${#temporals.format(book.publishDate, 'yyyy/MM/dd')}"></td>
+
+									<!-- ★★★ 在庫状況のセル ★★★ -->
+									<td th:with="inStockItems=${book.items.?[status.statusId == 1]}">
+                                        <span th:if="${not #lists.isEmpty(inStockItems)}" class="status-available">在庫あり</span>
+                                        <span th:if="${#lists.isEmpty(inStockItems)}" class="status-none">在庫なし</span>
                                     </td>
-                                    <td th:text="${book.bookName}">リーダブルコード</td>
-                                    <td th:text="${book.authorName}">Dustin Boswell</td>
-                                    <td th:text="${book.publisher}">オライリー</td>
-                                    <td th:text="${#temporals.format(book.publishDate, 'yyyy/MM/dd')}">2012/06/22</td>
-                                    <td>
+
+									<!-- 操作ボタン -->
+									<td>
                                         <a th:href="@{/book/{id}(id=${book.bookId})}" class="btn-table-action btn-success">詳細</a>
                                     </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
-                    <nav th:if="${bookPage.totalPages > 1}" class="pagination" aria-label="Page navigation">
-                        <ul>
-                            <li th:class="${bookPage.first} ? 'disabled' : ''">
-                                <a th:href="@{/book/search/results(page=${bookPage.number - 1}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}">&laquo; 前へ</a>
-                            </li>
+					<nav th:if="${bookPage.totalPages > 1}" class="pagination"
+						aria-label="Page navigation">
+						<ul>
+							<li th:class="${bookPage.first} ? 'disabled' : ''"><a
+								th:href="@{/book/search/results(page=${bookPage.number - 1}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}">&laquo;
+									前へ</a></li>
 
-                            <li th:each="i : ${#numbers.sequence(0, bookPage.totalPages - 1)}" th:class="${i == bookPage.number} ? 'active' : ''">
-                                <a th:href="@{/book/search/results(page=${i}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}" th:text="${i + 1}">1</a>
-                            </li>
+							<li
+								th:each="i : ${#numbers.sequence(0, bookPage.totalPages - 1)}"
+								th:class="${i == bookPage.number} ? 'active' : ''"><a
+								th:href="@{/book/search/results(page=${i}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}"
+								th:text="${i + 1}">1</a></li>
 
-                            <li th:class="${bookPage.last} ? 'disabled' : ''">
-                                <a th:href="@{/book/search/results(page=${bookPage.number + 1}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}">次へ &raquo;</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    </div>
-            </div>
-        </main>
-    </div>
+							<li th:class="${bookPage.last} ? 'disabled' : ''"><a
+								th:href="@{/book/search/results(page=${bookPage.number + 1}, size=${bookPage.size}, sort=${sort.toString().replace(': ', ',')}) + ${query}}">次へ
+									&raquo;</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</main>
+	</div>
 </body>
 </html>
