@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>資料廃棄・紛失登録</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="header-sub-menu header-material">
+            <a th:href="@{/book/{id}(id=${item.book.bookId})}" class="header-back-link">資料詳細へ</a>
+            <h1 class="header-title">資料廃棄・紛失登録</h1>
+        </header>
+
+        <main class="page-content">
+            <div class="book-display-box" th:object="${item.book}">
+                <div class="book-main-info">
+                    <span th:text="|アイテムID: ${item.itemId}|"></span>
+                    <span class="book-title" th:text="*{bookName}"></span>
+                </div>
+                <div class="book-sub-info">
+                    <span th:text="|著者名: *{authorName}|"></span>
+                    <span th:text="|出版社: *{publisher}|"></span>
+                </div>
+            </div>
+
+            <form th:action="@{/book/item/delete/confirm}" th:object="${itemActionForm}" method="post" class="registration-form" style="padding: 20px 40px;">
+
+                <input type="hidden" th:field="*{itemId}" />
+
+                <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+                    <ul>
+                        <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="actionDate">廃棄・紛失 年月日</label>
+                    <input type="date" th:field="*{actionDate}" class="input-field">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">処理種別</label>
+                    <div class="radio-group" style="display: flex; gap: 20px; padding: 10px;">
+                        <label>
+                            <input type="radio" th:field="*{actionType}" value="dispose"> 廃棄
+                        </label>
+                        <label>
+                            <input type="radio" th:field="*{actionType}" value="lose"> 紛失
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                     <a th:href="@{/book/{id}(id=${item.book.bookId})}" class="btn btn-secondary">戻る</a>
+                     <button type="submit" class="btn btn-primary">確認</button>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

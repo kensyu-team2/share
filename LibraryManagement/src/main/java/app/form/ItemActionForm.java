@@ -1,39 +1,23 @@
 package app.form;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
+
+@Data
 public class ItemActionForm {
-    /** 廃棄・紛失対象の個別資料ID */
-    @NotNull(message="対象アイテムを選択してください")
-    private Long itemId;
 
-    /** アクション種別: "DISCARD" or "LOST" */
-    @NotNull(message="処理種別を選択してください")
-    private String actionType;
+    @NotNull
+    private Integer itemId; // 対象となる個別資料ID
 
-    /** 理由・備考 */
-    @Size(max=200, message="備考は200文字以内で入力してください")
-    private String note;
+    @NotNull(message = "日付を入力してください。")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate actionDate; // 廃棄日または紛失日
 
-    public Long getItemId() {
-        return itemId;
-    }
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
-    }
-
-    public String getActionType() {
-        return actionType;
-    }
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
-    }
-
-    public String getNote() {
-        return note;
-    }
-    public void setNote(String note) {
-        this.note = note;
-    }
+    @NotNull(message = "処理を選択してください。")
+    private String actionType; // "dispose" (廃棄) または "lose" (紛失)
 }

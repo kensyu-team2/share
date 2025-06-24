@@ -1,65 +1,83 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>資料詳細</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<title>資料詳細</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div class="container container-wide" th:object="${book}">
-        <header class="header-sub-menu header-material">
-            <a th:href="@{/book/search}" class="header-back-link">検索画面へ</a>
-            <h1 class="header-title">資料詳細</h1>
-        </header>
-        <main class="page-content">
-            <div class="detail-panel">
-                <div class="panel-body">
-                    <section class="book-details-section">
-                        <div class="book-summary">
-                            <span>蔵書数: <span th:text="${#lists.size(book.items)}"></span></span>
-                            <span>在庫数: </span>
-                            <span>予約件数: </span>
-                        </div>
-                        <dl class="info-dl">
-                            <dt>書誌情報ID</dt><dd th:text="*{bookId}"></dd>
-                            <dt>ISBN</dt><dd th:text="*{isbn}"></dd>
-                            <dt>タイトル</dt><dd th:text="*{bookName}"></dd>
-                            <dt>著者名</dt><dd th:text="*{authorName}"></dd>
-                            <dt>出版社</dt><dd th:text="*{publisher}"></dd>
-                            <dt>出版年月日</dt><dd th:text="*{#temporals.format(publishDate, 'yyyy/MM/dd')}"></dd>
-                        </dl>
-                    </section>
+	<div class="container container-wide" th:object="${book}">
+		<header class="header-sub-menu header-material">
+			<a th:href="@{/book/search}" class="header-back-link">検索画面へ</a>
+			<h1 class="header-title">資料詳細</h1>
+		</header>
+		<main class="page-content">
+			<form th:action="@{/book/item/delete/form}" method="post">
+				<div class="detail-panel" th:object="${book}">
+					<div class="panel-body">
 
-                    <hr class="section-divider">
+						<section class="book-details-section">
+							<div class="book-summary">
+								<span>蔵書数: <span th:text="${#lists.size(book.items)}"></span></span>
+								<span>在庫数: </span> <span>予約件数: </span>
+							</div>
+							<dl class="info-dl">
+								<dt>書誌情報ID</dt>
+								<dd th:text="*{bookId}"></dd>
+								<dt>ISBN</dt>
+								<dd th:text="*{isbn}"></dd>
+								<dt>タイトル</dt>
+								<dd th:text="*{bookName}"></dd>
+								<dt>タイトルフリガナ</dt>
+								<dd th:text="*{bookRuby}"></dd>
+								<dt>著者名</dt>
+								<dd th:text="*{authorName}"></dd>
+								<dt>著者名フリガナ</dt>
+								<dd th:text="*{authorRuby}"></dd>
+								<dt>出版社</dt>
+								<dd th:text="*{publisher}"></dd>
+								<dt>出版年月日</dt>
+								<dd th:text="*{#temporals.format(publishDate, 'yyyy/MM/dd')}"></dd>
+								<th:block th:if="${not #lists.isEmpty(book.items)}">
+									<dt>ジャンル</dt>
+									<dd th:text="${book.items[0].category.categoryName}"></dd>
+									<dt>資料区分</dt>
+									<dd th:text="${book.items[0].type.typeName}"></dd>
+								</th:block>
+							</dl>
+						</section>
 
-                    <section class="item-list-section" th:if="${not #lists.isEmpty(book.items)}">
-                        <div class="item-list-header">
-                            <span>アイテムID</span>
-                            <span>入荷日</span>
-                            <span>在庫状況</span>
-                            <span>配架場所</span>
-                            <span>選択</span>
-                        </div>
-                        <ol class="item-list">
-                            <li th:each="item, stat : *{items}">
-                                <span th:text="${item.itemId}"></span>
-                                <span th:text="${#temporals.format(item.getDate, 'yyyy/MM/dd')}"></span>
-                                <span th:text="${item.status.statusName}"></span>
-                                <span th:text="${item.place.placeName}"></span>
-                                <input type="radio" name="selected_item" th:value="${item.itemId}" th:checked="${stat.first}" />
-                            </li>
-                        </ol>
-                    </section>
+						<hr class="section-divider">
 
-                    <div class="detail-actions">
-                        <a th:href="@{/book/search}" class="btn btn-secondary">戻る</a>
-                        <a th:href="@{/book/{id}/reserve(id=*{bookId})}" class="btn btn-secondary">予約</a>
-                        <button type="button" class="btn btn-secondary">履歴</button>
-                        <button type="button" class="btn btn-danger">削除</button>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
+						<section class="item-list-section"
+							th:if="${not #lists.isEmpty(book.items)}">
+							<div class="item-list-header">
+								<span>アイテムID</span> <span>入荷日</span> <span>在庫状況</span> <span>配架場所</span>
+								<span>選択</span>
+							</div>
+							<ol class="item-list">
+								<li th:each="item, stat : *{items}"><span
+									th:text="${item.itemId}"></span> <span
+									th:text="${#temporals.format(item.getDate, 'yyyy/MM/dd')}"></span>
+									<span th:text="${item.status.statusName}"></span> <span
+									th:text="${item.place.placeName}"></span> <input type="radio"
+									name="itemId" th:value="${item.itemId}"
+									th:checked="${stat.first}" /></li>
+							</ol>
+						</section>
+
+						<div class="detail-actions">
+							<a th:href="@{/book/search}" class="btn btn-secondary">戻る</a> <a
+								th:href="@{/book/{id}/reserve(id=*{bookId})}"
+								class="btn btn-secondary">予約</a>
+							<button type="button" class="btn btn-secondary" disabled>履歴</button>
+							<button type="submit" class="btn btn-danger">削除</button>
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</main>
+	</div>
 </body>
 </html>
