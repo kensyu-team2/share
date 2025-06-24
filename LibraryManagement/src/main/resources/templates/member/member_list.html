@@ -29,7 +29,7 @@
                     <th>メール</th>
                     <th>生年月日</th>
                     <th>登録日</th>
-                    <th>退会日</th>
+                    <th>退会</th>
                     <th>変更</th>
                     <th>予約</th>
                 </tr>
@@ -43,7 +43,14 @@
     <td th:text="${member.email}">taro.yamada@example.jp</td>
     <td th:text="${member.birthday}">1985-07-15</td>
     <td th:text="${member.registrationDate}">2024-01-05</td>
-    <td th:text="${member.retireDate != null ? member.retireDate : '-'}">-</td>
+    <td>
+    <span th:if="${member.retireDate == null}">
+        <a th:href="@{'/member/withdrawal/confirm/' + ${member.memberId}}" class="btn-table-delete">退会</a>
+    </span>
+    <span th:if="${member.retireDate != null}" th:text="${member.retireDate}">2025-06-24</span>
+</td>
+
+
     <td><a th:href="@{'/member/edit/' + ${member.memberId}}" class="btn-table-edit">変更</a></td>
 
     <td><a th:href="@{'/member/member_reservation_list/' + ${member.memberId}}" class="btn-table-edit">一覧</a></td>

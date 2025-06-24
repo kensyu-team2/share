@@ -1,64 +1,45 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>会員退会確認</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<div class="container">
+    <header class="header-sub-menu header-member">
+        <a th:href="@{/member/member_list}" class="header-back-link">会員一覧へ</a>
+        <h1 class="header-title">会員退会確認</h1>
+    </header>
 
-    <div class="container">
-        <header class="header-sub-menu header-member">
-            <a href="member_list.html" class="header-back-link">会員一覧へ</a>
-            <h1 class="header-title">会員退会確認</h1>
-        </header>
-
-        <main>
-            <form action="/members/withdraw/execute" method="post" class="confirmation-content">
-                
-                <div class="confirmation-grid">
-                    <div class="details-column">
-                        <div class="info-box">
-                            <span class="info-label">氏名</span>
-                            <span class="info-value">山田 太郎</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">フリガナ</span>
-                            <span class="info-value">ヤマダ タロウ</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">電話番号</span>
-                            <span class="info-value">090-1234-5678</span>
-                        </div>
-                    </div>
-                    <div class="items-column">
-                        <div class="info-box">
-                            <span class="info-label">メール</span>
-                            <span class="info-value">taro.yamada@example.com</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">住所</span>
-                            <span class="info-value">北海道札幌市中央区1-2-3</span>
-                        </div>
-                    </div>
+    <main>
+        <form th:action="@{/member/withdrawal/execute}" method="post" class="confirmation-content">
+            <input type="hidden" th:name="memberId" th:value="${member.memberId}" />
+            <div class="confirmation-grid">
+                <div class="details-column">
+                    <div class="info-box"><span class="info-label">氏名</span><span class="info-value" th:text="${member.name}"></span></div>
+                    <div class="info-box"><span class="info-label">フリガナ</span><span class="info-value" th:text="${member.nameRuby}"></span></div>
+                    <div class="info-box"><span class="info-label">電話番号</span><span class="info-value" th:text="${member.phone}"></span></div>
                 </div>
-
-                <div class="verification-checkbox">
-                    <input type="checkbox" id="identity-verified" name="identityVerified" required>
-                    <label for="identity-verified">身分証明書と照合し、本人確認を完了しました。</label>
+                <div class="items-column">
+                    <div class="info-box"><span class="info-label">メール</span><span class="info-value" th:text="${member.email}"></span></div>
+                    <div class="info-box"><span class="info-label">住所</span><span class="info-value" th:text="${member.address}"></span></div>
                 </div>
+            </div>
 
-                <p class="prompt-message">上記会員の退会処理を実行します。よろしいでしょうか？</p>
+            <div class="verification-checkbox">
+                <input type="checkbox" id="identity-verified" name="identityVerified" required>
+                <label for="identity-verified">身分証明書と照合し、本人確認を完了しました。</label>
+            </div>
 
-                <div class="action-buttons">
-                    <button type="submit" class="btn btn-primary">退会</button>
-                    <a href="member_list.html" class="btn btn-danger">戻る</a>
-                </div>
+            <p class="prompt-message">上記会員の退会処理を実行します。よろしいでしょうか？</p>
 
-            </form>
-        </main>
-    </div>
-
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">退会</button>
+                <a th:href="@{/member/member_list}" class="btn btn-danger">戻る</a>
+            </div>
+        </form>
+    </main>
+</div>
 </body>
 </html>
