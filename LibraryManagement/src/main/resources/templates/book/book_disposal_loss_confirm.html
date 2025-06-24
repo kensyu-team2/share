@@ -8,7 +8,7 @@
 <body>
 	<div class="container">
 		<header class="header-sub-menu header-material">
-			<h1 class="header-title">資料廃棄・紛失登録</h1>
+			<h1 class="header-title">資料廃棄・紛失登録 確認</h1>
 		</header>
 		<main class="confirmation-content">
 			<p class="prompt-message">以下の情報で登録しますか?</p>
@@ -35,12 +35,14 @@
 
 			<form th:action="@{/book/item/delete/execute}"
 				th:object="${itemActionForm}" method="post">
-				<input type="hidden" th:field="*{itemId}" /> <input type="hidden"
-					th:field="*{actionDate}" /> <input type="hidden"
-					th:field="*{actionType}" /> <a href="javascript:history.back()"
-					class="btn btn-danger">戻る</a> <a
-					th:href="@{/book/{id}/reserve(id=${reservationForm.bookId})}"
-					class="btn btn-danger">戻る</a>
+				<input type="hidden" th:field="*{itemId}" />
+                <input type="hidden" th:field="*{actionDate}" />
+                <input type="hidden" th:field="*{actionType}" />
+
+                <div class="action-buttons">
+                    <a href="javascript:history.back()" class="btn btn-danger">戻る</a>
+                    <button type="submit" class="btn btn-primary">登録</button>
+                </div>
 			</form>
 		</main>
 	</div>
