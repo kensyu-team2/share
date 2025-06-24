@@ -1,41 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>メインメニュー</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>メインメニュー</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-    <div class="container menu-container">
-        <h1 class="menu-title">メインメニュー</h1>
+	<div class="container menu-container">
+		<h1 class="menu-title">メインメニュー</h1>
 
-        <div class="menu-rows-wrapper">
-            <div class="menu-row">
-                <a th:href="@{/work/menu}" class="menu-item menu-item-comms">
-                    <span class="menu-item-text">業務連絡</span>
-                </a>
+		<div class="menu-rows-wrapper">
+			<div class="menu-row">
+				<a th:href="@{/work/menu}" class="menu-item menu-item-comms"> <span
+					class="menu-item-text">業務連絡</span>
+				</a> <a th:href="@{/book/menu}" class="menu-item menu-item-material">
+					<span class="menu-item-text">資料管理</span>
+				</a> <a th:href="@{/member/menu}" class="menu-item menu-item-member">
+					<span class="menu-item-text">会員管理</span>
+				</a>
+			</div>
+			<div class="menu-row">
+				<a th:href="@{/lending/input}" class="menu-item menu-item-lending">
+					<span class="menu-item-text">貸出</span>
 
-                <a th:href="@{/book/menu}" class="menu-item menu-item-material">
-                    <span class="menu-item-text">資料管理</span>
-                </a>
-
-                <a th:href="@{/member/menu}" class="menu-item menu-item-member">
-                    <span class="menu-item-text">会員管理</span>
-                </a>
-            </div>
-            <div class="menu-row">
-               <a th:href="@{/lending/input}" class="menu-item menu-item-lending">
-                    <span class="menu-item-text">貸出</span>
-                </a>
-
-                <a th:href="@{/return/menu}" class="menu-item menu-item-return">
-                    <span class="menu-item-text">返却</span>
-                </a>
-            </div>
-        </div>
-    </div>
+				</a> <a th:href="@{/return/input}" class="menu-item menu-item-return">
+					<span class="menu-item-text">返却</span>
+				</a>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

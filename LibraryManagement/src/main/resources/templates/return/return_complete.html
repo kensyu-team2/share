@@ -1,55 +1,48 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>返却完了</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
     <div class="container">
         <header class="header-return">
             <h1>返却 完了</h1>
         </header>
 
         <main>
-            <div class="confirmation-content">
-                
-                <div class="confirmation-grid">
-                    
-                    <div class="details-column">
-                        <div class="info-box">
-                            <span class="info-label">会員ID</span>
-                            <span class="info-value">10001</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">返却年月日</span>
-                            <span class="info-value">2025/06/18</span>
-                        </div>
-                    </div>
+            <div class="completion-content">
 
-                    <div class="items-column">
-                        <div class="item-list-box">
-                            <div class="info-label">返却資料一覧</div>
-                            <ul>
-                                <li>資料ID: 2001 / Spring Boot入門</li>
-                                <li>資料ID: 3010 / はじめてのJavaScript</li>
-                                </ul>
-                        </div>
-                    </div>
-                </div>
+                <p class="prompt-message" th:text="${message}">返却処理が完了しました。</p>
 
-                <p class="prompt-message">上記の資料の返却が完了しました。</p>
+                <table class="confirm-table" th:if="${processedLendings != null and !processedLendings.isEmpty()}">
+                    <thead>
+                        <tr>
+                            <th>資料ID</th>
+                            <th>書籍名</th>
+                            <th>返却した会員</th>
+                            <th>元の返却期限</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="lending : ${processedLendings}">
+                            <td th:text="${lending.item.itemId}"></td>
+                            <td th:text="${lending.item.book.bookName}"></td>
+                            <td th:text="|ID:${lending.member.memberId} / ${lending.member.name}|"></td>
+                            <td th:text="${#temporals.format(lending.dueDate, 'yyyy/MM/dd')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <div class="action-buttons">
-                    <a href="return_input.html" class="btn btn-primary">続けて返却を行う</a>
-                    <a href="../main_manu.html" class="btn btn-secondary">メインメニューへ戻る</a>
+                    <a th:href="@{/return/input}" class="btn btn-primary">続けて返却を行う</a>
+                    <a th:href="@{/}" class="btn btn-secondary">メインメニューへ戻る</a>
                 </div>
 
             </div>
         </main>
     </div>
-
 </body>
 </html>

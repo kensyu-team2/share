@@ -1,8 +1,17 @@
 package app.form;
 
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
+import javax.validation.constraints.Size;
+
+import lombok.Data;
+
+@Data
 public class ReturnForm {
-    @NotNull private Long lendingId;
-    // getter/setter
+
+    /**
+     * 返却する個別資料IDのリスト (最大10個)
+     */
+    @Size(min = 1, max = 10, message = "返却する資料を1〜10冊まで入力してください。")
+    private List<String> itemIds;
 }

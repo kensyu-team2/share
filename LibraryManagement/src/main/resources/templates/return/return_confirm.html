@@ -1,41 +1,55 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>返却確認画面</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
     <div class="container">
         <header class="header-return">
             <h1>返却 確認</h1>
         </header>
 
         <main>
-            <div class="confirmation-content">
-                
-                <div class="item-list-box" style="margin: 0 auto 30px auto; max-width: 500px;">
-                    <div class="info-label">返却資料一覧</div>
-                    <ul>
-                        <li>資料ID: 2001 / Spring Boot入門</li>
-                        <li>資料ID: 3010 / はじめてのJavaScript</li>
-                        </ul>
+            <form th:action="@{/return/execute}" method="post" th:object="${returnForm}">
+
+                <th:block th:each="itemId, iterStat : *{itemIds}">
+                    <input type="hidden" th:field="*{itemIds[__${iterStat.index}__]}" />
+                </th:block>
+
+                <div class="confirmation-content">
+                    <p class="prompt-message">以下の資料を返却します。よろしいでしょうか？</p>
+
+                    <table class="confirm-table">
+                        <thead>
+                            <tr>
+                                <th>資料ID</th>
+                                <th>書籍名</th>
+                                <th>会員ID</th>
+                                <th>会員名</th>
+                                <th>返却期限</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="lending : ${lendingList}">
+                                <td th:text="${lending.item.itemId}"></td>
+                                <td th:text="${lending.item.book.bookName}"></td>
+                                <td th:text="${lending.member.memberId}"></td>
+                                <td th:text="${lending.member.name}"></td>
+                                <td th:text="${#temporals.format(lending.dueDate, 'yyyy/MM/dd')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-confirm">返却する</button>
+                        <a th:href="@{/return/input}" class="btn btn-back">戻る</a>
+                    </div>
                 </div>
-
-                <p class="prompt-message">上記の内容で返却します。よろしいでしょうか？</p>
-
-                <div class="action-buttons">
-                    <form action="/return/execute" method="post" style="display: inline;">
-                        <a href="return_complete.html" class="btn btn-confirm">返却</button>
-                    </form>
-                    <a href="return_input.html" class="btn btn-back">戻る</a>
-                </div>
-
-            </div>
+            </form>
         </main>
     </div>
-
 </body>
 </html>
