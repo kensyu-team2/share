@@ -339,28 +339,25 @@ public class BookController {
 
 	/**
      * 履歴メニュー画面を表示します。
-     * (GET /book/history_menu)
+     * (GET /book/history/menu)
      */
-    @GetMapping("/history_menu")
+    @GetMapping("/history/menu")
     public String showHistoryMenu() {
-        return "book/history_menu"; // templates/book/history_menu.html を表示
+        return "book/history_menu";
     }
 
     /**
      * 貸出履歴一覧画面を表示します。
      * (GET /book/history/lending)
-     * @param pageable デフォルトは0ページ目、10件表示、貸出日の降順
      */
-    @GetMapping("/history/lending") // ← パスを "/lending_history" から "/history/lending" に変更
+    @GetMapping("/history/lending")
     public String showLendingHistory(
             @PageableDefault(page = 0, size = 10, sort = "lendDate", direction = Sort.Direction.DESC) Pageable pageable,
             Model model) {
 
         Page<Lending> lendingPage = lendingService.findAllLendingHistory(pageable);
-
         model.addAttribute("lendingPage", lendingPage);
 
-        // ★ 返すビューのパスも、フォルダ構成に合わせて修正
         return "book/history/lending_history";
     }
 }
