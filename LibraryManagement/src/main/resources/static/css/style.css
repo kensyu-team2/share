@@ -378,6 +378,9 @@ header h1 {
 .menu-item-return {
     background-color: #dce384; /* 返却の黄緑色 */
 }
+.menu-item-work {
+    background-color: #A8DCE2; /* 業務連絡の色 */
+}
 
 /* どの色のボタンでもhoverが綺麗に見えるように修正 */
 .menu-item:hover {
@@ -419,6 +422,9 @@ header h1 {
 /* 会員管理ヘッダーの赤色 */
 .header-member {
     background-color: #e6a8a8;
+}
+.header-work {
+    background-color: #A8DCE2;
 }
 /* ===================================
    会員登録・変更フォームのスタイル
