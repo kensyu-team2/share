@@ -292,19 +292,21 @@ public class BookController {
      * (GET /book/reserve/confirm)
      */
 	@GetMapping("/reserve/confirm")
-    public String showReservationConfirm(
-            @ModelAttribute("reservationForm") ReservationForm form,
-            @ModelAttribute("member") Member member,
-            Model model) {
+	public String showReservationConfirm(
+	        @ModelAttribute("reservationForm") ReservationForm form,
+	        @ModelAttribute("member") Member member,
+	        Model model) {
 
-        // 予約対象の書籍情報を取得してモデルに追加
-        Book book = bookService.findById(form.getBookId());
-        model.addAttribute("book", book);
+	    if (form.getBookId() == null || member.getMemberId() == null) {
+	        return "redirect:/book/search"; // もしくは検索画面など
+	    }
 
-        // memberオブジェクトは@ModelAttributeにより自動でModelに追加されている
+	    Book book = bookService.findById(form.getBookId());
+	    model.addAttribute("book", book);
 
-        return "book/book_reservation_confirm"; // テンプレート名を指定
-    }
+	    return "book/book_reservation_confirm";
+	}
+
 
 	/**
 	 * ★★★ 追加 ★★★
