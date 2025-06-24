@@ -11,7 +11,7 @@
             <h1 class="header-title">資料予約確認</h1>
         </header>
         <main class="confirmation-content">
-            <p class="prompt-message">以下の情報で登録しますか?</p>
+            <p class="prompt-message">以下の情報で予約しますか?</p>
 
             <div class="book-display-box" th:object="${book}">
                 <div class="book-main-info">
@@ -21,7 +21,6 @@
                 <div class="book-sub-info">
                     <span th:text="|著者名: *{authorName}|"></span>
                     <span th:text="|出版社: *{publisher}|"></span>
-                    <span th:text="|発行年月日: *{#temporals.format(publishDate, 'yyyy/MM/dd')}|"></span>
                 </div>
             </div>
 
@@ -35,8 +34,9 @@
             <form th:action="@{/book/reserve/execute}" th:object="${reservationForm}" method="post">
                 <input type="hidden" th:field="*{bookId}" />
                 <input type="hidden" th:field="*{memberId}" />
+
                 <div class="action-buttons">
-                    <a th:href="@{/book/{id}/reserve(id=*{bookId})}" class="btn btn-danger">戻る</a>
+                    <a href="javascript:history.back()" class="btn btn-danger">戻る</a>
                     <button type="submit" class="btn btn-primary">登録</button>
                 </div>
             </form>

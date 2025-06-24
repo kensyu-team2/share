@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,8 +15,8 @@
         </header>
 
         <main>
-            <form action="/reservations/confirm" method="post" class="registration-form">
-                
+            <form th:action="@{/book/reserve}" th:object="${reservationForm}" method="post" class="registration-form">
+
                 <div class="book-display-box">
                     <div class="book-main-info">
                         <span class="book-id">書籍ID: B0001</span>
@@ -33,7 +33,7 @@
                     <label for="memberId">会員ID</label>
                     <input type="text" id="memberId" name="memberId" class="input-field" placeholder="会員IDを入力...">
                 </div>
-                
+
                 <div class="action-buttons">
                     <a href="book_detail.html" class="btn btn-secondary">戻る</a>
                     <button type="submit" class="btn btn-secondary">確認</button>

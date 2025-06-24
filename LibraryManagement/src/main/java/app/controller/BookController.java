@@ -286,7 +286,7 @@ public class BookController {
      * 予約確認画面を表示
      * (GET /book/reserve/confirm)
      */
-    @GetMapping("/reserve/confirm")
+	@GetMapping("/reserve/confirm")
     public String showReservationConfirm(
             @ModelAttribute("reservationForm") ReservationForm form,
             @ModelAttribute("member") Member member,
@@ -296,10 +296,9 @@ public class BookController {
         Book book = bookService.findById(form.getBookId());
         model.addAttribute("book", book);
 
-        // memberオブジェクトは@ModelAttributeにより自動でModelに追加されているので、
-        // Thymeleaf側で ${member} として参照できます。
+        // memberオブジェクトは@ModelAttributeにより自動でModelに追加されている
 
-        return "book/book_reservation_confirm";
+        return "book/book_reservation_confirm"; // テンプレート名を指定
     }
 
 	/**
