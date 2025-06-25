@@ -126,4 +126,9 @@ public class LendingService {
     public List<Lending> findLendingHistoryByBookId(Integer bookId) {
         return lendingRepository.findByItem_Book_BookIdOrderByLendDateDesc(bookId);
     }
+
+    public List<Lending> getOverdueLendings() {
+        return lendingRepository.findOverdueLendings(LocalDate.now());
+    }
+
 }
