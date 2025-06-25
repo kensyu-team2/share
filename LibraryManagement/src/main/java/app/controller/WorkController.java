@@ -1,13 +1,18 @@
 package app.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import app.entity.Lending;
 import app.entity.Reservation;
 import app.repository.ReservationRepository;
+import app.service.LendingService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -28,10 +33,10 @@ public class WorkController {
 	//	}
 
 	//遅延一覧を表示
-	@RequestMapping("/delay/list")
-	public String showDelayList() {
-		return "work/delay_list";
-	}
+//	@RequestMapping("/delay/list")
+//	public String showDelayList() {
+//		return "work/delay_list";
+//	}
 
 	//予約一覧を表示
 	@RequestMapping("/reserve/list")
@@ -64,6 +69,16 @@ public class WorkController {
 		model.addAttribute("reservation", reservation);
 		return "work/reserve_cancel_complete";
 	}
+
+	private final LendingService lendingService;
+
+    @RequestMapping("/delay/list")
+    public String showDelayList(Model model) {
+        List<Lending> overdueList = lendingService.getOverdueLendings();
+        model.addAttribute("lendings", overdueList);
+        model.addAttribute("today", LocalDate.now()); // 延滞日数のため
+        return "work/delay_list";
+    }
 }
 
 //	//業務連絡メニューに戻る

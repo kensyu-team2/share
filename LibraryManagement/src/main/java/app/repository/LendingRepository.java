@@ -1,10 +1,12 @@
 package app.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 
 import app.entity.Item;
 import app.entity.Lending;
@@ -21,5 +23,8 @@ public interface LendingRepository extends JpaRepository<Lending, Integer>, JpaS
      * @return 貸出エンティティのリスト
      */
     List<Lending> findByItem_Book_BookIdOrderByLendDateDesc(Integer bookId);
+
+    @Query("SELECT l FROM Lending l WHERE l.returnDate IS NULL AND l.dueDate < :today")
+    List<Lending> findOverdueLendings(LocalDate today);
 
 }

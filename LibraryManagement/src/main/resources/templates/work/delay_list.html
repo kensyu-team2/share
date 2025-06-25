@@ -1,42 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>遅延一覧</title>
+<meta charset="UTF-8">
+<title>遅延一覧</title>
+<link rel="stylesheet" th:href="@{/css/work_table.css}">
 </head>
 <body>
+	<div class="reserve-list">
+		<div class="container menu-container">
 
-    <a class="home" th:href="@{/main/menu}">ホームに戻る</a>
+			<a class="header-back-link" th:href="@{/main/menu}">ホームに戻る</a>
 
-    <h1>遅延一覧</h1>
+			<header class="header">
+				<h1>遅延一覧</h1>
+			</header>
 
-    <table class="deta-table">
-        <thead>
-            <tr>
-                <th>会員ID</th>
-                <th>貸出日</th>
-                <th>返却日</th>
-                <th>遅延日数</th>
-                <th>資料ID</th>
-                <th>資料タイトル</th>
-                <th>著者名</th>
-            </tr>
-        </thead>
-        <tbody>
-            <td>1111</td>
-            <td>2025/3/27</td>
-            <td>2025/4/15</td>
-            <td>10日</td>
-            <td>2222</td>
-            <td>本1</td>
-            <td>著者1</td>
-        </tbody>
+			<table class="data-table">
+				<thead>
+					<tr>
+						<th>会員ID</th>
+						<th>貸出日</th>
+						<th>返却期限</th>
+						<th>遅延日数</th>
+						<th>資料ID</th>
+						<th>資料タイトル</th>
+						<th>著者名</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="lending : ${lendings}">
+						<td th:text="${lending.member.memberId}"></td>
+						<td th:text="${lending.lendDate}"></td>
+						<td th:text="${lending.dueDate}"></td>
+						<td th:text="|${T(java.time.temporal.ChronoUnit).DAYS.between(lending.dueDate, today)}日|"></td>
+						<td th:text="${lending.item.itemId}"></td>
+						<td th:text="${lending.item.book.bookName}"></td>
+						<td th:text="${lending.item.book.authorName}"></td>
+					</tr>
+				</tbody>
+			</table>
 
-    </table>
+			<a class="header-back-link" th:href="@{/work/menu}">戻る</a>
 
-    <a class="back" th:href="@{/work/menu}">戻る</a>
-
-
+		</div>
+	</div>
 </body>
+
 </html>

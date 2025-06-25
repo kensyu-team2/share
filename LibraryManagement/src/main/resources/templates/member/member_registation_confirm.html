@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>会員登録確認</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
   <div class="container">
     <header class="header-member">
       <div class="nav">
-        <a class="btn btn-secondary" th:href="@{/main_menu.html}">ホーム</a>
+        <a class="btn btn-secondary" th:href="@{/main_menu}">ホーム</a>
       </div>
       <h1>会員登録確認</h1>
     </header>
 
     <form th:action="@{/member/member_registation_complete}" th:object="${member}" method="post" class="lending-form">
+
       <p>氏名: <span th:text="*{name}"></span></p>
       <p>氏名フリガナ: <span th:text="*{nameRuby}"></span></p>
       <p>生年月日: <span th:text="*{birthday}"></span></p>
@@ -28,7 +29,7 @@
         <label for="confirm">身分証明書と照合し、本人確認を完了しました。</label>
       </div>
 
-      <!-- hiddenフィールド -->
+      <!-- hidden fields to pass data -->
       <input type="hidden" th:field="*{name}" />
       <input type="hidden" th:field="*{nameRuby}" />
       <input type="hidden" th:field="*{birthday}" />

@@ -2,43 +2,46 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>資料履歴</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>貸出履歴</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>資料履歴</h1>
+    <div class="container container-wide">
+        <header class="header-sub-menu header-material">
+            <a th:href="@{/book/menu}" class="header-back-link">資料管理メニューへ</a>
+            <h1 class="header-title">貸出履歴</h1>
         </header>
 
-        <main>
-            <div class="book-info-box" th:object="${book}">
+        <main class="page-content">
+            <div class="book-display-box" th:object="${book}">
                 <h2 th:text="|*{bookId} : *{bookName}|"></h2>
                 <p th:text="|著者: *{authorName} / 出版社: *{publisher} / 発行日: ${#temporals.format(book.publishDate, 'yyyy/MM/dd')}|"></p>
             </div>
 
-            <div class="history-table-container">
+            <div class="table-wrapper">
                 <table class="data-table">
                     <thead>
-                        <tr>
+                        <tr style="text-align: center;">
                             <th>個別資料ID</th>
                             <th>会員ID</th>
                             <th>会員名</th>
                             <th>貸出日</th>
                             <th>返却日</th>
-                            <th>廃棄日</th> </tr>
+                            <th>廃棄日</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr th:if="${historyList.isEmpty()}">
                             <td colspan="6" style="text-align: center;">この資料の貸出履歴はありません。</td>
                         </tr>
-                        <tr th:each="lending : ${historyList}">
+                        <tr th:each="lending : ${historyList}" style="text-align: center;">
                             <td th:text="${lending.item.itemId}"></td>
                             <td th:text="${lending.member.memberId}"></td>
-                            <td th:text="${lending.member.name}"></td>
+                            <td style="text-align: left;" th:text="${lending.member.name}"></td>
                             <td th:text="${#temporals.format(lending.lendDate, 'yyyy/MM/dd')}"></td>
-                            <td th:text="${lending.returnDate != null} ? ${#temporals.format(lending.returnDate, 'yyyy/MM/dd')} : '貸出中' "></td>
-                            <td th:text="${lending.item.deleteDate != null} ? ${#temporals.format(lending.item.deleteDate, 'yyyy/MM/dd')} : '-' "></td>
+                            <td th:text="${lending.returnDate != null} ? ${#temporals.format(lending.returnDate, 'yyyy/MM/dd')} : '貸出中'"></td>
+                            <td th:text="${lending.item.deleteDate != null} ? ${#temporals.format(lending.item.deleteDate, 'yyyy/MM/dd')} : '-'"></td>
                         </tr>
                     </tbody>
                 </table>

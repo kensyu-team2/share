@@ -8,8 +8,9 @@
 </head>
 <body>
 	<div class="container">
-		<header>
-			<h1>貸出履歴</h1>
+		<header class="header-sub-menu header-material">
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">貸出履歴</h1>
 		</header>
 
 		<main>
@@ -43,35 +44,40 @@
 			</div>
 
 			<!-- ページネーション コントロール -->
-			<nav class="pagination" th:if="${lendingPage.totalPages > 1}">
+			<nav class="pagination" th:if="${lendingPage.totalPages > 1}"
+				aria-label="Page navigation">
 				<ul>
-					<li th:class="${lendingPage.first} ? 'disabled' : ''"><a
-						th:href="@{/book/history/lending(page=0, size=${lendingPage.size})}">«
+					<li th:class="${lendingPage.first} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/book/history/lending(page=0, size=${lendingPage.size}, sort=${lendingPage.sort.toString().replace(': ', ',')})}">«
 							最初</a></li>
-					<li th:class="${lendingPage.first} ? 'disabled' : ''"><a
-						th:href="@{/book/history/lending(page=${lendingPage.number - 1}, size=${lendingPage.size})}">‹
+					<li th:class="${lendingPage.first} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/book/history/lending(page=${lendingPage.number - 1}, size=${lendingPage.size}, sort=${lendingPage.sort.toString().replace(': ', ',')})}">‹
 							前へ</a></li>
+
 					<li
 						th:each="i : ${#numbers.sequence(0, lendingPage.totalPages - 1)}"
-						th:class="${i == lendingPage.number} ? 'active' : ''"><a
-						th:href="@{/book/history/lending(page=${i}, size=${lendingPage.size})}"
+						th:classappend="${i == lendingPage.number} ? 'active'"><a
+						class="page-link"
+						th:href="@{/book/history/lending(page=${i}, size=${lendingPage.size}, sort=${lendingPage.sort.toString().replace(': ', ',')})}"
 						th:text="${i + 1}"></a></li>
-					<li th:class="${lendingPage.last} ? 'disabled' : ''"><a
-						th:href="@{/book/history/lending(page=${lendingPage.number + 1}, size=${lendingPage.size})}">次へ
+
+					<li th:class="${lendingPage.last} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/book/history/lending(page=${lendingPage.number + 1}, size=${lendingPage.size}, sort=${lendingPage.sort.toString().replace(': ', ',')})}">次へ
 							›</a></li>
-					<li th:class="${lendingPage.last} ? 'disabled' : ''"><a
-						th:href="@{/book/history/lending(page=${lendingPage.totalPages - 1}, size=${lendingPage.size})}">最後
+					<li th:class="${lendingPage.last} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/book/history/lending(page=${lendingPage.totalPages - 1}, size=${lendingPage.size}, sort=${lendingPage.sort.toString().replace(': ', ',')})}">最後
 							»</a></li>
 				</ul>
 			</nav>
 
 			<!-- 戻るボタンのリンク先を修正 -->
-			 <div class="action-buttons">
-                 <!-- 「資料管理メニューに戻る」ボタン -->
-                 <a th:href="@{/book/menu}" class="btn btn-secondary">資料管理メニューへ戻る</a>
-                 <!-- 「メインメニューに戻る」ボタン -->
-                 <a th:href="@{/}" class="btn btn-secondary">メインメニューへ戻る</a>
-            </div>
+			<div class="action-buttons">
+				<a th:href="@{/book/menu}" class="btn btn-secondary">資料管理メニューへ戻る</a>
+			</div>
 		</main>
 	</div>
 </body>

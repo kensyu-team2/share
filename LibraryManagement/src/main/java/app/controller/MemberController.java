@@ -4,13 +4,17 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import app.entity.Member;
 import app.entity.Reservation;
@@ -32,10 +36,11 @@ public class MemberController {
 	// 会員一覧
 	@GetMapping("/member_list")
 	public String showMemberList(Model model) {
-		List<Member> members = memberService.findAll();
-		model.addAttribute("members", members);
-		return "member/member_list";
+	    List<Member> members = memberService.findAllActive();  // 退会者は除外して取得
+	    model.addAttribute("members", members);
+	    return "member/member_list";
 	}
+
 
 	// 会員登録入力
 	@GetMapping("/member_registation")
@@ -45,16 +50,32 @@ public class MemberController {
 	}
 	// 会員登録確認
 	@PostMapping("/member_registation_confirm")
-	public String confirmRegistration(@ModelAttribute("member") Member member, Model model) {
-		model.addAttribute("member", member); // 明示的に渡す
-		return "member/member_registation_confirm";
+	public String confirmRegistration(
+	    @Valid @ModelAttribute("member") Member member,
+	    BindingResult bindingResult,
+	    Model model) {
+	    if (bindingResult.hasErrors()) {
+	        // 入力エラーがある場合は入力フォームに戻す
+	        return "member/member_registation";
+	    }
+
+	 // 名前＋生年月日が既存会員と一致する場合
+	    if (memberService.existsByNameAndBirthday(member.getName(), member.getBirthday())) {
+	        bindingResult.reject("duplicate.member", "同一人物の可能性があるため、登録できません。");
+	        return "member/member_registation";
+	    }
+	    model.addAttribute("member", member);
+	    return "member/member_registation_confirm";
 	}
+
 	// 会員登録完了
 	@PostMapping("/member_registation_complete")
-	public String completeRegistration(@ModelAttribute("member") Member member) {
-		memberService.save(member); // 登録日もここでセットされる
-		return "member/member_registation_complete";
+	public String completeRegistration(@ModelAttribute("member") Member member, Model model) {
+	    Member savedMember = memberService.save(member); // DB登録と同時にIDが採番される
+	    model.addAttribute("member", savedMember);       // 採番されたIDを含むMemberをモデルに追加
+	    return "member/member_registation_complete";    // 完了画面に遷移
 	}
+
 	// 予約一覧表示
 	@GetMapping("/member_reservation_list/{memberId}")
 	public String showReservationList(@PathVariable Integer memberId, Model model) {
@@ -76,10 +97,18 @@ public class MemberController {
 	}
 
 	@PostMapping("/edit/confirm")
-	public String confirmEdit(@ModelAttribute("member") Member member, Model model) {
-		model.addAttribute("member", member);
-		return "member/change_member_information_confirm";
+	public String confirmEdit(
+	    @Valid @ModelAttribute("member") Member member,
+	    BindingResult bindingResult,
+	    Model model) {
+	    if (bindingResult.hasErrors()) {
+	        // 入力エラーがある場合は編集フォームに戻す
+	        return "member/change_member_information";
+	    }
+	    model.addAttribute("member", member);
+	    return "member/change_member_information_confirm";
 	}
+
 
 	@PostMapping("/edit/complete")
 	public String completeEdit(@ModelAttribute Member formMember, Model model) {
@@ -129,6 +158,21 @@ public class MemberController {
 	        return "error";
 	    }
 	}
+
+//	会員検索
+	@GetMapping("/search")
+	public String searchMembers(
+	    @RequestParam(name = "keyword", required = false) String keyword,
+	    @RequestParam(name = "includeRetired", defaultValue = "false") boolean includeRetired,
+	    Model model) {
+
+	    List<Member> members = memberService.searchMembers(keyword, includeRetired);
+	    model.addAttribute("members", members);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("includeRetired", includeRetired);
+	    return "member/member_list";
+	}
+
 
 
 }
