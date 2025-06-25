@@ -1,5 +1,6 @@
 package app.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,5 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	List<Member> searchByKeyword(@Param("keyword") String keyword);
 
 
+	boolean existsByNameAndBirthday(String name, LocalDate birthday);
 }

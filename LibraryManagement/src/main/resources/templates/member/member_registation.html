@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>会員登録</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <style>
+    .error-message { color: red; font-size: 0.9em; }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -13,40 +16,52 @@
     </header>
 
     <form th:action="@{/member/member_registation_confirm}" th:object="${member}" method="post" class="lending-form">
+
       <div class="form-columns">
         <div class="column">
           <div class="form-group">
             <label for="name">氏名</label>
             <input type="text" th:field="*{name}" id="name" class="input-field" />
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-message"></p>
           </div>
+
           <div class="form-group">
             <label for="birthday">生年月日</label>
             <input type="date" th:field="*{birthday}" id="birthday" class="input-field" />
+            <p th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}" class="error-message"></p>
           </div>
+
           <div class="form-group">
             <label for="phone">電話番号</label>
             <input type="text" th:field="*{phone}" id="phone" class="input-field" />
+            <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error-message"></p>
           </div>
         </div>
+
         <div class="column">
           <div class="form-group">
             <label for="nameRuby">氏名フリガナ</label>
             <input type="text" th:field="*{nameRuby}" id="nameRuby" class="input-field" />
+            <p th:if="${#fields.hasErrors('nameRuby')}" th:errors="*{nameRuby}" class="error-message"></p>
           </div>
+
           <div class="form-group">
             <label for="address">住所</label>
             <input type="text" th:field="*{address}" id="address" class="input-field" />
+            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error-message"></p>
           </div>
+
           <div class="form-group">
             <label for="email">メールアドレス</label>
             <input type="email" th:field="*{email}" id="email" class="input-field" />
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></p>
           </div>
         </div>
       </div>
 
       <div class="form-actions">
         <button type="submit" class="btn btn-primary submit-button">登録</button>
-        <a th:href="@{/member/member_mgmt_menu}" class="back-link btn btn-danger">戻る</a>
+        <a th:href="@{/..}" class="back-link btn btn-danger">戻る</a>
       </div>
     </form>
   </div>

@@ -4,8 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,11 +50,24 @@ public class MemberController {
 	}
 	// 会員登録確認
 	@PostMapping("/member_registation_confirm")
-	public String confirmRegistration(@ModelAttribute("member") Member member, Model model) {
-		model.addAttribute("member", member); // 明示的に渡す
-		return "member/member_registation_confirm";
+	public String confirmRegistration(
+	    @Valid @ModelAttribute("member") Member member,
+	    BindingResult bindingResult,
+	    Model model) {
+	    if (bindingResult.hasErrors()) {
+	        // 入力エラーがある場合は入力フォームに戻す
+	        return "member/member_registation";
+	    }
+
+	 // 名前＋生年月日が既存会員と一致する場合
+	    if (memberService.existsByNameAndBirthday(member.getName(), member.getBirthday())) {
+	        bindingResult.reject("duplicate.member", "同一人物の可能性があるため、登録できません。");
+	        return "member/member_registation";
+	    }
+	    model.addAttribute("member", member);
+	    return "member/member_registation_confirm";
 	}
-	// 会員登録完了
+
 	// 会員登録完了
 	@PostMapping("/member_registation_complete")
 	public String completeRegistration(@ModelAttribute("member") Member member, Model model) {
@@ -81,10 +97,18 @@ public class MemberController {
 	}
 
 	@PostMapping("/edit/confirm")
-	public String confirmEdit(@ModelAttribute("member") Member member, Model model) {
-		model.addAttribute("member", member);
-		return "member/change_member_information_confirm";
+	public String confirmEdit(
+	    @Valid @ModelAttribute("member") Member member,
+	    BindingResult bindingResult,
+	    Model model) {
+	    if (bindingResult.hasErrors()) {
+	        // 入力エラーがある場合は編集フォームに戻す
+	        return "member/change_member_information";
+	    }
+	    model.addAttribute("member", member);
+	    return "member/change_member_information_confirm";
 	}
+
 
 	@PostMapping("/edit/complete")
 	public String completeEdit(@ModelAttribute Member formMember, Model model) {

@@ -58,4 +58,8 @@ public class MemberService {
         	return memberRepository.findAllActive();
         }
 
+    public boolean existsByNameAndBirthday(String name, LocalDate birthday) {
+        return memberRepository.existsByNameAndBirthday(name, birthday);
+    }
+
     }
