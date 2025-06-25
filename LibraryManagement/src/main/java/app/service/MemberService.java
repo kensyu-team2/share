@@ -41,4 +41,21 @@ public class MemberService {
 //    public Optional<Member> findByEmail(String email) {
 //        return Optional.ofNullable(memberRepository.findByEmail(email));
 //    }
-}
+
+    public List<Member> searchMembers(String keyword, boolean includeRetired) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return includeRetired
+                ? memberRepository.findAll()
+                : memberRepository.findAllActive();
+        } else {
+            return includeRetired
+                ? memberRepository.searchByKeyword(keyword)
+                : memberRepository.searchByKeywordAndNotRetired(keyword);
+        }
+    }
+
+    public List<Member> findAllActive() {
+        	return memberRepository.findAllActive();
+        }
+
+    }
