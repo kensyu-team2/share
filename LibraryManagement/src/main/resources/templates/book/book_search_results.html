@@ -25,7 +25,7 @@
 					<div th:if="${bookPage.hasContent()}" class="table-wrapper">
 						<table class="data-table">
 							<thead>
-								<tr>
+								<tr >
 									<th>書誌種別</th>
 									<th>書名</th>
 									<th>著者名</th>
@@ -58,7 +58,7 @@
 
 									<!-- 操作ボタン -->
 									<td><a th:href="@{/book/{id}(id=${book.bookId})}"
-										class="btn-table-action">詳細</a></td>
+										class="btn-table-edit">詳細</a></td>
 								</tr>
 							</tbody>
 						</table>

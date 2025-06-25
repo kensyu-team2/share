@@ -565,6 +565,7 @@ header h1 {
 .data-table th {
     background-color: #f8f9fa; /* ヘッダー行の背景色 */
     font-weight: bold;
+    text-align: center;
 }
 
 /* テーブルの行を交互に色付けして見やすくする */

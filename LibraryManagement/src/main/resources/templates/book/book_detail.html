@@ -67,12 +67,12 @@
 						</section>
 
 						<div class="detail-actions">
-							<a th:href="@{/book/search}" class="btn btn-secondary">戻る</a> <a
-								th:href="@{/book/{id}/reserve(id=*{bookId})}"
-								class="btn btn-secondary">予約</a>
-							<button type="button" class="btn btn-secondary"
-                                    th:onclick="|location.href='@{/book/history/item/{id}(id=*{bookId})}'|">履歴</button>
+							<a th:href="@{/book/{id}/reserve(id=*{bookId})}"
+								class="btn btn-confirm">予約</a>
+							<button type="button" class="btn btn-confirm"
+								th:onclick="|location.href='@{/book/history/item/{id}(id=*{bookId})}'|">履歴</button>
 							<button type="submit" class="btn btn-danger">削除</button>
+							<a th:href="@{/book/search}" class="btn btn-secondary">戻る</a>
 						</div>
 
 					</div>
