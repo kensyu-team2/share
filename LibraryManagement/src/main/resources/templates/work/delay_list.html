@@ -32,8 +32,7 @@
 						<td th:text="${lending.member.memberId}"></td>
 						<td th:text="${lending.lendDate}"></td>
 						<td th:text="${lending.dueDate}"></td>
-						<td
-							th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(lending.dueDate, today) > 10 ? 10 : T(java.time.temporal.ChronoUnit).DAYS.between(lending.dueDate, today)} + '日'"></td>
+						<td th:text="|${T(java.time.temporal.ChronoUnit).DAYS.between(lending.dueDate, today)}日|"></td>
 						<td th:text="${lending.item.itemId}"></td>
 						<td th:text="${lending.item.book.bookName}"></td>
 						<td th:text="${lending.item.book.authorName}"></td>
