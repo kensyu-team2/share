@@ -1,48 +1,56 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資料予約</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資料予約</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+	<div class="container">
+		<header class="header-sub-menu header-material">
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">資料予約</h1>
+		</header>
 
-    <div class="container">
-        <header class="header-sub-menu header-material">
-            <a href="book_detail.html" class="header-back-link">資料詳細へ</a>
-            <h1 class="header-title">資料予約</h1>
-        </header>
+		<main>
+			<form th:action="@{/book/reserve}" th:object="${reservationForm}"
+				method="post" class="registration-form">
 
-        <main>
-            <form th:action="@{/book/reserve}" th:object="${reservationForm}" method="post" class="registration-form">
+				<input type="hidden" th:field="*{bookId}" />
 
-                <div class="book-display-box">
-                    <div class="book-main-info">
-                        <span class="book-id">書籍ID: B0001</span>
-                        <span class="book-title">Spring Boot入門</span>
-                    </div>
-                    <div class="book-sub-info">
-                        <span>著者名: AI 博士</span>
-                        <span>出版社: 技術評論社</span>
-                        <span>発行年月日: 2025/04/01</span>
-                    </div>
-                </div>
-                <input type="hidden" th:field="*{bookId}" />
+				<div class="book-display-box" th:object="${book}">
+					<div class="book-main-info">
+						<span class="book-id" th:text="|書籍ID: *{bookId}|"></span> <span
+							class="book-title" th:text="*{bookName}"></span>
+					</div>
+					<div class="book-sub-info">
+						<span th:text="|著者名: *{authorName}|"></span> <span
+							th:text="|出版社: *{publisher}|"></span> <span
+							th:text="|発行年月日: *{#temporals.format(publishDate, 'yyyy/MM/dd')}|"></span>
+					</div>
+				</div>
 
-                <div class="form-group" style="max-width: 400px; margin: 40px auto;">
-                    <label for="memberId">会員ID</label>
-                    <input type="text" id="memberId" name="memberId" class="input-field" placeholder="会員IDを入力...">
-                </div>
+				<div th:if="${errorMessage}" class="error-message"
+					th:text="${errorMessage}"></div>
+				<div th:if="${#fields.hasErrors('memberId')}"
+					th:errors="*{memberId}" class="error-message"></div>
 
-                <div class="action-buttons">
-                    <a href="book_detail.html" class="btn btn-secondary">戻る</a>
-                    <button type="submit" class="btn btn-secondary">確認</button>
-                </div>
+				<div class="form-group" style="max-width: 400px; margin: 40px auto;">
+					<label for="memberId">会員ID</label> <input type="text"
+						th:field="*{memberId}" class="input-field"
+						placeholder="会員IDを入力...">
+				</div>
 
-            </form>
-        </main>
-    </div>
+				<div class="action-buttons">
+					<button type="submit" class="btn btn-primary">確認</button>
+					<a th:href="@{/book/{id}(id=${book.bookId})}"
+						class="btn btn-danger">戻る</a>
 
+				</div>
+
+			</form>
+		</main>
+	</div>
 </body>
 </html>
