@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
 		<header class="header-sub-menu header-material">
-			<a th:href="@{/book/menu}" class="header-back-link">資料管理メニュー</a>
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
 			<h1 class="header-title">資料登録</h1>
 		</header>
 		<main>
@@ -85,10 +85,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-actions">
-					<button type="submit" class="submit-button">登録</button>
-					<a th:href="@{/book/menu}" class="back-link">戻る</a>
+				<div class="action-buttons">
+					<button type="submit" class="btn btn-primary">登録</button>
+					<a th:href="@{/book/menu}" class="btn btn-secondary">戻る</a>
 				</div>
+
 			</form>
 		</main>
 	</div>
