@@ -52,11 +52,14 @@ public class MemberController {
 		return "member/member_registation_confirm";
 	}
 	// 会員登録完了
+	// 会員登録完了
 	@PostMapping("/member_registation_complete")
-	public String completeRegistration(@ModelAttribute("member") Member member) {
-		memberService.save(member); // 登録日もここでセットされる
-		return "member/member_registation_complete";
+	public String completeRegistration(@ModelAttribute("member") Member member, Model model) {
+	    Member savedMember = memberService.save(member); // DB登録と同時にIDが採番される
+	    model.addAttribute("member", savedMember);       // 採番されたIDを含むMemberをモデルに追加
+	    return "member/member_registation_complete";    // 完了画面に遷移
 	}
+
 	// 予約一覧表示
 	@GetMapping("/member_reservation_list/{memberId}")
 	public String showReservationList(@PathVariable Integer memberId, Model model) {
