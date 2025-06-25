@@ -8,6 +8,7 @@
 <body>
 <div class="container">
     <header class="header-sub-menu header-material">
+   		 <a th:href="@{/}" class="header-back-link">メインメニュー</a>
         <h1 class="header-title">資料登録確認</h1>
     </header>
 
@@ -61,8 +62,9 @@
             <input type="hidden" th:field="*{typeId}">
 
             <div class="action-buttons mt-4">
-                <a href="javascript:history.back()" class="btn btn-danger">戻る</a>
+
                 <button type="submit" class="btn btn-primary">登録実行</button>
+                <a href="javascript:history.back()" class="btn btn-danger">戻る</a>
             </div>
         </form>
     </main>

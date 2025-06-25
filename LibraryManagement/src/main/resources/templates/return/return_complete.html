@@ -8,33 +8,35 @@
 </head>
 <body>
     <div class="container">
-        <header class="header-return">
-            <h1>返却 完了</h1>
+        <header class="header-sub-menu header-return">
+            <h1 class="header-title">返却 完了</h1>
         </header>
 
-        <main>
-            <div class="completion-content">
+        <main class="page-content">
+            <div class="confirmation-content">
 
                 <p class="prompt-message" th:text="${message}">返却処理が完了しました。</p>
 
-                <table class="confirm-table" th:if="${processedLendings != null and !processedLendings.isEmpty()}">
-                    <thead>
-                        <tr>
-                            <th>資料ID</th>
-                            <th>書籍名</th>
-                            <th>返却した会員</th>
-                            <th>元の返却期限</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="lending : ${processedLendings}">
-                            <td th:text="${lending.item.itemId}"></td>
-                            <td th:text="${lending.item.book.bookName}"></td>
-                            <td th:text="|ID:${lending.member.memberId} / ${lending.member.name}|"></td>
-                            <td th:text="${#temporals.format(lending.dueDate, 'yyyy/MM/dd')}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper" th:if="${processedLendings != null and !processedLendings.isEmpty()}">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>資料ID</th>
+                                <th>書籍名</th>
+                                <th>返却した会員</th>
+                                <th>元の返却期限</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="lending : ${processedLendings}">
+                                <td th:text="${lending.item.itemId}"></td>
+                                <td th:text="${lending.item.book.bookName}"></td>
+                                <td th:text="|ID:${lending.member.memberId} / ${lending.member.name}|"></td>
+                                <td th:text="${#temporals.format(lending.dueDate, 'yyyy/MM/dd')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="action-buttons">
                     <a th:href="@{/return/input}" class="btn btn-primary">続けて返却を行う</a>
