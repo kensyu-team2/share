@@ -18,14 +18,15 @@ public class LendingForm {
     /**
      * 会員ID
      */
-    @NotBlank(message = "会員IDを入力してください。")
-    @Pattern(regexp = "^[0-9]{1,5}$", message = "会員IDは5桁までの数字で入力してください。")
-    private String memberId;
+	  @NotBlank(message = "会員IDを入力してください。")
+	    @Pattern(regexp = "^[0-9]*$", message = "会員IDは数字で入力してください。")
+	    @Size(max = 5, message = "会員IDは５桁までで入力してください。")
+	    private String memberId;
 
     /**
      * 貸し出す個別資料IDのリスト
      */
  // ★リストの中身に対するバリデーションを削除
-    @Size(min = 1, message = "貸出希望の資料を1冊以上入力してください。")
+	  @Size(min = 1, message = "資料IDを入力してください。")
     private List<String> itemIds;
 }

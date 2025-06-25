@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import app.entity.Book;
 import app.entity.Reservation;
 
 @Repository
@@ -14,5 +15,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     @EntityGraph(attributePaths = {"book"})
     List<Reservation> findByMember_MemberId(Integer memberId);
+
+    /**
+     * 特定の書籍(Book)に紐づく全ての予約情報を、予約日が古い順で取得します。
+     * @param book 検索対象の書籍エンティティ
+     * @return 予約エンティティのリスト
+     */
+    List<Reservation> findByBookOrderByReserveDateAsc(Book book);
 }
 

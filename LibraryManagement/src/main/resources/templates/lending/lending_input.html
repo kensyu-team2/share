@@ -14,36 +14,46 @@
 		</header>
 
 		<main>
-			<form th:action="@{/lending/confirm}" method="post" class="lending-form" th:object="${lendingForm}">
+			<form th:action="@{/lending/confirm}" method="post"
+				class="lending-form" th:object="${lendingForm}">
 
-				<div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
-				<div class="error-message" th:if="${#fields.hasGlobalErrors()}">
-					<ul>
-						<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+				<div class="error-summary"
+					th:if="${errorMessage != null or #fields.hasErrors('*')}">
+					<p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+					<ul th:if="${#fields.hasErrors('*')}">
+						<li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
 					</ul>
 				</div>
-
-				<input type="text" class="input-field" th:field="*{memberId}" placeholder="会員ID入力欄">
-				<div class="error-message" th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></div>
+				<input type="text" class="input-field" th:field="*{memberId}"
+					placeholder="会員ID入力欄">
 
 
 				<div class="form-columns">
 					<div class="column">
-						<input type="text" class="input-field" th:field="*{itemIds[0]}" placeholder="資料ID入力欄">
-						<input type="text" class="input-field" th:field="*{itemIds[1]}" placeholder="資料ID入力欄">
-						<input type="text" class="input-field" th:field="*{itemIds[2]}" placeholder="資料ID入力欄">
-						<input type="text" class="input-field" th:field="*{itemIds[3]}" placeholder="資料ID入力欄">
-						<input type="text" class="input-field" th:field="*{itemIds[4]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[0]}"
+							placeholder="資料ID入力欄"> <input type="text"
+							class="input-field" th:field="*{itemIds[1]}"
+							placeholder="資料ID入力欄"> <input type="text"
+							class="input-field" th:field="*{itemIds[2]}"
+							placeholder="資料ID入力欄"> <input type="text"
+							class="input-field" th:field="*{itemIds[3]}"
+							placeholder="資料ID入力欄"> <input type="text"
+							class="input-field" th:field="*{itemIds[4]}"
+							placeholder="資料ID入力欄">
 					</div>
 					<div class="column">
-						<input type="text" class="input-field" th:field="*{itemIds[5]}" placeholder="資料ID入力欄">
-						<input type="text" class="input-field" th:field="*{itemIds[6]}" placeholder="資料ID入力欄">
-						<input type="text" class="input-field" th:field="*{itemIds[7]}" placeholder="資料ID入力欄">
-						<input type="text" class="input-field" th:field="*{itemIds[8]}" placeholder="資料ID入力欄">
-						<input type="text" class="input-field" th:field="*{itemIds[9]}" placeholder="資料ID入力欄">
+						<input type="text" class="input-field" th:field="*{itemIds[5]}"
+							placeholder="資料ID入力欄"> <input type="text"
+							class="input-field" th:field="*{itemIds[6]}"
+							placeholder="資料ID入力欄"> <input type="text"
+							class="input-field" th:field="*{itemIds[7]}"
+							placeholder="資料ID入力欄"> <input type="text"
+							class="input-field" th:field="*{itemIds[8]}"
+							placeholder="資料ID入力欄"> <input type="text"
+							class="input-field" th:field="*{itemIds[9]}"
+							placeholder="資料ID入力欄">
 					</div>
 				</div>
-				<div class="error-message" th:if="${#fields.hasErrors('itemIds')}" th:errors="*{itemIds}"></div>
 
 				<button type="submit" class="submit-button">登録</button>
 

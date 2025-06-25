@@ -18,24 +18,27 @@
 
                 <p class="prompt-message" th:text="${message}">上記の内容で登録しました</p>
 
-                <div class="confirmation-grid" th:if="${completedData != null}">
+                <div class="confirmation-grid" th:if="${completedMember != null}">
 
                     <div class="details-column">
                         <div class="info-box">
                             <span class="info-label">会員ID</span>
-                            <span class="info-value" th:text="${completedData.member.memberId}">10001</span>
+                            <!-- 変数名を "completedMember" に修正します -->
+                            <span class="info-value" th:text="${completedMember.memberId}"></span>
                         </div>
                         <div class="info-box">
                             <span class="info-label">会員名</span>
-                            <span class="info-value" th:text="${completedData.member.name}">山田 太郎</span>
+                            <span class="info-value" th:text="${completedMember.name}"></span>
                         </div>
                         <div class="info-box">
                             <span class="info-label">貸出年月日</span>
-                            <span class="info-value" th:text="${#temporals.format(completedData.lendDate, 'yyyy/MM/dd')}">2025/06/23</span>
+                            <!-- 変数名を "completedLendDate" に修正します -->
+                            <span class="info-value" th:text="${#temporals.format(completedLendDate, 'yyyy/MM/dd')}"></span>
                         </div>
                         <div class="info-box">
                             <span class="info-label">返却期日</span>
-                            <span class="info-value" th:text="${#temporals.format(completedData.dueDate, 'yyyy/MM/dd')}">2025/07/07</span>
+                            <!-- 変数名を "completedDueDate" に修正します -->
+                            <span class="info-value" th:text="${#temporals.format(completedDueDate, 'yyyy/MM/dd')}"></span>
                         </div>
                     </div>
 
@@ -43,9 +46,9 @@
                         <div class="item-list-box">
                             <div class="info-label">貸出資料一覧</div>
                             <ul>
-                                <li th:each="item : ${completedData.items}"
+                                <!-- ループで使うリストを "completedItems" に修正します -->
+                                <li th:each="item : ${completedItems}"
                                     th:text="|資料ID: ${item.itemId} / ${item.book.bookName}|">
-                                    資料ID: 2001 / Spring Boot入門
                                 </li>
                             </ul>
                         </div>
@@ -53,7 +56,8 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a th:href="@{/}" class="btn btn-confirm">確認</a>
+                    <a th:href="@{/lending/input}" class="btn btn-confirm">続けて貸出を行う</a>
+                    <a th:href="@{/}" class="btn btn-primary">ホームへ</a>
                 </div>
 
             </div>
