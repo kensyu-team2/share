@@ -2,72 +2,74 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>貸出確認画面</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>貸出確認画面</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
 
-    <div class="container">
-        <header>
-            <h1>貸出 確認</h1>
-        </header>
+	<div class="container">
 
-        <main>
-            <form th:action="@{/lending/execute}" method="post" th:object="${lendingForm}">
+		<header class="header-sub-menu header-lending">
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">貸出 確認</h1>
+		</header>
+		<main>
+			<form th:action="@{/lending/execute}" method="post"
+				th:object="${lendingForm}">
 
-                <input type="hidden" th:field="*{memberId}" />
-                <th:block th:each="itemId, iterStat : *{itemIds}">
-                    <input type="hidden" th:if="${itemId ne ''}" th:field="*{itemIds[__${iterStat.index}__]}" />
-                </th:block>
+				<input type="hidden" th:field="*{memberId}" />
+				<th:block th:each="itemId, iterStat : *{itemIds}">
+					<input type="hidden" th:if="${itemId ne ''}"
+						th:field="*{itemIds[__${iterStat.index}__]}" />
+				</th:block>
 
-                <div class="confirmation-content">
-                    <div class="confirmation-grid">
+				<div class="confirmation-content">
+					<div class="confirmation-grid">
 
-                        <div class="details-column">
-                            <div class="info-box">
-                                <span class="info-label">会員ID</span>
-                                <span class="info-value" th:text="${member.memberId}">10001</span>
-                            </div>
-                            <div class="info-box">
-                                <span class="info-label">会員名</span>
-                                <span class="info-value" th:text="${member.name}">山田 太郎</span>
-                            </div>
-                            <div class="info-box">
-                                <span class="info-label">貸出年月日</span>
-                                <span class="info-value" th:text="${#temporals.format(lendDate, 'yyyy/MM/dd')}">2025/06/24</span>
-                            </div>
-                            <div class="info-box">
-                                <span class="info-label">返却期日</span>
-                                <span class="info-value" th:text="${#temporals.format(dueDate, 'yyyy/MM/dd')}">2025/07/08</span>
-                            </div>
-                        </div>
+						<div class="details-column">
+							<div class="info-box2">
+								<span class="info-label">会員ID</span> <span class="info-value"
+									th:text="${member.memberId}">10001</span>
+							</div>
+							<div class="info-box2">
+								<span class="info-label">会員名</span> <span class="info-value"
+									th:text="${member.name}">山田 太郎</span>
+							</div>
+							<div class="info-box2">
+								<span class="info-label">貸出年月日</span> <span class="info-value"
+									th:text="${#temporals.format(lendDate, 'yyyy/MM/dd')}">2025/06/24</span>
+							</div>
+							<div class="info-box2">
+								<span class="info-label">返却期日</span> <span class="info-value"
+									th:text="${#temporals.format(dueDate, 'yyyy/MM/dd')}">2025/07/08</span>
+							</div>
+						</div>
 
-                        <div class="items-column">
-                            <div class="item-list-box">
-                                <div class="info-label">貸出資料一覧</div>
-                                <ul>
-                                    <li th:each="item : ${items}"
-                                        th:text="|資料ID: ${item.itemId} / ${item.book.bookName}|">
-                                        資料ID: 2001 / Spring Boot入門
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+						<div class="items-column">
+							<div class="item-list-box" style="margin: 20px;">
+								<div class="info-label">貸出資料一覧</div>
+								<ul>
+									<li th:each="item : ${items}"
+										th:text="|資料ID: ${item.itemId} / ${item.book.bookName}|">
+										資料ID: 2001 / Spring Boot入門</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 
-                    <p class="prompt-message">上記の内容でよろしいでしょうか？</p>
+					<p class="prompt-message">上記の内容でよろしいでしょうか？</p>
 
-                    <div class="action-buttons">
-                        <button type="submit" class="btn btn-confirm">登録</button>
-                        <a th:href="@{/lending/input}" class="btn btn-back">戻る</a>
-                    </div>
-                </div>
-            </form>
-        </main>
-    </div>
+					<div class="action-buttons">
+						<button type="submit" class="btn btn-confirm">登録</button>
+						<a th:href="@{/lending/input}" class="btn btn-back">戻る</a>
+					</div>
+				</div>
+			</form>
+		</main>
+	</div>
 
 </body>
 </html>

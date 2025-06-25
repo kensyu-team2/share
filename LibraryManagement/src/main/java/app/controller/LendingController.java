@@ -148,7 +148,9 @@ public class LendingController {
 
         // 正常に完了したら完了メッセージを添えて完了画面へリダイレクト
         redirectAttributes.addFlashAttribute("message", "貸出処理が正常に完了しました。");
+        System.out.println("redirect:/lending/complete");
         return "redirect:/lending/complete";
+
     }
 
     /**
@@ -157,6 +159,7 @@ public class LendingController {
      */
     @GetMapping("/complete")
     public String showComplete() {
+    	System.out.println("lending/lending_complete");
         return "lending/lending_complete";
     }
 }
