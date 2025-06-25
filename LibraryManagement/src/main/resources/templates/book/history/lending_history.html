@@ -8,8 +8,9 @@
 </head>
 <body>
 	<div class="container">
-		<header>
-			<h1>貸出履歴</h1>
+		<header class="header-sub-menu header-material">
+			<a th:href="@{/book/menu}" class="header-back-link">資料管理メニューへ</a>
+			<h1 class="header-title">貸出履歴</h1>
 		</header>
 
 		<main>
@@ -66,12 +67,10 @@
 			</nav>
 
 			<!-- 戻るボタンのリンク先を修正 -->
-			 <div class="action-buttons">
-                 <!-- 「資料管理メニューに戻る」ボタン -->
-                 <a th:href="@{/book/menu}" class="btn btn-secondary">資料管理メニューへ戻る</a>
-                 <!-- 「メインメニューに戻る」ボタン -->
-                 <a th:href="@{/}" class="btn btn-secondary">メインメニューへ戻る</a>
-            </div>
+			<div class="action-buttons">
+				<a th:href="@{/book/menu}" class="btn btn-primary">資料管理メニューへ戻る</a> <a
+					th:href="@{/}" class="btn btn-secondary">メインメニューへ戻る</a>
+			</div>
 		</main>
 	</div>
 </body>
