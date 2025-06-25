@@ -8,9 +8,11 @@
 </head>
 <body>
     <div class="container">
+
         <header class="header-sub-menu header-return">
-            <h1 class="header-title">返却 完了</h1>
-        </header>
+			<a th:href="@{/}" class="header-back-link"style="color: black">メインメニュー</a>
+			<h1 class="header-title">返却 完了</h1>
+		</header>
 
         <main class="page-content">
             <div class="confirmation-content">
@@ -40,7 +42,7 @@
 
                 <div class="action-buttons">
                     <a th:href="@{/return/input}" class="btn btn-primary">続けて返却を行う</a>
-                    <a th:href="@{/}" class="btn btn-secondary">メインメニューへ戻る</a>
+
                 </div>
 
             </div>

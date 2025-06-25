@@ -13,7 +13,7 @@ body {
 /* --- 全体を囲むコンテナ --- */
 .container {
 	width: 100%;
-	max-width: 1000px;
+	max-width: 1200px;
 	background-color: #ffffff;
 	border-radius: 8px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -563,6 +563,7 @@ header h1 {
 
 /* --- データテーブル --- */
 .data-table {
+	width: auto;
 	width: 100%;
 	border-collapse: collapse; /* ボーダーを重ねて綺麗に見せる */
 	font-size: 14px;
@@ -607,7 +608,7 @@ header h1 {
 
 /* 幅広のコンテンツ用のコンテナスタイル */
 .container-wide {
-	max-width: 1100px; /* 横幅を広げる (この値は調整可能です) */
+	max-width: 1200px; /* 横幅を広げる (この値は調整可能です) */
 }
 
 /* データテーブルのセル内で文字が折り返されないようにする */
@@ -857,6 +858,7 @@ select.input-field {
 	padding: 0;
 	margin: 0;
 	gap: 15px;
+	flex-wrap: nowrap;
 }
 
 .pagination .page-link {
@@ -1130,4 +1132,17 @@ select.input-field {
 	/* ★★★ 以下2行を追加 ★★★ */
 	max-width: 700px; /* フォーム全体の最大幅を定義 (お好みで調整) */
 	margin: 0 auto; /* 左右の余白を自動で計算し、中央揃えにする */
+}
+.btn-table-delete {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #dc3545; /* 赤色 */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+.btn-table-delete:hover {
+    background-color: #c82333;
 }

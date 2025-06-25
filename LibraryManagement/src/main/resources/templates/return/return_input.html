@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>返却画面</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>返却画面</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div class="container">
-        <header class="header-return">
-            <h1>返却</h1>
-        </header>
+	<div class="container container-wide">
+		<header class="header-sub-menu header-return">
+			<a th:href="@{/}" class="header-back-link"style="color: black">メインメニュー</a>
+			<h1 class="header-title">返却</h1>
+		</header>
+		<main>
+			<form th:action="@{/return/confirm}" method="post"
+				class="return-form" th:object="${returnForm}">
 
-        <main>
-            <form th:action="@{/return/confirm}" method="post" class="return-form" th:object="${returnForm}">
+				<div class.error-message th:if="${errorMessage}"
+					th:text="${errorMessage}"></div>
+				<div class.error-message th:if="${#fields.hasErrors('itemIds')}"
+					th:errors="*{itemIds}"></div>
 
-                <div class.error-message th:if="${errorMessage}" th:text="${errorMessage}"></div>
-                <div class.error-message th:if="${#fields.hasErrors('itemIds')}" th:errors="*{itemIds}"></div>
+				<ol class="return-inputs-list">
+					<li><input type="text" th:field="*{itemIds[0]}"
+						aria-label="資料ID 1"></li>
+					<li><input type="text" th:field="*{itemIds[1]}"
+						aria-label="資料ID 2"></li>
+					<li><input type="text" th:field="*{itemIds[2]}"
+						aria-label="資料ID 3"></li>
+					<li><input type="text" th:field="*{itemIds[3]}"
+						aria-label="資料ID 4"></li>
+					<li><input type="text" th:field="*{itemIds[4]}"
+						aria-label="資料ID 5"></li>
+					<li><input type="text" th:field="*{itemIds[5]}"
+						aria-label="資料ID 6"></li>
+					<li><input type="text" th:field="*{itemIds[6]}"
+						aria-label="資料ID 7"></li>
+					<li><input type="text" th:field="*{itemIds[7]}"
+						aria-label="資料ID 8"></li>
+					<li><input type="text" th:field="*{itemIds[8]}"
+						aria-label="資料ID 9"></li>
+					<li><input type="text" th:field="*{itemIds[9]}"
+						aria-label="資料ID 10"></li>
+				</ol>
 
-                <ol class="return-inputs-list">
-                    <li><input type="text" th:field="*{itemIds[0]}" aria-label="資料ID 1"></li>
-                    <li><input type="text" th:field="*{itemIds[1]}" aria-label="資料ID 2"></li>
-                    <li><input type="text" th:field="*{itemIds[2]}" aria-label="資料ID 3"></li>
-                    <li><input type="text" th:field="*{itemIds[3]}" aria-label="資料ID 4"></li>
-                    <li><input type="text" th:field="*{itemIds[4]}" aria-label="資料ID 5"></li>
-                    <li><input type="text" th:field="*{itemIds[5]}" aria-label="資料ID 6"></li>
-                    <li><input type="text" th:field="*{itemIds[6]}" aria-label="資料ID 7"></li>
-                    <li><input type="text" th:field="*{itemIds[7]}" aria-label="資料ID 8"></li>
-                    <li><input type="text" th:field="*{itemIds[8]}" aria-label="資料ID 9"></li>
-                    <li><input type="text" th:field="*{itemIds[9]}" aria-label="資料ID 10"></li>
-                </ol>
+				<button type="submit" class="submit-button">確認へ</button>
 
-                <button type="submit" class="submit-button">確認へ</button>
-                <a th:href="@{/}" class="back-link">戻る</a>
 
-            </form>
-        </main>
-    </div>
+			</form>
+		</main>
+	</div>
 </body>
 </html>

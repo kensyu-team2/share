@@ -1,68 +1,71 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>貸出完了画面</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>貸出完了画面</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>貸出 完了</h1>
-        </header>
+	<div class="container">
 
-        <main>
-            <div class="completion-content">
+		<header class="header-sub-menu header-lending">
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">貸出 完了</h1>
+		</header>
+		<main>
+			<div class="completion-content">
 
-                <p class="prompt-message" th:text="${message}">上記の内容で登録しました</p>
+				<p class="prompt-message" th:text="${message}">上記の内容で登録しました</p>
+				<div class="confirmation-content">
+					<div class="confirmation-grid" th:if="${completedMember != null}">
 
-                <div class="confirmation-grid" th:if="${completedMember != null}">
+						<div class="details-column">
+							<div class="info-box2">
+								<span class="info-label">会員ID</span>
+								<!-- 変数名を "completedMember" に修正します -->
+								<span class="info-value" th:text="${completedMember.memberId}"></span>
+							</div>
+							<div class="info-box2">
+								<span class="info-label">会員名</span> <span class="info-value"
+									th:text="${completedMember.name}"></span>
+							</div>
+							<div class="info-box2">
+								<span class="info-label">貸出年月日</span>
+								<!-- 変数名を "completedLendDate" に修正します -->
+								<span class="info-value"
+									th:text="${#temporals.format(completedLendDate, 'yyyy/MM/dd')}"></span>
+							</div>
+							<div class="info-box2">
+								<span class="info-label">返却期日</span>
+								<!-- 変数名を "completedDueDate" に修正します -->
+								<span class="info-value"
+									th:text="${#temporals.format(completedDueDate, 'yyyy/MM/dd')}"></span>
+							</div>
+						</div>
 
-                    <div class="details-column">
-                        <div class="info-box">
-                            <span class="info-label">会員ID</span>
-                            <!-- 変数名を "completedMember" に修正します -->
-                            <span class="info-value" th:text="${completedMember.memberId}"></span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">会員名</span>
-                            <span class="info-value" th:text="${completedMember.name}"></span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">貸出年月日</span>
-                            <!-- 変数名を "completedLendDate" に修正します -->
-                            <span class="info-value" th:text="${#temporals.format(completedLendDate, 'yyyy/MM/dd')}"></span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">返却期日</span>
-                            <!-- 変数名を "completedDueDate" に修正します -->
-                            <span class="info-value" th:text="${#temporals.format(completedDueDate, 'yyyy/MM/dd')}"></span>
-                        </div>
-                    </div>
+						<div class="items-column">
+							<div class="item-list-box" style="margin: 20px;">
+								<div class="info-label">貸出資料一覧</div>
+								<ul>
+									<!-- ループで使うリストを "completedItems" に修正します -->
+									<li th:each="item : ${completedItems}"
+										th:text="|資料ID: ${item.itemId} / ${item.book.bookName}|">
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 
-                    <div class="items-column">
-                        <div class="item-list-box">
-                            <div class="info-label">貸出資料一覧</div>
-                            <ul>
-                                <!-- ループで使うリストを "completedItems" に修正します -->
-                                <li th:each="item : ${completedItems}"
-                                    th:text="|資料ID: ${item.itemId} / ${item.book.bookName}|">
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+					<div class="action-buttons">
+						<a th:href="@{/lending/input}" class="btn btn-confirm">続けて貸出を行う</a>
 
-                <div class="action-buttons">
-                    <a th:href="@{/lending/input}" class="btn btn-confirm">続けて貸出を行う</a>
-                    <a th:href="@{/}" class="btn btn-primary">ホームへ</a>
-                </div>
-
-            </div>
-        </main>
-    </div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
 
 </body>
 </html>

@@ -1,58 +1,62 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>返却確認画面</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>返却確認画面</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div class="container container-wide">
-        <header class="header-sub-menu header-return">
-             <a th:href="@{/return/input}" class="header-back-link">入力画面へ戻る</a>
-            <h1 class="header-title">返却 確認</h1>
-        </header>
+	<div class="container container-wide">
+		<header class="header-sub-menu header-return">
+			<a th:href="@{/}" class="header-back-link" style="color: black">メインメニュー</a>
+			<h1 class="header-title">返却 確認</h1>
+		</header>
 
-        <main class="page-content">
-            <form th:action="@{/return/execute}" method="post" th:object="${returnForm}">
+		<main class="page-content">
+			<form th:action="@{/return/execute}" method="post"
+				th:object="${returnForm}">
 
-                <th:block th:each="itemId, iterStat : *{itemIds}">
-                    <input type="hidden" th:field="*{itemIds[__${iterStat.index}__]}" />
-                </th:block>
+				<th:block th:each="itemId, iterStat : *{itemIds}">
+					<input type="hidden" th:field="*{itemIds[__${iterStat.index}__]}" />
+				</th:block>
 
-                <div class="confirmation-content">
-                    <p class="prompt-message">以下の資料を返却します。よろしいでしょうか？</p>
+				<div class="confirmation-content">
+					<p class="prompt-message">以下の資料を返却します。よろしいでしょうか？</p>
 
-                    <div class="table-wrapper" th:if="${lendingList != null and !lendingList.isEmpty()}">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>資料ID</th>
-                                    <th>書籍名</th>
-                                    <th>会員ID</th>
-                                    <th>会員名</th>
-                                    <th>元の返却期限</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="lending : ${lendingList}">
-                                    <td th:text="${lending.item.itemId}"></td>
-                                    <td th:text="${lending.item.book.bookName}"></td>
-                                    <td th:text="${lending.member.memberId}"></td>
-                                    <td th:text="${lending.member.name}"></td>
-                                    <td th:text="${#temporals.format(lending.dueDate, 'yyyy/MM/dd')}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+					<div class="table-wrapper"
+						th:if="${lendingList != null and !lendingList.isEmpty()}">
+						<table class="data-table">
+							<thead>
+								<tr>
+									<th>資料ID</th>
+									<th>書籍名</th>
+									<th>会員ID</th>
+									<th>会員名</th>
+									<th>元の返却期限</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="lending : ${lendingList}">
+									<td th:text="${lending.item.itemId}"></td>
+									<td th:text="${lending.item.book.bookName}"></td>
+									<td th:text="${lending.member.memberId}"></td>
+									<td th:text="${lending.member.name}"></td>
+									<td
+										th:text="${#temporals.format(lending.dueDate, 'yyyy/MM/dd')}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
-                    <div class="action-buttons">
-                        <a th:href="@{/return/input}" class="btn btn-danger">戻る</a>
-                        <button type="submit" class="btn btn-primary">返却する</button>
-                    </div>
-                </div>
-            </form>
-        </main>
-    </div>
+					<div class="action-buttons">
+
+						<button type="submit" class="btn btn-primary">返却する</button>
+						<a th:href="@{/return/input}" class="btn btn-danger">戻る</a>
+					</div>
+				</div>
+			</form>
+		</main>
+	</div>
 </body>
 </html>
