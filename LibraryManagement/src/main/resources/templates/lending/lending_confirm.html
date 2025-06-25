@@ -11,10 +11,11 @@
 <body>
 
 	<div class="container">
-		<header>
-			<h1>貸出 確認</h1>
-		</header>
 
+		<header class="header-sub-menu header-lending">
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">貸出 確認</h1>
+		</header>
 		<main>
 			<form th:action="@{/lending/execute}" method="post"
 				th:object="${lendingForm}">
