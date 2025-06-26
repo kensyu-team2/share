@@ -1,40 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>予約キャンセル完了画面</title>
-    <link rel="stylesheet" th:href="@{/css/work_table.css}">
+<meta charset="UTF-8">
+<title>予約キャンセル完了</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <a th:href="@{/}" class="header-back-link">メインメニュー</a>
-    <h1>予約キャンセル完了</h1>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>会員ID</th>
-                <th>予約日</th>
-                <th>取り置き期限</th>
-                <th>資料ID</th>
-                <th>資料タイトル</th>
-                <th>著者名</th>
+	<div class="container">
+		<header class="header-sub-menu header-material">
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">予約キャンセル完了</h1>
+		</header>
 
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1111</td>
-                <td>2025/6/19</td>
-                <td>2025/7/3</td>
-                <td>2222</td>
-                <td>資料1</td>
-                <td>著者1</td>
+		<main class="confirmation-content">
+			<div class="alert alert-success">
+				<p>予約のキャンセルが完了しました。</p>
+			</div>
 
-            </tr>
-        </tbody>
-    </table>
-    <p>上記の予約をキャンセルしました</p>
-    <a class="" th:href="@{/work/reserve/list}">確認して予約一覧へ</a>
 
+
+			<div class="action-buttons">
+				<a th:href="@{/work/reserve/list}" class="btn btn-primary">予約一覧へ戻る</a>
+			</div>
+		</main>
+	</div>
 </body>
 </html>

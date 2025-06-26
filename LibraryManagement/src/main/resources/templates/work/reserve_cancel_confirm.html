@@ -1,23 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>予約キャンセル確認画面</title>
-    <link rel="stylesheet" th:href="@{/css/work_table.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>予約キャンセル確認</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+	<div class="container">
+		<header class="header-sub-menu header-material">
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">予約キャンセル確認</h1>
+		</header>
 
-    <a th:href="@{/}" class="header-back-link">メインメニュー</a>
+		<main class="confirmation-content">
+			<p class="prompt-message">以下の予約をキャンセルしてよろしいですか？</p>
 
-    <h1>予約キャンセル確認</h1>
+			<div class="info-box" th:object="${reservation}">
+				<dl class="info-dl">
+					<dt>予約ID</dt>
+					<dd th:text="*{reserveId}"></dd>
+					<dt>書籍名</dt>
+					<dd th:text="*{book.bookName}"></dd>
+					<dt>会員名</dt>
+					<dd th:text="*{member.name}"></dd>
+					<dt>予約日</dt>
+					<dd th:text="*{#temporals.format(reserveDate, 'yyyy/MM/dd')}"></dd>
+				</dl>
+			</div>
 
-
-
-    <p>この予約をキャンセルしてよろしいですか？</p>
-
-    <a th:href="@{/work/reserve/cancel/complete/{reserveId}(reserveId=${reservation.reserveId})}">はい</a>
-    <a class="" th:href="@{/work/reserve/list}">戻る</a>
-
+			<div class="action-buttons">
+				<a
+					th:href="@{/work/reserve/cancel/complete/{reserveId}(reserveId=${reservation.reserveId})}"
+					class="btn btn-danger">はい（キャンセルする）</a> <a
+					th:href="@{/work/reserve/list}" class="btn btn-secondary">いいえ（戻る）</a>
+			</div>
+		</main>
+	</div>
 </body>
 </html>
