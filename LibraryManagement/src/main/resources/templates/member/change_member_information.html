@@ -18,34 +18,44 @@
 				<input type="hidden" th:field="*{memberId}" />
 
 				<div class="form-group">
-					<label>氏名</label>
-					<input type="text" th:field="*{name}" class="input-field" required />
+					<label>氏名</label> <input type="text" th:field="*{name}"
+						class="input-field" required />
+					<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+						class="error-message"></div>
 				</div>
 
 				<div class="form-group">
-					<label>フリガナ</label>
-					<input type="text" th:field="*{nameRuby}" class="input-field" required />
+					<label>フリガナ</label> <input type="text" th:field="*{nameRuby}"
+						class="input-field" required />
+					<div th:if="${#fields.hasErrors('nameRuby')}"
+						th:errors="*{nameRuby}" class="error-message"></div>
 				</div>
 
 				<div class="form-group">
-					<label>電話番号</label>
-					<input type="tel" th:field="*{phone}" class="input-field" required />
+					<label>電話番号</label> <input type="tel" th:field="*{phone}"
+						class="input-field" required />
+					<div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+						class="error-message"></div>
 				</div>
 
 				<div class="form-group">
-					<label>メール</label>
-					<input type="email" th:field="*{email}" class="input-field" required />
+					<label>メール</label> <input type="email" th:field="*{email}"
+						class="input-field" required />
+					<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+						class="error-message"></div>
 				</div>
 
 				<div class="form-group">
-					<label>住所</label>
-					<input type="text" th:field="*{address}" class="input-field" required />
+					<label>住所</label> <input type="text" th:field="*{address}"
+						class="input-field" required />
+					<div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+						class="error-message"></div>
 				</div>
-
 				<div class="action-buttons">
-					<a th:href="@{/member/member_list}" class="btn btn-secondary">戻る</a>
-					<button type="submit" class="btn btn-primary">確認</button>
-				</div>
+    <a th:href="@{/member/member_list}" class="btn btn-secondary">戻る</a>
+    <button type="submit" class="btn btn-primary">確認</button>
+</div>
+
 			</form>
 		</main>
 	</div>
