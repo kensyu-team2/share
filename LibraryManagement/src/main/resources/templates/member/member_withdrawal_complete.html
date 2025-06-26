@@ -8,29 +8,34 @@
 <body>
 <div class="container">
     <header class="header-sub-menu header-member">
-        <a th:href="@{/member/member_list}" class="header-back-link">会員一覧へ</a>
+        <a th:href="@{/}" class="header-back-link">メインメニュー</a>
         <h1 class="header-title">会員退会完了</h1>
     </header>
 
-    <main>
-        <div class="confirmation-content">
-            <div class="confirmation-grid">
-                <div class="details-column">
-                    <div class="info-box"><span class="info-label">氏名</span><span class="info-value" th:text="${member.name}"></span></div>
-                    <div class="info-box"><span class="info-label">フリガナ</span><span class="info-value" th:text="${member.nameRuby}"></span></div>
-                    <div class="info-box"><span class="info-label">電話番号</span><span class="info-value" th:text="${member.phone}"></span></div>
-                </div>
-                <div class="items-column">
-                    <div class="info-box"><span class="info-label">メール</span><span class="info-value" th:text="${member.email}"></span></div>
-                    <div class="info-box"><span class="info-label">住所</span><span class="info-value" th:text="${member.address}"></span></div>
-                </div>
-            </div>
+    <main class="confirmation-content">
+        <div class="alert alert-success">
+            <p>以下の会員の退会処理が完了しました。</p>
+        </div>
 
-            <p class="prompt-message">上記の会員が退会しました。</p>
+        <div class="info-box" th:object="${member}">
+            <dl class="info-dl">
+                <dt>会員ID</dt>
+                <dd th:text="*{memberId}"></dd>
+                <dt>氏名</dt>
+                <dd th:text="*{name}"></dd>
+                <dt>フリガナ</dt>
+                <dd th:text="*{nameRuby}"></dd>
+                <dt>電話番号</dt>
+                <dd th:text="*{phone}"></dd>
+                <dt>メール</dt>
+                <dd th:text="*{email}"></dd>
+                <dt>住所</dt>
+                <dd th:text="*{address}"></dd>
+            </dl>
+        </div>
 
-            <div class="action-buttons">
-                <a th:href="@{/member/member_list}" class="btn btn-primary">確認</a>
-            </div>
+        <div class="action-buttons">
+            <a th:href="@{/member/member_list}" class="btn btn-primary">会員一覧へ戻る</a>
         </div>
     </main>
 </div>
