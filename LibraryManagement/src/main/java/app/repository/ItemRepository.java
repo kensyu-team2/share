@@ -8,5 +8,7 @@ import app.entity.Item;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
+
+	 long countByBookBookIdAndStatusStatusId(Integer bookId, Integer statusId);
     // 今は基本的なメソッドだけで十分です
 }

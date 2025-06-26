@@ -54,47 +54,57 @@ public class LendingController {
 			BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 
-		 // 1. まず、リストから空の要素を取り除いた、新しいリストを作成します
-        List<String> nonEmptyItemIds;
-        if (lendingForm.getItemIds() != null) {
-            nonEmptyItemIds = lendingForm.getItemIds().stream()
-                .filter(id -> id != null && !id.trim().isEmpty())
-                .collect(Collectors.toList());
-        } else {
-            nonEmptyItemIds = new ArrayList<>();
-        }
+		// 1. まず、リストから空の要素を取り除いた、新しいリストを作成します
+		List<String> nonEmptyItemIds;
+		if (lendingForm.getItemIds() != null) {
+			nonEmptyItemIds = lendingForm.getItemIds().stream()
+					.filter(id -> id != null && !id.trim().isEmpty())
+					.collect(Collectors.toList());
+		} else {
+			nonEmptyItemIds = new ArrayList<>();
+		}
 
-        // 2. 元のフォームオブジェクトのリストを、この新しいリストで上書きします
-        lendingForm.setItemIds(nonEmptyItemIds);
+		// 2. 元のフォームオブジェクトのリストを、この新しいリストで上書きします
+		lendingForm.setItemIds(nonEmptyItemIds);
 
-        // 3. これ以降は、上書きされたlendingFormを使ってバリデーションを行います
+		// 3. これ以降は、上書きされたlendingFormを使ってバリデーションを行います
 
-        // 会員IDのチェック (手動バリデーション)
-        String memberId = lendingForm.getMemberId();
-        if (memberId == null || memberId.trim().isEmpty()) {
-            bindingResult.rejectValue("memberId", "NotBlank.memberId", "会員IDを入力してください。");
-        } else {
-            if (!memberId.matches("^[0-9]+$")) {
-                bindingResult.rejectValue("memberId", "Pattern.memberId", "会員IDは数字で入力してください。");
-            }
-            if (memberId.length() > 5) {
-                bindingResult.rejectValue("memberId", "Size.memberId", "会員IDは５桁までで入力してください。");
-            }
-        }
+		// 会員IDのチェック (手動バリデーション)
+		String memberId = lendingForm.getMemberId();
+		if (memberId == null || memberId.trim().isEmpty()) {
+			bindingResult.rejectValue("memberId", "NotBlank.memberId", "会員IDを入力してください。");
+		} else {
+			if (!memberId.matches("^[0-9]+$")) {
+				bindingResult.rejectValue("memberId", "Pattern.memberId", "会員IDは数字で入力してください。");
+			}
+			if (memberId.length() > 5) {
+				bindingResult.rejectValue("memberId", "Size.memberId", "会員IDは５桁までで入力してください。");
+			}
+			// 会員IDの形式が正しい場合のみ、DBに存在するかをチェックします
+			if (!bindingResult.hasFieldErrors("memberId")) {
+				try {
+					lendingService.findMemberById(Integer.parseInt(memberId));
+				} catch (RuntimeException e) {
+					// Serviceから例外が投げられたら、それは「会員が存在しない」ことを意味します
+					// テスト仕様書通りのメッセージをセットします
+					bindingResult.rejectValue("memberId", "NotExist.memberId", "存在しない会員IDが入力されています。");
+				}
+			}
+		}
 
-        // 資料IDのチェック (手動バリデーション)
-        if (lendingForm.getItemIds().isEmpty()) {
-            bindingResult.rejectValue("itemIds", "Size.itemIds", "資料IDを入力してください。");
-        } else {
-            for (String itemId : lendingForm.getItemIds()) {
-                if (!itemId.matches("^[0-9]+$")) {
-                    bindingResult.rejectValue("itemIds", "Pattern.itemIds", "個別資料IDは数字で入力してください。");
-                }
-                if (itemId.length() > 10) {
-                    bindingResult.rejectValue("itemIds", "Size.itemIds", "個別資料IDは１０桁までで入力してください。");
-                }
-            }
-        }
+		// 資料IDのチェック (手動バリデーション)
+		if (lendingForm.getItemIds().isEmpty()) {
+			bindingResult.rejectValue("itemIds", "Size.itemIds", "資料IDを入力してください。");
+		} else {
+			for (String itemId : lendingForm.getItemIds()) {
+				if (!itemId.matches("^[0-9]+$")) {
+					bindingResult.rejectValue("itemIds", "Pattern.itemIds", "個別資料IDは数字で入力してください。");
+				}
+				if (itemId.length() > 10) {
+					bindingResult.rejectValue("itemIds", "Size.itemIds", "個別資料IDは１０桁までで入力してください。");
+				}
+			}
+		}
 
 		if (bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("lendingForm", lendingForm);
@@ -151,36 +161,36 @@ public class LendingController {
 	 */
 	// LendingController.java
 
-	 @PostMapping("/execute")
-	    public String execute(@ModelAttribute LendingForm lendingForm, RedirectAttributes redirectAttributes) {
+	@PostMapping("/execute")
+	public String execute(@ModelAttribute LendingForm lendingForm, RedirectAttributes redirectAttributes) {
 
-	        try {
-	            // Serviceの貸出実行メソッドを呼び出す
-	            lendingService.executeLending(lendingForm);
+		try {
+			// Serviceの貸出実行メソッドを呼び出す
+			lendingService.executeLending(lendingForm);
 
-	            Member member = lendingService.findMemberById(Integer.parseInt(lendingForm.getMemberId()));
-	            List<Item> items = lendingService.findItemsByIds(lendingForm.getItemIds());
-	            LocalDate lendDate = LocalDate.now();
-	            LocalDate dueDate = lendDate.plusWeeks(2);
+			Member member = lendingService.findMemberById(Integer.parseInt(lendingForm.getMemberId()));
+			List<Item> items = lendingService.findItemsByIds(lendingForm.getItemIds());
+			LocalDate lendDate = LocalDate.now();
+			LocalDate dueDate = lendDate.plusWeeks(2);
 
-	            // 完了画面に渡すためのデータを"Flash Attribute"としてセットします。
-	            // HTMLの変数名と合わせます
-	            redirectAttributes.addFlashAttribute("completedMember", member);
-	            redirectAttributes.addFlashAttribute("completedItems", items);
-	            redirectAttributes.addFlashAttribute("completedLendDate", lendDate);
-	            redirectAttributes.addFlashAttribute("completedDueDate", dueDate);
+			// 完了画面に渡すためのデータを"Flash Attribute"としてセットします。
+			// HTMLの変数名と合わせます
+			redirectAttributes.addFlashAttribute("completedMember", member);
+			redirectAttributes.addFlashAttribute("completedItems", items);
+			redirectAttributes.addFlashAttribute("completedLendDate", lendDate);
+			redirectAttributes.addFlashAttribute("completedDueDate", dueDate);
 
-	        } catch (RuntimeException e) {
-	            // エラーハンドリング
-	            redirectAttributes.addFlashAttribute("lendingForm", lendingForm);
-	            redirectAttributes.addFlashAttribute("errorMessage", "貸出処理中にエラーが発生しました：" + e.getMessage());
-	            return "redirect:/lending/input";
-	        }
+		} catch (RuntimeException e) {
+			// エラーハンドリング
+			redirectAttributes.addFlashAttribute("lendingForm", lendingForm);
+			redirectAttributes.addFlashAttribute("errorMessage", "貸出処理中にエラーが発生しました：" + e.getMessage());
+			return "redirect:/lending/input";
+		}
 
-	        // 完了メッセージを渡す
-	        redirectAttributes.addFlashAttribute("message", "貸出処理が正常に完了しました。");
-	        return "redirect:/lending/complete";
-	    }
+		// 完了メッセージを渡す
+		redirectAttributes.addFlashAttribute("message", "貸出処理が正常に完了しました。");
+		return "redirect:/lending/complete";
+	}
 
 	/**
 	 * 登録完了画面を表示
