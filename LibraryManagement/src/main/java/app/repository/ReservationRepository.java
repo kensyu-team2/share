@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import app.entity.Book;
@@ -22,5 +23,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
      * @return 予約エンティティのリスト
      */
     List<Reservation> findByBookOrderByReserveDateAsc(Book book);
+
+    @Query("SELECT r FROM Reservation r WHERE EXISTS (" +
+    	       "SELECT i FROM Item i WHERE i.book = r.book AND i.status.statusId = 3)")
+    List<Reservation> findReservedOnly();
+
 }
 

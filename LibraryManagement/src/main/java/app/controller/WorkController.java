@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import app.entity.Lending;
 import app.entity.Reservation;
@@ -40,10 +41,21 @@ public class WorkController {
 
 	//予約一覧を表示
 	@RequestMapping("/reserve/list")
-	public String showReserveList(Model model) {
-	    model.addAttribute("reservations", reservationRepository.findAll());
+	public String showReserveList(@RequestParam(value = "filter", required = false, defaultValue = "all") String filter,
+	                              Model model) {
+	    List<Reservation> reservations;
+	    if ("reserved".equals(filter)) {
+	        // 予約確保中のみ（StatusId: 3）を持つ資料に紐づく予約を取得
+	        reservations = reservationRepository.findReservedOnly();
+	    } else {
+	        // 全件
+	        reservations = reservationRepository.findAll();
+	    }
+	    model.addAttribute("reservations", reservations);
+	    model.addAttribute("filter", filter);
 	    return "work/reserve_list";
 	}
+
 
 
 	// 【予約キャンセル確認画面】表示

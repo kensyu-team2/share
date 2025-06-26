@@ -17,9 +17,18 @@
 			<div class="panel-body">
 				<div class="filter-controls"
 					style="justify-content: flex-start; margin-bottom: 20px;">
-					<label><input type="radio" name="reserve" value="">予約確保中</label>
-					<label><input type="radio" name="reserve" value="">予約全件表示</label>
+					<form method="get" th:action="@{/work/reserve/list}"
+						style="display: flex; gap: 20px;">
+						<label> <input type="radio" name="filter" value="reserved"
+							th:checked="${filter == 'reserved'}"
+							onchange="this.form.submit()"> 予約確保中
+						</label> <label> <input type="radio" name="filter" value="all"
+							th:checked="${filter == 'all'}" onchange="this.form.submit()">
+							予約全件表示
+						</label>
+					</form>
 				</div>
+
 
 				<div class="table-wrapper">
 					<table class="data-table">
