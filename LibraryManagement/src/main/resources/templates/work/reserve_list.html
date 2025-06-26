@@ -1,53 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>予約一覧</title>
-<link rel="stylesheet" th:href="@{/css/work_table.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-	<div class="reserve-list">
-		<div class="container menu-container">
-			<header class="header">
-				<div class="back-link">
-					<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+	<div class="container container-wide">
+		<header class="header-sub-menu header-material">
+			<a th:href="@{/}" class="header-back-link">メインメニュー</a>
+			<h1 class="header-title">予約一覧</h1>
+		</header>
+
+		<main class="page-content">
+			<div class="panel-body">
+				<div class="filter-controls"
+					style="justify-content: flex-start; margin-bottom: 20px;">
+					<label><input type="radio" name="reserve" value="">予約確保中</label>
+					<label><input type="radio" name="reserve" value="">予約全件表示</label>
 				</div>
-				<h1>予約一覧</h1>
-			</header>
 
-			<input type="radio" name="reserve" value="">予約確保中 <input
-				type="radio" name="reserve" value="">予約全件表示
-
-			<table class="data-table">
-				<thead>
-					<tr>
-						<th>予約日</th>
-						<th>取り置き期限</th>
-						<th>会員ID</th>
-						<th>資料ID</th>
-						<th>資料タイトル</th>
-						<th>著者名</th>
-						<th>キャンセル</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="res : ${reservations}">
-						<td th:text="${res.reserveDate}"></td>
-						<td th:text="${res.deadline}"></td>
-						<td th:text="${res.member.memberId}"></td>
-						<td th:text="${res.book.bookId}"></td>
-						<td th:text="${res.book.bookName}"></td>
-						<td th:text="${res.book.authorName}"></td>
-						<td><a
-							th:href="@{/work/reserve/cancel/confirm/{reserveId}(reserveId=${res.reserveId})}">キャンセル</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<a class="" th:href="@{/work/menu}">戻る</a>
-		</div>
+				<div class="table-wrapper">
+					<table class="data-table">
+						<thead>
+							<tr style="text-align: center;">
+								<th>予約日</th>
+								<th>取り置き期限</th>
+								<th>会員ID</th>
+								<th>資料ID</th>
+								<th>資料タイトル</th>
+								<th>著者名</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="res : ${reservations}" style="text-align: center;">
+								<td th:text="${res.reserveDate}"></td>
+								<td th:text="${res.deadline}"></td>
+								<td th:text="${res.member.memberId}"></td>
+								<td th:text="${res.book.bookId}"></td>
+								<td th:text="${res.book.bookName}"></td>
+								<td th:text="${res.book.authorName}"></td>
+								<td><a
+									th:href="@{/work/reserve/cancel/confirm/{reserveId}(reserveId=${res.reserveId})}">キャンセル</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="search-actions">
+						<a th:href="@{/book/menu}" class="btn btn-secondary">戻る</a>
+					</div>
+				</div>
+			</div>
+		</main>
 	</div>
 </body>
 </html>
