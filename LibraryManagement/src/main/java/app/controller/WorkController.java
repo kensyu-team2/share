@@ -26,7 +26,6 @@ public class WorkController {
 	public String showMenu() {
 		return "work/work_menu";
 	}
-
 	//	//メインメニューに戻る
 	//	@RequestMapping("/main")
 	//	public String backHome() {
@@ -95,4 +94,3 @@ public class WorkController {
 
 //	//業務連絡メニューに戻る
 //	@RequestMapping("")
-

@@ -172,8 +172,4 @@ public class MemberController {
 	    model.addAttribute("includeRetired", includeRetired);
 	    return "member/member_list";
 	}
-
-
-
 }
-

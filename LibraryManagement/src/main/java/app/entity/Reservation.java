@@ -72,4 +72,3 @@ public class Reservation {
         return reserveDate.plusDays(10);  // 例：予約日の14日後を取り置き期限とする
     }
 }
-

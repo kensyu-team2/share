@@ -28,4 +28,3 @@ public class ReservationController {
         return "reservation/list";  // Thymeleafなどのテンプレート名
     }
 }
-
