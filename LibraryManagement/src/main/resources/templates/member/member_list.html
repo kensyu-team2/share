@@ -15,15 +15,14 @@
 
 		<main class="page-content">
 			<form action="/member/search" method="get" class="search-form">
-	<input type="search" name="keyword" class="search-input"
-		placeholder="氏名、IDなどで検索..." th:value="${keyword}">
-	<label>
-		<input type="checkbox" name="includeRetired"
-			th:checked="${includeRetired} ? 'checked' : null">
-		退会済みも表示する
-	</label>
-	<button type="submit" class="search-button">検索</button>
-</form>
+				<input type="search" name="keyword" class="search-input"
+					placeholder="氏名、IDなどで検索..." th:value="${keyword}"> <label>
+					<input type="checkbox" name="includeRetired"
+					th:checked="${includeRetired} ? 'checked' : null">
+					退会済みも表示する
+				</label>
+				<button type="submit" class="search-button">検索</button>
+			</form>
 
 
 
