@@ -1,47 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>会員登録確認</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>会員登録確認</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-  <div class="container">
-    <header class="header-member">
-      <div class="nav">
-        <a class="btn btn-secondary" th:href="@{/main_menu}">ホーム</a>
-      </div>
-      <h1>会員登録確認</h1>
+<div class="container">
+    <header class="header-sub-menu header-member">
+        <a th:href="@{/}" class="header-back-link">メインメニュー</a>
+        <h1 class="header-title">会員登録確認</h1>
     </header>
 
-    <form th:action="@{/member/member_registation_complete}" th:object="${member}" method="post" class="lending-form">
+    <main class="confirmation-content">
+        <div class="info-box" th:object="${member}">
+            <p class="prompt-message">以下の内容で登録しますか？</p>
+            <dl class="info-dl">
+                <dt>氏名</dt>
+                <dd th:text="*{name}"></dd>
+                <dt>フリガナ</dt>
+                <dd th:text="*{nameRuby}"></dd>
+                <dt>生年月日</dt>
+                <dd th:text="*{#temporals.format(birthday, 'yyyy/MM/dd')}"></dd>
+                <dt>住所</dt>
+                <dd th:text="*{address}"></dd>
+                <dt>電話番号</dt>
+                <dd th:text="*{phone}"></dd>
+                <dt>メール</dt>
+                <dd th:text="*{email}"></dd>
+            </dl>
+        </div>
 
-      <p>氏名: <span th:text="*{name}"></span></p>
-      <p>氏名フリガナ: <span th:text="*{nameRuby}"></span></p>
-      <p>生年月日: <span th:text="*{birthday}"></span></p>
-      <p>住所: <span th:text="*{address}"></span></p>
-      <p>電話番号: <span th:text="*{phone}"></span></p>
-      <p>メールアドレス: <span th:text="*{email}"></span></p>
+        <form th:action="@{/member/member_registation_complete}" th:object="${member}" method="post">
+            <input type="hidden" th:field="*{name}" />
+            <input type="hidden" th:field="*{nameRuby}" />
+            <input type="hidden" th:field="*{birthday}" />
+            <input type="hidden" th:field="*{address}" />
+            <input type="hidden" th:field="*{phone}" />
+            <input type="hidden" th:field="*{email}" />
 
-      <div class="verification-checkbox">
-        <input type="checkbox" name="confirm" id="confirm" required />
-        <label for="confirm">身分証明書と照合し、本人確認を完了しました。</label>
-      </div>
+            <div class="verification-checkbox">
+                <label for="confirm">
+                    <input type="checkbox" name="confirm" id="confirm" required />
+                    身分証明書と照合し、本人確認を完了しました。
+                </label>
+            </div>
 
-      <!-- hidden fields to pass data -->
-      <input type="hidden" th:field="*{name}" />
-      <input type="hidden" th:field="*{nameRuby}" />
-      <input type="hidden" th:field="*{birthday}" />
-      <input type="hidden" th:field="*{address}" />
-      <input type="hidden" th:field="*{phone}" />
-      <input type="hidden" th:field="*{email}" />
-
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary submit-button">登録</button>
-        <button type="button" onclick="history.back()" class="btn btn-danger back-link">戻る</button>
-      </div>
-    </form>
-  </div>
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">登録</button>
+                <button type="button" onclick="history.back()" class="btn btn-danger">戻る</button>
+            </div>
+        </form>
+    </main>
+</div>
 </body>
 </html>

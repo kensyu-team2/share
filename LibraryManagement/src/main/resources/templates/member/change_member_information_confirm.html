@@ -1,60 +1,59 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>会員変更確認</title>
-<link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>会員変更確認</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<div class="container">
-		<header class="header-sub-menu header-member">
-			<h1 class="header-title">会員変更確認</h1>
-		</header>
+<div class="container">
+    <header class="header-sub-menu header-member">
+        <a th:href="@{/}" class="header-back-link">メインメニュー</a>
+        <h1 class="header-title">会員変更確認</h1>
+    </header>
 
-		<main class="confirmation-content">
-			<p class="prompt-message">上記の内容でよろしいでしょうか？</p>
+    <main class="confirmation-content">
+        <form th:action="@{/member/edit/complete}" th:object="${member}" method="post">
 
-			<div class="info-box" th:object="${member}">
-				<dl class="info-dl">
-					<dt>氏名</dt>
-					<dd th:text="*{name}"></dd>
+            <p class="prompt-message">以下の内容でよろしいでしょうか？</p>
 
-					<dt>フリガナ</dt>
-					<dd th:text="*{nameRuby}"></dd>
+            <div class="info-box">
+                 <dl class="info-dl">
+                    <dt>氏名</dt>
+                    <dd th:text="*{name}"></dd>
+                    <dt>フリガナ</dt>
+                    <dd th:text="*{nameRuby}"></dd>
+                    <dt>電話番号</dt>
+                    <dd th:text="*{phone}"></dd>
+                    <dt>メール</dt>
+                    <dd th:text="*{email}"></dd>
+                    <dt>住所</dt>
+                    <dd th:text="*{address}"></dd>
+                </dl>
+            </div>
 
-					<dt>電話番号</dt>
-					<dd th:text="*{phone}"></dd>
+            <input type="hidden" th:field="*{memberId}"/>
+            <input type="hidden" th:field="*{name}"/>
+            <input type="hidden" th:field="*{nameRuby}"/>
+            <input type="hidden" th:field="*{phone}"/>
+            <input type="hidden" th:field="*{email}"/>
+            <input type="hidden" th:field="*{address}"/>
+            <input type="hidden" th:field="*{registrationDate}"/>
 
-					<dt>メール</dt>
-					<dd th:text="*{email}"></dd>
+            <div class="verification-checkbox">
+                <label for="confirm">
+                    <input type="checkbox" name="confirm" id="confirm" required />
+                    身分証明書と照合し、本人確認を完了しました。
+                </label>
+            </div>
 
-					<dt>住所</dt>
-					<dd th:text="*{address}"></dd>
-				</dl>
-			</div>
-
-			<form th:action="@{/member/edit/complete}" th:object="${member}"
-				method="post">
-				<input type="hidden" th:field="*{memberId}" /> <input type="hidden"
-					th:field="*{name}" /> <input type="hidden" th:field="*{nameRuby}" />
-				<input type="hidden" th:field="*{phone}" /> <input type="hidden"
-					th:field="*{email}" /> <input type="hidden" th:field="*{address}" />
-				<input type="hidden" th:field="*{registrationDate}" />
-
-				<div class="verification-checkbox">
-					<label> <input type="checkbox" required>
-						身分証明書と照合し、本人確認を完了しました。
-					</label>
-				</div>
-
-				<div class="action-buttons">
-					<button type="submit" class="btn btn-primary">変更</button>
-					<a th:href="@{'/member/edit/' + *{memberId}}"
-						class="btn btn-danger">戻る</a>
-
-				</div>
-			</form>
-		</main>
-	</div>
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">変更</button>
+                <a th:href="@{'/member/edit/' + *{memberId}}" class="btn btn-danger">戻る</a>
+            </div>
+        </form>
+    </main>
+</div>
 </body>
 </html>

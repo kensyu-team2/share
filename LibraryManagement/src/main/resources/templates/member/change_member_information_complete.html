@@ -8,6 +8,7 @@
 <body>
 <div class="container">
     <header class="header-sub-menu header-member">
+        <a th:href="@{/}" class="header-back-link">メインメニュー</a>
         <h1 class="header-title">会員変更完了</h1>
     </header>
 
@@ -20,23 +21,20 @@
             <dl class="info-dl">
                 <dt>氏名</dt>
                 <dd th:text="*{name}"></dd>
-
                 <dt>フリガナ</dt>
                 <dd th:text="*{nameRuby}"></dd>
-
                 <dt>電話番号</dt>
                 <dd th:text="*{phone}"></dd>
-
                 <dt>メール</dt>
                 <dd th:text="*{email}"></dd>
-
                 <dt>住所</dt>
                 <dd th:text="*{address}"></dd>
             </dl>
         </div>
 
         <div class="action-buttons">
-            <a th:href="@{/member/member_list}" class="btn btn-primary">会員一覧へ</a>
+            <a th:href="@{/member/member_list}" class="btn btn-secondary">会員一覧へ</a>
+
         </div>
     </main>
 </div>
