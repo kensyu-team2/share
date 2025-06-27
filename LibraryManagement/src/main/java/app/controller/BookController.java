@@ -89,13 +89,13 @@ public class BookController {
 
 			// --- ここからテスト用の初期データをセット（修正版） ---
 			bookForm.setIsbn("978-4-87311-565-8");
-			bookForm.setBookName("リーダブルコード");
-			bookForm.setBookRuby("リーダブルコード");
-			bookForm.setAuthorName("Dustin Boswell");
-			bookForm.setAuthorRuby("ダスティン ボズウェル");
+			bookForm.setBookName("Pythonが5日でわかる本・AI基本編");
+			bookForm.setBookRuby("パイソンガイツカデワカルホンエーアイキホンヘン");
+			bookForm.setAuthorName("中島 省吾");
+			bookForm.setAuthorRuby("なかしま しょうご");
 			bookForm.setArrivalDate(LocalDate.of(2025, 6, 22));
-			bookForm.setPublisher("test社");
-			bookForm.setPublishDate(LocalDate.of(2012, 6, 22));
+			bookForm.setPublisher("日経ソフトウエア");
+			bookForm.setPublishDate(LocalDate.of(2019, 11, 24));
 			bookForm.setCategoryId(3); // 'コンピュータ・IT'
 			bookForm.setTypeId(1); // '一般書（単行本）'
 			// --- ここまで ---

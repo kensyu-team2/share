@@ -35,9 +35,8 @@
 						<thead>
 							<tr style="text-align: center;">
 								<th>予約日</th>
-								<th>取り置き期限</th>
 								<th>会員ID</th>
-								<th>資料ID</th>
+								<th>会員名</th> <th>電話番号</th> <th>資料ID</th>
 								<th>資料タイトル</th>
 								<th>著者名</th>
 								<th>操作</th>
@@ -45,20 +44,19 @@
 						</thead>
 						<tbody>
 							<tr th:each="res : ${reservations}" style="text-align: center;">
-								<td th:text="${res.reserveDate}"></td>
-								<td th:text="${res.deadline}"></td>
+								<td th:text="${#temporals.format(res.reserveDate, 'yyyy/MM/dd')}"></td>
 								<td th:text="${res.member.memberId}"></td>
-								<td th:text="${res.book.bookId}"></td>
-								<td th:text="${res.book.bookName}"></td>
-								<td th:text="${res.book.authorName}"></td>
-								<td><a
-									th:href="@{/work/reserve/cancel/confirm/{reserveId}(reserveId=${res.reserveId})}">キャンセル</a>
+								<td th:text="${res.member.name}"></td> <td th:text="${res.member.phone}"></td> <td th:text="${res.book.bookId}"></td>
+								<td style="text-align: left;" th:text="${res.book.bookName}"></td>
+								<td style="text-align: left;" th:text="${res.book.authorName}"></td>
+								<td><a class="btn-table-action btn-danger"
+									th:href="@{/work/reserve/cancel/confirm/{reserveId}(reserveId=${res.reserveId})}">ｷｬﾝｾﾙ</a>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<div class="search-actions">
-						<a th:href="@{/book/menu}" class="btn btn-secondary">戻る</a>
+					<div class="action-buttons">
+						<a th:href="@{/work/menu}" class="btn btn-secondary">戻る</a>
 					</div>
 				</div>
 			</div>

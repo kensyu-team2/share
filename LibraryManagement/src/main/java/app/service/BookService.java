@@ -1,6 +1,7 @@
 package app.service;
 
 import java.time.LocalDate;
+import java.util.Optional; // Optionalをインポート
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import app.entity.Book;
 import app.entity.Category;
 import app.entity.Item;
-import app.entity.Member; // ← 正しいMemberクラス
+import app.entity.Member;
 import app.entity.Place;
 import app.entity.Reservation;
 import app.entity.Status;
@@ -57,31 +58,55 @@ public class BookService {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    /**
+     * 書籍を登録または在庫追加する
+     * - ISBNが既存の場合は、新しいItemを追加
+     * - ISBNが新規の場合は、新しいBookとItemを登録
+     * @param bookForm フォームからの入力データ
+     * @return 登録または追加対象となったBookエンティティ
+     */
     public Book registerBook(BookForm bookForm) {
-        if (bookRepository.findByIsbn(bookForm.getIsbn()).isPresent()) {
-            throw new IllegalStateException("このISBNは既に登録されています。");
+        // ISBNで既存のBookを検索
+        Optional<Book> existingBookOptional = bookRepository.findByIsbn(bookForm.getIsbn());
+
+        if (existingBookOptional.isPresent()) {
+            // --- ISBNが既に存在する場合：新しいItemのみを追加 ---
+            Book existingBook = existingBookOptional.get();
+            createAndSaveNewItem(existingBook, bookForm);
+            return existingBook;
+
+        } else {
+            // --- ISBNが存在しない場合：新しいBookとItemを両方作成（従来のロジック） ---
+            Book newBook = new Book();
+            newBook.setIsbn(bookForm.getIsbn());
+            newBook.setBookName(bookForm.getBookName());
+            newBook.setBookRuby(bookForm.getBookRuby());
+            newBook.setAuthorName(bookForm.getAuthorName());
+            newBook.setAuthorRuby(bookForm.getAuthorRuby());
+            newBook.setPublisher(bookForm.getPublisher());
+            newBook.setPublishDate(bookForm.getPublishDate());
+
+            Book savedBook = bookRepository.save(newBook);
+            createAndSaveNewItem(savedBook, bookForm);
+            return savedBook;
         }
+    }
 
-        Book book = new Book();
-        book.setIsbn(bookForm.getIsbn());
-        book.setBookName(bookForm.getBookName());
-        book.setBookRuby(bookForm.getBookRuby());
-        book.setAuthorName(bookForm.getAuthorName());
-        book.setAuthorRuby(bookForm.getAuthorRuby());
-        book.setPublisher(bookForm.getPublisher());
-        book.setPublishDate(bookForm.getPublishDate());
-
-        Book savedBook = bookRepository.save(book);
-
+    /**
+     * BookとBookFormの情報から新しいItemを作成し、DBに保存するヘルパーメソッド
+     * @param book 関連付けるBookエンティティ
+     * @param form フォームからの入力データ
+     */
+    private void createAndSaveNewItem(Book book, BookForm form) {
         Item item = new Item();
-        item.setBook(savedBook);
-        item.setGetDate(bookForm.getArrivalDate());
+        item.setBook(book); // 関連付けるBookをセット
+        item.setGetDate(form.getArrivalDate());
 
-        Category category = categoryRepository.findById(bookForm.getCategoryId())
+        Category category = categoryRepository.findById(form.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("該当するカテゴリが存在しません。"));
-        Type type = typeRepository.findById(bookForm.getTypeId())
+        Type type = typeRepository.findById(form.getTypeId())
                 .orElseThrow(() -> new IllegalArgumentException("該当する資料区分が存在しません。"));
-        Place place = placeRepository.findById("1F-A-1")
+        Place place = placeRepository.findById("1F-A-1") // 配架場所は固定値
                 .orElseThrow(() -> new IllegalArgumentException("該当する配架場所が存在しません。"));
         Status status = statusRepository.findById(1) // 1:在庫あり
                 .orElseThrow(() -> new IllegalArgumentException("該当するステータスが存在しません。"));
@@ -92,9 +117,9 @@ public class BookService {
         item.setStatus(status);
 
         itemRepository.save(item);
-
-        return savedBook; // 保存したBookオブジェクトを返す
     }
+
+    // --- search, findById, createReservation メソッドは変更なし ---
 
     public Page<Book> search(BookSearchForm form, Pageable pageable) {
         Specification<Book> spec = buildSpecification(form);
